@@ -1,0 +1,69 @@
+.grid {
+  --line: var(--grid-line);
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, var(--line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--line) 1px, transparent 1px);
+  background-size: var(--cell) var(--cell);
+  /* close the last row and column */
+  box-shadow:
+    inset -1px 0 0 var(--line),
+    inset 0 -1px 0 var(--line);
+}
+
+.paper {
+  --line: var(--color-grid-light);
+}
+
+/* Right/bottom-anchored regions still align to the section's column lines */
+.alignRight {
+  background-position: right top;
+  box-shadow:
+    inset 1px 0 0 var(--line),
+    inset 0 -1px 0 var(--line);
+}
+
+.alignBottom {
+  background-position-y: bottom;
+}
+
+.inkVerticals {
+  background-image:
+    linear-gradient(to right, var(--color-ink) 1px, transparent 1px),
+    linear-gradient(to right, var(--line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--line) 1px, transparent 1px);
+  background-size:
+    calc(var(--cell) * 2) var(--cell),
+    var(--cell) var(--cell),
+    var(--cell) var(--cell);
+}
+
+.fade-left {
+  mask-image: linear-gradient(to left, #000 40%, transparent);
+}
+
+.fade-right {
+  mask-image: linear-gradient(to right, #000 40%, transparent);
+}
+
+.fade-top {
+  mask-image: linear-gradient(to top, #000 40%, transparent);
+}
+
+.fade-bottom {
+  mask-image: linear-gradient(to bottom, #000 40%, transparent);
+}
+
+@media (max-width: 1023px) {
+  .hide-desktop {
+    display: none;
+  }
+}
+
+@media (max-width: 599px) {
+  .hide-tablet {
+    display: none;
+  }
+}

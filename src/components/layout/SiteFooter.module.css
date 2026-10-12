@@ -1,0 +1,79 @@
+/* Figma: 1280 × 624. Wordmark spans the full width from x=5 and is cropped at the bottom. */
+.footer {
+  font-family: var(--font-ui);
+}
+
+.top {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  column-gap: 32px;
+  padding-top: 41px;
+}
+
+.signature,
+.links {
+  font-size: var(--fs-ui);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: var(--tracking-body);
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.links a,
+.links span {
+  color: inherit;
+}
+
+.description {
+  grid-column: 1 / -1;
+  max-width: 540px;
+  margin-top: 56px;
+  font-size: var(--fs-ui);
+  font-weight: 300;
+  line-height: 1.5;
+  letter-spacing: var(--tracking-body);
+}
+
+/* Petal pattern: flipped horizontally, anchored right, bleeding off the bottom edge */
+.petals {
+  position: absolute;
+  z-index: 0;
+  left: 6.8%;
+  top: 25.96%;
+  width: 120.84%;
+  max-width: none;
+  height: auto;
+  transform: scaleX(-1);
+  pointer-events: none;
+}
+
+.wordmarkSpace {
+  margin-top: clamp(64px, 7.5vw, 96px);
+}
+
+@media (max-width: 767px) {
+  .top {
+    grid-template-columns: 1fr;
+    row-gap: 24px;
+  }
+
+  .description {
+    margin-top: 24px;
+    font-size: var(--fs-small);
+  }
+
+  .links {
+    gap: 12px 24px;
+  }
+
+  .petals {
+    left: -20%;
+    top: 40%;
+    width: 200%;
+  }
+}

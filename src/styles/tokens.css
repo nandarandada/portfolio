@@ -1,0 +1,71 @@
+/*
+ * Frosa design tokens.
+ * Values come from the Figma file (Portifolio page): colors, type families,
+ * sizes, tracking and the 21-column editorial grid used at 1280px.
+ */
+:root {
+  /* Palette — red, black, white and carefully selected neutrals */
+  --color-red: #9e1c1c;
+  --color-red-deep: #840909; /* timeline band */
+  --color-ink: #1f1f1f;
+  --color-white: #ffffff;
+  --color-ink-muted: rgb(31 31 31 / 0.2); /* inactive stacked-list items */
+  --color-placeholder: #e6e6e6; /* media placeholders only, never a design surface */
+  --color-grid-light: #f2e8e8;
+
+  /* Texture: cardboard grain blended with color-burn over the surface color */
+  --texture-grain: url('/textures/noise.jpg');
+  --texture-size: 1000px;
+
+  /* Typography */
+  --font-display: 'Libre Baskerville', 'Baskerville', Georgia, serif;
+  --font-body: 'General Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-ui: var(--font-body);
+  /* --font-logo is not needed: the wordmark is the vector from Figma (src/components/primitives/Wordmark.tsx). */
+
+  /* Type scale — desktop values match Figma at 1280px, scaled down fluidly to 375px */
+  --fs-display: clamp(2rem, 1.4rem + 2.95vw, 3.75rem); /* 60px  Libre Baskerville Bold, lh 1.25 */
+  --fs-statement: clamp(1.75rem, 1.44rem + 1.33vw, 2.5rem); /* 40px  Libre Baskerville Bold, lh 1.25 */
+  --fs-label: clamp(1.125rem, 0.8rem + 1.4vw, 2.125rem); /* 34px  General Sans Bold, tracking 20% */
+  --fs-body: clamp(1.125rem, 1.07rem + 0.22vw, 1.25rem); /* 20px  General Sans Regular, lh 1.65 */
+  --fs-ui: 1.125rem; /* 18px  General Sans Medium, nav + footer */
+  --fs-small: 1rem; /* 16px  General Sans Italic, captions */
+  --fs-dropcap: 2.65em; /* 53px at 20px body */
+
+  --lh-display: 1.25;
+  --lh-body: 1.65;
+  --lh-snug: 1.4;
+  --tracking-body: 0.02em;
+  --tracking-label: 0.2em;
+
+  /* Layout */
+  --container: 1050px; /* 115px margins at 1280px */
+  --gutter: 16px;
+  --measure-narrow: 16rem; /* the editorial body column (≈255px in Figma) */
+  --measure-statement: 29rem; /* serif statements (≈461px) */
+
+  /* Editorial grid — 21 columns across the viewport at desktop (61px cells at 1280px).
+     Cell size is relative to each section's width (container query units), so every
+     grid region on the page shares one rhythm. */
+  --grid-cols: 21;
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.19, 0.8, 0.22, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 240ms;
+  --dur-base: 600ms;
+  --dur-reveal: 1000ms;
+  --stagger: 90ms;
+}
+
+@media (max-width: 1023px) {
+  :root {
+    --grid-cols: 14;
+  }
+}
+
+@media (max-width: 599px) {
+  :root {
+    --grid-cols: 8;
+  }
+}

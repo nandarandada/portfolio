@@ -1,0 +1,83 @@
+.header {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 10;
+  color: var(--color-white);
+}
+
+/* Figma: wordmark at 44px from the top, nav baseline aligned to it */
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding-top: 44px;
+}
+
+.home {
+  display: block;
+  color: inherit;
+}
+
+.wordmark {
+  width: 150px;
+  height: auto;
+}
+
+.nav {
+  display: flex;
+  gap: 30px;
+  font-family: var(--font-ui);
+  font-size: var(--fs-ui);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: var(--tracking-body);
+}
+
+.link {
+  color: inherit;
+  text-decoration: none;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-position: 100% 100%;
+  background-size: 0% 1px;
+  padding-bottom: 4px;
+  transition: background-size var(--dur-base) var(--ease-out);
+}
+
+.link:hover,
+.link:focus-visible {
+  background-position: 0 100%;
+  background-size: 100% 1px;
+}
+
+.active {
+  font-weight: 700;
+}
+
+.active::before {
+  content: '•';
+  margin-right: 0.3em;
+  color: var(--color-red);
+}
+
+@media (max-width: 599px) {
+  .inner {
+    padding-top: 28px;
+  }
+
+  .wordmark {
+    width: 112px;
+  }
+
+  .nav {
+    gap: 20px;
+    font-size: var(--fs-small);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .link {
+    transition: none;
+  }
+}

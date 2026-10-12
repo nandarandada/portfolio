@@ -1,0 +1,126 @@
+/* Layout helpers for the Home sections. Anything reusable belongs in a composition. */
+
+/* Manifesto: the narrow column starts four cells into the panel (two beyond its padding) */
+.manifesto {
+  margin-left: calc(var(--cell) * 2);
+  max-width: var(--measure-narrow);
+}
+
+/* Seal: right margin, overlapping the red grid (Figma ≈ x 950, y +475, Ø 266 at 1280) */
+.seal {
+  position: absolute;
+  z-index: 2;
+  left: calc(var(--cell) * 15.6);
+  top: calc(var(--cell) * 7.8);
+  width: calc(var(--cell) * 4.35);
+}
+
+.sealMedia {
+  border-radius: 50%;
+}
+
+/* Expertise strip: 123px band at 1280 */
+.strip {
+  padding-block: 44px;
+}
+
+/* Selected Work: heading centred in the two grid rows above the cards, starting on the
+   first card's column; the link sits in the row below the last caption, right-aligned
+   with the grid's last column. Both on clean surfaces so no grid line runs behind text. */
+.workHeading {
+  display: flex;
+  align-items: center;
+  height: calc(var(--cell) * 2);
+  padding-left: calc(var(--cell) * 2);
+}
+
+.workHeadingSurface,
+.workLinkSurface {
+  width: fit-content;
+  padding: 4px 12px;
+  margin: -4px -12px;
+}
+
+.workLink {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: var(--cell);
+  padding-right: calc(var(--cell) * 2);
+  font-family: var(--font-ui);
+  font-weight: 500;
+  font-size: var(--fs-body);
+  letter-spacing: var(--tracking-body);
+}
+
+/* Practice overview: statement across columns 3–8 (up to the image), image across columns 9–19,
+   seven rows tall; the statement's top aligns one row below the image's top */
+.overview {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-cols), var(--cell));
+  grid-auto-rows: var(--cell);
+}
+
+.overviewText {
+  grid-column: 3 / span 6;
+  grid-row: 2 / span 5;
+  align-self: start;
+  display: grid;
+  gap: 24px;
+  /* bleeds into the margin on the left only; ends exactly where the image begins */
+  padding: 8px 0 8px 12px;
+  margin: -8px 0 -8px -12px;
+}
+
+.overviewBody {
+  max-width: 17rem;
+}
+
+.overviewMedia {
+  grid-column: 9 / span 11;
+  grid-row: 1 / span 7;
+}
+
+.overviewFrame {
+  height: calc(var(--cell) * 7);
+  aspect-ratio: auto !important;
+}
+
+@media (max-width: 1023px) {
+  .manifesto {
+    margin-left: 0;
+  }
+
+  .workHeading {
+    height: auto;
+    padding: 0 var(--gutter);
+    margin-bottom: 40px;
+  }
+
+  .workLink {
+    justify-content: flex-start;
+    height: auto;
+    padding: 48px var(--gutter) 0;
+  }
+
+  .seal {
+    display: none;
+  }
+
+  .overview {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    padding-inline: var(--gutter);
+  }
+
+  .overviewText {
+    align-self: flex-start;
+    max-width: 30rem;
+  }
+
+  .overviewFrame {
+    height: auto;
+    aspect-ratio: 672 / 427 !important;
+  }
+}

@@ -1,0 +1,19 @@
+.page {
+  min-height: calc(var(--cell) * 10);
+}
+
+.inner {
+  padding-top: calc(var(--cell) * 4.3);
+  padding-bottom: calc(var(--cell) * 2);
+}
+
+.note {
+  margin-top: 32px;
+  max-width: 28rem;
+}
+
+@media (max-width: 1023px) {
+  .inner {
+    padding-top: 160px;
+  }
+}

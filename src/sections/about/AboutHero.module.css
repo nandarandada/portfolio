@@ -1,0 +1,59 @@
+/*
+ * 1280px: headline 72px (between the compact 40px and the poster 96px), measure 13 cells
+ * (≈790px), starting one cell inside the content column. Statement 48px below on the same
+ * left edge, 18px sans, measure ≈ 320px. Red grid block on the far right as counterweight.
+ */
+.inner {
+  padding-top: calc(var(--cell) * 4);
+  /* +41px keeps the approved hero height now that the statement has no drop cap */
+  padding-bottom: calc(var(--cell) * 3 + 41px);
+  padding-left: calc(var(--gutter) + var(--cell));
+}
+
+.headline {
+  max-width: calc(var(--cell) * 13);
+  font-size: clamp(2.25rem, 1.2rem + 4.2vw, 4.5rem);
+  line-height: 1.1;
+  text-wrap: balance;
+}
+
+.statement {
+  max-width: min(20rem, calc(var(--cell) * 6));
+  margin-top: 48px;
+}
+
+/* Secondary to the headline: UI size (18px), comfortable leading, slightly muted */
+.statementText {
+  font-size: var(--fs-ui);
+  line-height: 1.6;
+  opacity: 0.85;
+}
+
+@media (max-width: 1023px) {
+  .inner {
+    padding-top: 150px;
+    padding-bottom: 88px;
+    padding-left: var(--gutter);
+  }
+
+  .headline {
+    max-width: 36rem;
+  }
+
+}
+
+@media (max-width: 599px) {
+  .inner {
+    padding-top: 124px;
+    padding-bottom: 94px;
+  }
+
+  .headline {
+    font-size: clamp(1.875rem, 8.6vw, 2.25rem);
+  }
+
+  .statement {
+    max-width: 18rem;
+    margin-top: 32px;
+  }
+}

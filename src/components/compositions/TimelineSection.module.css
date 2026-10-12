@@ -1,0 +1,81 @@
+/* Figma: band x=471 (36px wide), text column x=522 (≈255px): a 306px block centered on the page */
+.section {
+  --band: 36px;
+  --column: 306px;
+  padding-block: clamp(96px, calc(var(--cell) * 2), 130px);
+}
+
+.band {
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  bottom: 0;
+  left: calc(50% - var(--column) / 2);
+  width: var(--band);
+  background: var(--color-red-deep) var(--texture-grain) center / var(--texture-size);
+  background-blend-mode: color-burn;
+}
+
+.list {
+  width: 100%;
+  max-width: var(--column);
+  margin-inline: auto;
+  display: grid;
+  gap: clamp(72px, calc(var(--cell) * 1.6), 104px);
+}
+
+.item {
+  display: grid;
+  grid-template-columns: var(--band) 1fr;
+  column-gap: 15px;
+}
+
+.year {
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: var(--fs-body);
+  line-height: 1.2;
+  text-align: center;
+}
+
+.digits {
+  display: grid;
+}
+
+.content {
+  display: grid;
+  gap: 12px;
+  align-content: start;
+}
+
+.title {
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: var(--fs-body);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--tracking-body);
+}
+
+.text {
+  font-size: var(--fs-ui);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--tracking-body);
+  text-wrap: pretty;
+}
+
+.org {
+  font-size: var(--fs-small);
+  font-style: italic;
+  line-height: var(--lh-snug);
+  letter-spacing: 0.03em;
+}
+
+@media (max-width: 599px) {
+  .section {
+    --column: 100%;
+  }
+
+  .band {
+    left: var(--gutter);
+  }
+}

@@ -1,0 +1,37 @@
+.map {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.dots {
+  fill: var(--color-white);
+}
+
+/* Final state = the Figma artwork: red dots inside the white dotted map */
+.highlight {
+  fill: var(--color-red);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Phase 1 — the dotted map appears */
+  .base {
+    opacity: 0;
+    transition: opacity var(--base-fade) var(--ease-out);
+  }
+
+  /* Phase 2 — highlighted dots start as part of the white map, then turn red */
+  .highlight {
+    fill: var(--color-white);
+    transition: fill 600ms var(--ease-in-out);
+    transition-delay: var(--delay);
+  }
+
+  .map[data-inview='true'] .base {
+    opacity: 1;
+  }
+
+  .map[data-inview='true'] .highlight {
+    fill: var(--color-red);
+  }
+}

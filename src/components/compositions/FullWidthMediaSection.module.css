@@ -1,0 +1,33 @@
+.band {
+  position: relative;
+  background: var(--color-white);
+  overflow: clip;
+}
+
+/* Keep wide frames from collapsing into a thin strip on narrow screens */
+@media (max-width: 767px) {
+  .media {
+    aspect-ratio: 4 / 3 !important;
+  }
+}
+
+/* Subtle parallax: the media drifts inside its frame while the band crosses the viewport */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .media > img,
+    .media > video {
+      scale: 1.08;
+      animation: drift linear both;
+      animation-timeline: view();
+    }
+
+    @keyframes drift {
+      from {
+        translate: 0 -3%;
+      }
+      to {
+        translate: 0 3%;
+      }
+    }
+  }
+}

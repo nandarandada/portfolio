@@ -1,0 +1,40 @@
+/* Everything sits in one centered column; each element keeps its own measure,
+   so the serif statement starts left of the narrow body column, as in Figma. */
+.column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(64px, calc(var(--cell) * 2.4), 150px);
+}
+
+.heading {
+  width: 100%;
+  max-width: var(--measure-statement);
+}
+
+.body {
+  width: 100%;
+  max-width: var(--measure-narrow);
+}
+
+/* Metadata: serif statements separated by a blank line (Figma 127:2391, 40px / 1.25) */
+.lines {
+  width: 100%;
+  max-width: 34rem;
+  display: grid;
+  gap: calc(var(--lh-display) * 1em);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--fs-statement);
+  line-height: var(--lh-display);
+}
+
+@media (max-width: 599px) {
+  .column {
+    align-items: stretch;
+  }
+
+  .body {
+    max-width: 22rem;
+  }
+}

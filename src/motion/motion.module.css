@@ -1,0 +1,74 @@
+/* Editorial motion vocabulary. Everything here is disabled under prefers-reduced-motion. */
+
+/* Reveal: a short fade-and-rise for paragraphs, lists and small groups. */
+.reveal {
+  opacity: 0;
+  transform: translate3d(0, 18px, 0);
+  transition:
+    opacity var(--dur-reveal) var(--ease-out),
+    transform var(--dur-reveal) var(--ease-out);
+  transition-delay: var(--delay, 0ms);
+}
+
+.reveal[data-inview='true'] {
+  opacity: 1;
+  transform: none;
+}
+
+/* TextReveal: each measured line rises from behind its own mask. */
+.line {
+  display: block;
+  overflow: clip;
+  /* room for descenders and the drop cap so the mask never crops glyphs */
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+
+.lineInner {
+  display: block;
+  transform: translate3d(0, 105%, 0);
+  transition: transform var(--dur-reveal) var(--ease-out);
+  transition-delay: calc(var(--delay, 0ms) + var(--i, 0) * var(--stagger));
+}
+
+[data-inview='true'] > .line > .lineInner {
+  transform: none;
+}
+
+.measure {
+  /* words are measured in place before lines are built; keep them invisible meanwhile */
+  opacity: 0;
+}
+
+/* ImageReveal: the frame opens upward while the media settles inside it. */
+.imageReveal {
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path 1200ms var(--ease-in-out);
+  transition-delay: var(--delay, 0ms);
+}
+
+.imageReveal > * {
+  transform: scale(1.08);
+  transition: transform 1600ms var(--ease-out);
+  transition-delay: var(--delay, 0ms);
+}
+
+[data-inview='true'] > .imageReveal {
+  clip-path: inset(0 0 0 0);
+}
+
+[data-inview='true'] > .imageReveal > * {
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .lineInner,
+  .imageReveal,
+  .imageReveal > * {
+    opacity: 1;
+    transform: none;
+    clip-path: none;
+    transition: none;
+  }
+}

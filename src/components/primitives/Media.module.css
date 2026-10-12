@@ -1,0 +1,26 @@
+.frame {
+  position: relative;
+  width: 100%;
+  overflow: clip;
+}
+
+.asset {
+  width: 100%;
+  height: 100%;
+  object-fit: var(--fit);
+  object-position: var(--position);
+}
+
+.empty {
+  display: grid;
+  place-items: center;
+  background: var(--color-placeholder);
+}
+
+.note {
+  font-family: var(--font-ui);
+  font-size: var(--fs-small);
+  font-weight: 500;
+  color: rgb(31 31 31 / 0.45);
+  letter-spacing: var(--tracking-body);
+}

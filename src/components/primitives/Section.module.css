@@ -1,0 +1,77 @@
+.section {
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+  container-type: inline-size;
+  container-name: section;
+  /* one grid cell, shared by every EditorialGridBackground in this section */
+  --cell: calc(100cqw / var(--grid-cols));
+  background: var(--surface-bg);
+  background-blend-mode: var(--surface-blend, normal);
+  color: var(--surface-fg);
+}
+
+/* Grain is blended with color-burn, as in the Figma file: it deepens the
+   surface color without lifting it, so text contrast is preserved. */
+.dark {
+  --surface-bg: var(--color-ink) var(--texture-grain) center / var(--texture-size);
+  --surface-blend: color-burn;
+  --surface-fg: var(--color-white);
+  --grid-line: var(--color-red);
+}
+
+.ink {
+  --surface-bg: var(--color-ink);
+  --surface-fg: var(--color-white);
+  --grid-line: var(--color-red);
+}
+
+.red {
+  --surface-bg: var(--color-red) var(--texture-grain) center / var(--texture-size);
+  --surface-blend: color-burn;
+  --surface-fg: var(--color-white);
+  --grid-line: rgb(255 255 255 / 0.12);
+}
+
+.light {
+  --surface-bg: var(--color-white);
+  --surface-fg: var(--color-ink);
+  --grid-line: var(--color-red);
+}
+
+.flat.dark,
+.flat.red {
+  --surface-bg: var(--surface-color);
+}
+
+.dark {
+  --surface-color: var(--color-ink);
+}
+
+.red {
+  --surface-color: var(--color-red);
+}
+
+.surface {
+  position: relative;
+  z-index: 1;
+  background: var(--surface-bg);
+  background-blend-mode: var(--surface-blend, normal);
+}
+
+/* Vertical rhythm, expressed in grid cells so spacing follows the grid */
+.space-none {
+  padding-block: 0;
+}
+
+.space-compact {
+  padding-block: clamp(48px, calc(var(--cell) * 1.5), 96px);
+}
+
+.space-regular {
+  padding-block: clamp(72px, calc(var(--cell) * 2.5), 160px);
+}
+
+.space-spacious {
+  padding-block: clamp(96px, calc(var(--cell) * 3.5), 220px);
+}

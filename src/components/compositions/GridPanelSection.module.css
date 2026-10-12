@@ -1,0 +1,32 @@
+.section {
+  padding-top: calc(var(--cell) * var(--rows-above));
+  padding-bottom: calc(var(--cell) * var(--rows-below));
+}
+
+.panel {
+  margin-left: calc(var(--cell) * var(--start));
+  width: calc(var(--cell) * var(--span));
+  /* Figma: text starts two cells in and may run to one cell from the right edge */
+  padding: calc(var(--cell) * 2) var(--cell) calc(var(--cell) * 2) calc(var(--cell) * 2);
+}
+
+@media (max-width: 1023px) {
+  .panel {
+    margin-left: var(--cell);
+    width: calc(100% - var(--cell) * 2);
+    padding: calc(var(--cell) * 1.5) var(--cell);
+  }
+}
+
+@media (max-width: 599px) {
+  .section {
+    padding-top: calc(var(--cell) * min(var(--rows-above), 1.5));
+    padding-bottom: calc(var(--cell) * min(var(--rows-below), 1.5));
+  }
+
+  .panel {
+    margin-left: 0;
+    width: 100%;
+    padding: calc(var(--cell) * 1.5) var(--gutter);
+  }
+}

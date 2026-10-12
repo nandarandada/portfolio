@@ -1,0 +1,57 @@
+.strip {
+  position: relative;
+  z-index: 1;
+  overflow: clip;
+  container-type: inline-size;
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: var(--fs-label);
+  line-height: 1.2;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+}
+
+/* Static default: centered lines that wrap between keywords */
+.track {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  row-gap: 0.5em;
+  padding-inline: var(--gutter);
+}
+
+.item {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.bullet {
+  display: inline-block;
+  margin-inline: 0.35em 0.6em;
+  letter-spacing: 0;
+}
+
+/* Scroll-linked: a single line that travels from its first to its last keyword */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .track {
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      width: max-content;
+      padding-inline: calc(var(--gutter) * 2);
+      animation: travel linear both;
+      animation-timeline: view();
+      animation-range: cover 10% cover 90%;
+    }
+
+    @keyframes travel {
+      from {
+        transform: translate3d(0, 0, 0);
+      }
+      to {
+        transform: translate3d(calc(100cqw - 100%), 0, 0);
+      }
+    }
+  }
+}

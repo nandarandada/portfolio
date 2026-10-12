@@ -1,0 +1,68 @@
+.hero {
+  min-height: calc(var(--cell) * 10);
+}
+
+/* Two tracks: the headline column ends where grid column 14 begins, so the statement
+   box lands on the grid exactly as in Figma, and grows with its copy. */
+.inner {
+  --container-offset: calc((100cqw - min(100cqw, var(--container) + 2 * var(--gutter))) / 2 + var(--gutter));
+  display: grid;
+  grid-template-columns: calc(var(--cell) * 13 - var(--container-offset)) max(calc(var(--cell) * 5), 300px);
+  align-items: start;
+  padding-top: calc(var(--cell) * 4.3);
+  padding-bottom: calc(var(--cell) * 2);
+}
+
+.headline {
+  max-width: min(42rem, calc(var(--cell) * 11));
+}
+
+/* Column 14, row 5 of the section grid */
+.statementWrap {
+  margin-top: calc(var(--cell) * -0.3);
+}
+
+.statement {
+  min-height: calc(var(--cell) * 4);
+  display: flex;
+  align-items: center;
+  padding: 27px;
+  border: 1px solid var(--grid-line);
+}
+
+.statement p {
+  font-size: var(--fs-ui);
+}
+
+@media (max-width: 1023px) {
+  .hero {
+    min-height: 0;
+  }
+
+  .inner {
+    display: block;
+    padding-top: 160px;
+    padding-bottom: 72px;
+  }
+
+  .headline {
+    max-width: 36rem;
+  }
+
+  .statementWrap {
+    width: auto;
+    max-width: 22rem;
+    margin-top: 40px;
+  }
+
+  .statement {
+    min-height: 0;
+    padding: 20px 24px;
+  }
+}
+
+@media (max-width: 599px) {
+  .inner {
+    padding-top: 128px;
+  }
+}

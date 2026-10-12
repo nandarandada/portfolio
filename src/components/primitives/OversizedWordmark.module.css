@@ -1,0 +1,37 @@
+.wrap {
+  position: relative;
+  z-index: 1;
+  padding-left: 0.4%;
+  color: var(--color-white);
+}
+
+/* crop the foot of the letters, as in the footer design */
+.crop {
+  margin-bottom: -0.6%;
+}
+
+.wordmark {
+  width: 100.3%;
+  max-width: none;
+  height: auto;
+}
+
+/* Subtle parallax, only where scroll-driven animations exist */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .parallax {
+      animation: rise linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 60%;
+    }
+
+    @keyframes rise {
+      from {
+        transform: translate3d(0, 18%, 0);
+      }
+      to {
+        transform: none;
+      }
+    }
+  }
+}

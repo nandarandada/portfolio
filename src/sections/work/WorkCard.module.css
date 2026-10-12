@@ -1,0 +1,149 @@
+/* ── Desktop: cards sit on the 21-column grid of their band ───────────── */
+.card {
+  position: relative;
+}
+
+/* caption below: the card occupies its own columns, pushed down by `--offset` rows */
+.below {
+  grid-column: var(--col) / span var(--span);
+  margin-top: calc(var(--cell) * var(--offset));
+  display: flex;
+  flex-direction: column;
+}
+
+/* caption beside: the card spans the band and lays out media + caption on the same grid */
+.side {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(var(--grid-cols), var(--cell));
+  align-items: end;
+}
+
+.side .mediaWrap {
+  grid-column: var(--col) / span var(--span);
+  grid-row: 1;
+}
+
+.side .captionWrap {
+  grid-column: var(--caption-col) / span var(--caption-span);
+  grid-row: 1;
+}
+
+.media {
+  height: calc(var(--cell) * var(--rows));
+  aspect-ratio: auto !important;
+}
+
+/* Before / after: two halves inside one frame, labelled quietly */
+.comparison {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+}
+
+.half {
+  position: relative;
+  margin: 0;
+}
+
+.halfLabel {
+  position: absolute;
+  left: 12px;
+  bottom: 10px;
+  font-family: var(--font-ui);
+  font-size: var(--fs-small);
+  font-weight: 500;
+  color: var(--color-ink);
+}
+
+/* ── Caption ───────────────────────────────────────────────────────────── */
+/* static, so the title's stretched link covers the whole card (media included),
+   not just the caption surface; the band content layer already sits above the grid */
+.caption {
+  position: static;
+  padding-top: 14px;
+  min-height: var(--cell);
+}
+
+.side .caption {
+  padding: 0 0 4px;
+  min-height: 0;
+}
+
+.title {
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: var(--fs-body);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--tracking-body);
+}
+
+/* The whole card opens the project; secondary links sit above this layer */
+.link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
+.meta,
+.placeholderTag {
+  font-size: var(--fs-small);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--tracking-body);
+}
+
+.meta {
+  margin-top: 4px;
+  opacity: 0.75;
+}
+
+/* Placeholders say so, in the same quiet voice as the metadata */
+.placeholderTag {
+  margin-bottom: 6px;
+  font-style: italic;
+  opacity: 0.6;
+}
+
+.summary {
+  margin-top: 12px;
+  max-width: 28rem;
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  letter-spacing: var(--tracking-body);
+}
+
+.live {
+  position: relative;
+  z-index: 2;
+  margin-top: 12px;
+  font-family: var(--font-ui);
+  font-weight: 500;
+  font-size: var(--fs-small);
+}
+
+/* ── Tablet and mobile: recomposed, not shrunk ──────────────────────────── */
+@media (max-width: 1023px) {
+  .below,
+  .side {
+    grid-column: auto;
+    margin-top: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .media {
+    height: auto;
+    aspect-ratio: var(--ratio) !important;
+  }
+
+  .comparison .media {
+    aspect-ratio: var(--half-ratio) !important;
+  }
+
+  .side .caption,
+  .caption {
+    padding: 14px 0 0;
+    min-height: 0;
+  }
+}

@@ -1,0 +1,84 @@
+/* Figma: heading at column 3; logos one row below; copy two rows below logos; columns 6 cells apart */
+.wrap {
+  margin-left: calc(var(--cell) * 2);
+  width: calc(var(--cell) * 17);
+}
+
+.headingSurface,
+.textSurface {
+  width: fit-content;
+  padding: 6px 12px;
+  margin: -6px -12px;
+}
+
+.heading {
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: var(--fs-body);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--tracking-body);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, calc(var(--cell) * 6));
+  margin-top: calc(var(--cell) * 1.3);
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--cell) * 1.3);
+}
+
+/* One logo row height, so every description starts on the same line */
+.logo {
+  display: flex;
+  align-items: center;
+  height: 48px;
+}
+
+.logo > * {
+  width: auto;
+  height: 100%;
+  max-width: 100%;
+}
+
+.text {
+  max-width: calc(var(--cell) * 4.4);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  letter-spacing: var(--tracking-body);
+}
+
+@media (max-width: 1023px) {
+  .wrap {
+    width: auto;
+    margin-inline: var(--gutter);
+  }
+
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 32px;
+    margin-top: 40px;
+  }
+
+  .item {
+    gap: 32px;
+  }
+
+  .text {
+    max-width: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+
+  .item {
+    gap: 20px;
+  }
+}

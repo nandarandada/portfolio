@@ -1,0 +1,26 @@
+/* Figma: text starts two cells into the 12-cell panel and runs ≈ 9 cells wide */
+.stack {
+  display: grid;
+  gap: calc(var(--lh-display) * var(--fs-display));
+  max-width: 34rem;
+}
+
+.statement {
+  text-wrap: balance;
+}
+
+.supporting {
+  max-width: 24rem;
+  font-weight: 500;
+}
+
+.action {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--fs-statement);
+  line-height: var(--lh-display);
+}
+
+.action a {
+  color: var(--color-red);
+}

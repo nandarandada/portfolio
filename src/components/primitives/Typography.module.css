@@ -1,0 +1,76 @@
+.display,
+.editorial {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: var(--lh-display);
+  letter-spacing: 0;
+  text-wrap: balance;
+}
+
+.display {
+  font-size: var(--fs-display);
+}
+
+.editorial {
+  font-size: var(--fs-statement);
+}
+
+.body {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  letter-spacing: var(--tracking-body);
+  text-wrap: pretty;
+}
+
+.body strong {
+  font-weight: 600;
+}
+
+.body + .body {
+  margin-top: calc(var(--lh-body) * 1em);
+}
+
+.narrow {
+  max-width: var(--measure-narrow);
+}
+
+.wide {
+  max-width: 34rem;
+}
+
+/* The initial sits on the first baseline and rises above it, slightly indented. */
+.dropCap {
+  text-indent: 0.75em;
+}
+
+.dropCap::first-letter {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--fs-dropcap);
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+/* Same treatment for a whole first word (e.g. "AI"), so acronyms aren't split */
+.dropWordParagraph {
+  text-indent: 0.75em;
+}
+
+.dropWord {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--fs-dropcap);
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+.label {
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: var(--fs-label);
+  line-height: 1.2;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+}

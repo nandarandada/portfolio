@@ -1,0 +1,75 @@
+/* Small layout helpers shared by the About sections. Anything reusable belongs in a composition. */
+.centeredColumn {
+  display: flex;
+  justify-content: center;
+  margin-top: clamp(64px, calc(var(--cell) * 2.4), 150px);
+}
+
+.narrow {
+  width: 100%;
+  max-width: var(--measure-narrow);
+}
+
+/* NewWayOfWorking: list in the first third, statement and copy beside it */
+.split {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 8fr);
+  gap: calc(var(--cell) * 1.5);
+  align-items: start;
+}
+
+.splitMain {
+  display: grid;
+  gap: 32px;
+}
+
+.copy {
+  max-width: 30rem;
+}
+
+.intro {
+  display: grid;
+  gap: 32px;
+  max-width: 36rem;
+  margin-bottom: clamp(48px, calc(var(--cell) * 1.3), 80px);
+}
+
+.closing {
+  max-width: 34rem;
+  margin-top: clamp(48px, calc(var(--cell) * 1.3), 80px);
+}
+
+@media (max-width: 899px) {
+  .split {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+}
+
+@media (max-width: 599px) {
+  .centeredColumn {
+    justify-content: flex-start;
+  }
+
+  .narrow {
+    max-width: 22rem;
+  }
+}
+
+/* World map (Figma Frame 512 at 1280: heading 46px from the top, map 218px from the top,
+   spanning the full width and bleeding at both edges) */
+.mapSection {
+  padding-top: 46px;
+}
+
+.mapHeading {
+  text-align: center;
+}
+
+.mapHeading > span {
+  display: block;
+}
+
+.map {
+  margin-top: clamp(48px, 7.4vw, 106px);
+}

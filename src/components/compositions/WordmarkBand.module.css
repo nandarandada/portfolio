@@ -1,0 +1,5 @@
+/* Figma at 1280: 562px tall, letters from y=145 to y=376 */
+.band {
+  padding-top: calc(var(--cell) * 2.38);
+  padding-bottom: calc(var(--cell) * 3.05);
+}
