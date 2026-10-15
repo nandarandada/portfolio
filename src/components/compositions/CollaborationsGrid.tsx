@@ -1,6 +1,7 @@
 import type { MediaAsset } from '../primitives/Media';
 import { MediaPlaceholder } from '../primitives/Media';
 import { Surface } from '../primitives/Section';
+import { ItemTitle } from '../primitives/Typography';
 import { Reveal } from '../../motion/Reveal';
 import styles from './CollaborationsGrid.module.css';
 
@@ -13,28 +14,25 @@ export type Collaboration = {
 
 /**
  * Three columns of client logo + short contribution (Figma: Home "Previous Collaborations").
- * Columns start on grid columns 3, 9 and 15; text sits on clean surfaces over the grid.
+ * Columns start on grid columns 3, 9 and 15. The whole block (title, logos, texts) sits on
+ * one white panel snapped to whole grid cells.
  */
 export function CollaborationsGrid({ heading, headingId, items }: { heading: string; headingId: string; items: Collaboration[] }) {
   return (
-    <div className={styles.wrap}>
-      <Surface className={styles.headingSurface}>
-        <h2 id={headingId} className={styles.heading}>
-          {heading}
-        </h2>
-      </Surface>
+    <Surface className={styles.wrap} snap>
+      <ItemTitle as="h2" id={headingId}>
+        {heading}
+      </ItemTitle>
       <ul className={styles.grid}>
         {items.map((item, i) => (
           <Reveal as="li" key={item.name} delay={i * 90} className={styles.item}>
             <div className={styles.logo}>
               <MediaPlaceholder media={{ ...item.logo, alt: item.logo.alt ?? item.name }} />
             </div>
-            <Surface className={styles.textSurface}>
-              <p className={styles.text}>{item.text}</p>
-            </Surface>
+            <p className={styles.text}>{item.text}</p>
           </Reveal>
         ))}
       </ul>
-    </div>
+    </Surface>
   );
 }

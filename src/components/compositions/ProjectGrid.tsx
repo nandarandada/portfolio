@@ -1,9 +1,8 @@
 import type { CSSProperties } from 'react';
 import type { MediaAsset } from '../primitives/Media';
 import { MediaPlaceholder } from '../primitives/Media';
-import { Surface } from '../primitives/Section';
-import { TextLink } from '../primitives/TextLink';
 import { ImageReveal } from '../../motion/ImageReveal';
+import { CardCaption } from './CardCaption';
 import styles from './ProjectGrid.module.css';
 
 /** Where a card sits on the desktop 21-column grid, in cells (Figma: Home and Work project grids). */
@@ -30,7 +29,7 @@ export function ProjectGrid({ items, label }: { items: ProjectCardData[]; label:
         const { col, span, row, rows } = item.placement;
         const style = {
           gridColumn: `${col + 1} / span ${span}`,
-          gridRow: `${row + 1} / span ${rows + 1}`,
+          gridRow: `${row + 1} / span ${rows + 2}`, // image rows + two caption rows
           '--rows': rows,
           '--ratio': `${span} / ${rows}`,
         } as CSSProperties;
@@ -39,15 +38,7 @@ export function ProjectGrid({ items, label }: { items: ProjectCardData[]; label:
             <ImageReveal delay={(i % 2) * 120}>
               <MediaPlaceholder media={item.media} className={styles.media} />
             </ImageReveal>
-            <Surface className={styles.caption}>
-              <h3 className={styles.title}>
-                <TextLink href={item.href} className={styles.link}>
-                  {item.title}
-                </TextLink>
-              </h3>
-              <p className={styles.category}>{item.category}</p>
-              {item.description && <p className={styles.description}>{item.description}</p>}
-            </Surface>
+            <CardCaption title={item.title} href={item.href} meta={item.category} summary={item.description} />
           </li>
         );
       })}

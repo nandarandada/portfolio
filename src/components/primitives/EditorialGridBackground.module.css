@@ -13,6 +13,17 @@
     inset 0 -1px 0 var(--line);
 }
 
+.fullHeight {
+  height: calc(100% - var(--top));
+}
+
+@supports (height: round(down, 1px, 1px)) {
+  .fullHeight {
+    /* +0.5px absorbs sub-pixel rounding when the section is an exact number of cells */
+    height: round(down, calc(100% - var(--top) + 0.5px), var(--cell));
+  }
+}
+
 .paper {
   --line: var(--color-grid-light);
 }

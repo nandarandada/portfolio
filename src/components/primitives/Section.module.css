@@ -6,6 +6,8 @@
   container-name: section;
   /* one grid cell, shared by every EditorialGridBackground in this section */
   --cell: calc(100cqw / var(--grid-cols));
+  /* distance from the section edge to the content column (centred container + gutter) */
+  --container-offset: calc((100cqw - min(100cqw, var(--container) + 2 * var(--gutter))) / 2 + var(--gutter));
   background: var(--surface-bg);
   background-blend-mode: var(--surface-blend, normal);
   color: var(--surface-fg);
@@ -37,6 +39,8 @@
   --surface-bg: var(--color-white);
   --surface-fg: var(--color-ink);
   --grid-line: var(--color-red);
+  /* snapped panels on paper redraw the faint paper grid lines */
+  --surface-line: var(--color-grid-light);
 }
 
 .flat.dark,
@@ -59,6 +63,21 @@
   background-blend-mode: var(--surface-blend, normal);
 }
 
+/* Snapped: the surface fills whole grid cells (via the backdrop) and keeps their borders */
+.surface[data-snapped] {
+  background: none;
+  border-color: transparent !important;
+}
+
+.backdrop {
+  position: absolute;
+  z-index: -1;
+  background: var(--surface-bg);
+  background-blend-mode: var(--surface-blend, normal);
+  border: 1px solid var(--surface-line, var(--grid-line));
+  pointer-events: none;
+}
+
 /* Vertical rhythm, expressed in grid cells so spacing follows the grid */
 .space-none {
   padding-block: 0;
@@ -74,4 +93,10 @@
 
 .space-spacious {
   padding-block: clamp(96px, calc(var(--cell) * 3.5), 220px);
+}
+
+/* Two paper sections in a row: overlap by 1px so the first section's closing grid line and
+   the next section's first line coincide, instead of drawing a double line */
+:global([data-tone='light'] + [data-tone='light']) {
+  margin-top: -1px;
 }

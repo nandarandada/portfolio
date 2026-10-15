@@ -1,9 +1,8 @@
 import type { CSSProperties } from 'react';
 import { MediaPlaceholder } from '../../components/primitives/Media';
-import { Surface } from '../../components/primitives/Section';
 import { TextLink } from '../../components/primitives/TextLink';
 import { ImageReveal } from '../../motion/ImageReveal';
-import { Reveal } from '../../motion/Reveal';
+import { CardCaption } from '../../components/compositions/CardCaption';
 import { workTypeLabels, type Project } from '../../content/projects';
 import { workPage } from '../../content/work';
 import styles from './WorkCard.module.css';
@@ -58,32 +57,31 @@ export function WorkCard({ project, slot, onDark = false }: { project: Project; 
   } as CSSProperties;
 
   const meta = [workTypeLabels[project.workType], project.disciplines.join(', ')].filter(Boolean).join(' · ');
-  const Caption = onDark ? 'div' : Surface;
 
   return (
     <li className={[styles.card, styles[slot.caption], project.placeholder && styles.isPlaceholder].filter(Boolean).join(' ')} style={style}>
       <ImageReveal className={styles.mediaWrap}>
         <ProjectMedia project={project} />
       </ImageReveal>
-      <Reveal className={styles.captionWrap}>
-        <Caption className={styles.caption}>
-          {project.placeholder && <p className={styles.placeholderTag}>{workPage.placeholderLabel}</p>}
-          <h3 className={styles.title}>
-            <TextLink href={`/work/${project.slug}`} className={styles.link}>
-              {project.title}
-            </TextLink>
-          </h3>
-          <p className={styles.meta}>{meta}</p>
-          {project.summary && <p className={styles.summary}>{project.summary}</p>}
-          {project.liveUrl && (
-            <p className={styles.live}>
+      <div className={styles.captionWrap}>
+        {/* on dark pause bands the caption sits on the texture; on paper it snaps to the grid */}
+        <CardCaption
+          title={project.title}
+          href={`/work/${project.slug}`}
+          meta={meta}
+          summary={project.summary}
+          note={project.placeholder ? workPage.placeholderLabel : undefined}
+          placement={slot.caption}
+          onDark={onDark}
+          action={
+            project.liveUrl && (
               <TextLink href={project.liveUrl}>
                 {workPage.liveLinkLabel} <span aria-hidden="true">↗</span>
               </TextLink>
-            </p>
-          )}
-        </Caption>
-      </Reveal>
+            )
+          }
+        />
+      </div>
     </li>
   );
 }

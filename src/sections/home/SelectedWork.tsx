@@ -23,14 +23,14 @@ export function SelectedWork() {
       grids={[{ region: { left: 0, top: 5, width: 2, height: 11 }, inkVerticals: true, hideBelow: 'desktop' }]}
     >
       <div className={styles.workHeading}>
-        <Surface className={styles.workHeadingSurface}>
+        <Surface className={styles.workHeadingSurface} snap>
           <EditorialHeading id="selected-work-heading" text={selectedWork.heading} />
         </Surface>
       </div>
       <ProjectGrid items={toProjectCards(featured)} label={selectedWork.heading} />
       <div className={styles.workLink}>
         <Reveal>
-          <Surface className={styles.workLinkSurface}>
+          <Surface className={styles.workLinkSurface} snap>
             <TextLink href={selectedWork.link.href}>
               {selectedWork.link.label} <span aria-hidden="true">→</span>
             </TextLink>

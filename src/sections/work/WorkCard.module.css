@@ -56,71 +56,6 @@
   color: var(--color-ink);
 }
 
-/* ── Caption ───────────────────────────────────────────────────────────── */
-/* static, so the title's stretched link covers the whole card (media included),
-   not just the caption surface; the band content layer already sits above the grid */
-.caption {
-  position: static;
-  padding-top: 14px;
-  min-height: var(--cell);
-}
-
-.side .caption {
-  padding: 0 0 4px;
-  min-height: 0;
-}
-
-.title {
-  font-family: var(--font-ui);
-  font-weight: 600;
-  font-size: var(--fs-body);
-  line-height: var(--lh-snug);
-  letter-spacing: var(--tracking-body);
-}
-
-/* The whole card opens the project; secondary links sit above this layer */
-.link::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-}
-
-.meta,
-.placeholderTag {
-  font-size: var(--fs-small);
-  line-height: var(--lh-snug);
-  letter-spacing: var(--tracking-body);
-}
-
-.meta {
-  margin-top: 4px;
-  opacity: 0.75;
-}
-
-/* Placeholders say so, in the same quiet voice as the metadata */
-.placeholderTag {
-  margin-bottom: 6px;
-  font-style: italic;
-  opacity: 0.6;
-}
-
-.summary {
-  margin-top: 12px;
-  max-width: 28rem;
-  font-size: var(--fs-body);
-  line-height: var(--lh-body);
-  letter-spacing: var(--tracking-body);
-}
-
-.live {
-  position: relative;
-  z-index: 2;
-  margin-top: 12px;
-  font-family: var(--font-ui);
-  font-weight: 500;
-  font-size: var(--fs-small);
-}
-
 /* ── Tablet and mobile: recomposed, not shrunk ──────────────────────────── */
 @media (max-width: 1023px) {
   .below,
@@ -139,11 +74,5 @@
 
   .comparison .media {
     aspect-ratio: var(--half-ratio) !important;
-  }
-
-  .side .caption,
-  .caption {
-    padding: 14px 0 0;
-    min-height: 0;
   }
 }

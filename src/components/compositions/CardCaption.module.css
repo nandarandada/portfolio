@@ -1,0 +1,60 @@
+/* Static, so the title's stretched link covers the whole card (media included) */
+.caption {
+  position: static;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  flex-shrink: 0;
+  min-height: var(--cell);
+  padding: var(--space-lg) var(--space-md) var(--space-md);
+}
+
+/* Beside the media: the label sits at the bottom, aligned with the media's foot */
+.side {
+  justify-content: flex-end;
+  padding: var(--space-md);
+}
+
+.link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
+.metaPart {
+  white-space: nowrap;
+}
+
+.note {
+  font-size: var(--fs-small);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-body);
+  font-style: italic;
+  opacity: 0.6;
+}
+
+.summary {
+  max-width: 28rem;
+  margin-top: var(--space-2xs);
+  font-size: var(--fs-small);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--tracking-body);
+}
+
+.action {
+  position: relative;
+  z-index: 2;
+  margin-top: var(--space-2xs);
+  font-family: var(--font-ui);
+  font-weight: 500;
+  font-size: var(--fs-small);
+}
+
+/* Off the column grid (tablet, phone): text aligns with the media instead of being inset */
+@media (max-width: 1023px) {
+  .caption,
+  .side {
+    justify-content: flex-start;
+    padding: var(--space-md) 0 0;
+  }
+}

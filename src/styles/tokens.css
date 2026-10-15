@@ -33,10 +33,23 @@
   --fs-dropcap: 2.65em; /* 53px at 20px body */
 
   --lh-display: 1.25;
+  --lh-tight: 1.25; /* labels: card titles, meta lines */
   --lh-body: 1.65;
   --lh-snug: 1.4;
   --tracking-body: 0.02em;
   --tracking-label: 0.2em;
+
+  /* Emphasis */
+  --opacity-soft: 0.85; /* supporting statements on dark */
+  --opacity-muted: 0.75; /* meta lines under titles */
+
+  /* Spacing — the rhythm used inside panels and captions on the grid */
+  --space-2xs: 4px;
+  --space-xs: 8px;
+  --space-sm: 12px;
+  --space-md: 16px; /* text inset from grid lines */
+  --space-lg: 20px; /* image → caption */
+  --space-xl: 24px;
 
   /* Layout */
   --container: 1050px; /* 115px margins at 1280px */

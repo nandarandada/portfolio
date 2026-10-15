@@ -16,38 +16,6 @@
   aspect-ratio: auto !important;
 }
 
-.caption {
-  padding-top: 10px;
-  min-height: var(--cell);
-}
-
-.title {
-  font-family: var(--font-ui);
-  font-weight: 600;
-  font-size: var(--fs-body);
-  line-height: var(--lh-snug);
-  letter-spacing: var(--tracking-body);
-}
-
-/* The whole card is clickable through the title link */
-.link::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-}
-
-.category,
-.description {
-  font-size: var(--fs-small);
-  line-height: var(--lh-snug);
-  letter-spacing: var(--tracking-body);
-}
-
-.description {
-  margin-top: 8px;
-  max-width: 28rem;
-}
-
 @media (max-width: 1023px) {
   .grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -64,10 +32,6 @@
   .media {
     height: auto;
     aspect-ratio: var(--ratio) !important;
-  }
-
-  .caption {
-    min-height: 0;
   }
 }
 

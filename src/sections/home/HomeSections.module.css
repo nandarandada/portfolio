@@ -34,7 +34,14 @@
   padding-left: calc(var(--cell) * 2);
 }
 
-.workHeadingSurface,
+/* The heading's white box starts on the images' grid line; the title is inset 16px, like the
+   card captions, so the open space sits to its right */
+.workHeadingSurface {
+  width: fit-content;
+  padding: var(--space-2xs) var(--space-md);
+  margin: -4px 0;
+}
+
 .workLinkSurface {
   width: fit-content;
   padding: 4px 12px;
@@ -67,9 +74,10 @@
   align-self: start;
   display: grid;
   gap: 24px;
-  /* bleeds into the margin on the left only; ends exactly where the image begins */
-  padding: 8px 0 8px 12px;
-  margin: -8px 0 -8px -12px;
+  /* generous breathing room: the snapped panel takes an extra grid row above and below,
+     and bleeds left; it still ends exactly where the image begins */
+  padding: calc(var(--cell) * 0.75) 0 calc(var(--cell) * 0.75) 12px;
+  margin: calc(var(--cell) * -0.75) 0 calc(var(--cell) * -0.75) -12px;
 }
 
 .overviewBody {
@@ -95,6 +103,11 @@
     height: auto;
     padding: 0 var(--gutter);
     margin-bottom: 40px;
+  }
+
+  /* off the column grid on phones: align the title with the images */
+  .workHeadingSurface {
+    padding: 4px 0;
   }
 
   .workLink {

@@ -4,8 +4,9 @@ import type { MediaAsset } from '../components/primitives/Media';
 export const homeHero = {
   headline: 'Thoughtful design for everyday experiences.',
   statement: [
-    'Frosa is an independent design practice connecting product thinking, visual craft, and hands-on building.',
-    'From shaping the right experience to bringing thoughtful ideas to life.',
+    // *…* marks phrases set in the serif, uppercase (see EditorialHero).
+    'Frosa is an independent design practice connecting *product thinking*, *visual craft*, and *hands-\u2060on building*.',
+    'From understanding what matters to designing, building, and refining experiences that work.',
   ],
 };
 
@@ -16,8 +17,8 @@ export const homeManifesto = {
     'Good experiences are shaped by more than what appears on the screen. They come from understanding the problem, questioning assumptions, and making thoughtful decisions along the way.',
     'At Frosa, strategy, experience, and execution come together. From the first idea to a working product, every detail has a purpose.',
   ],
-  /** The "Identity & Product · Frosa" seal. TODO(assets): export the seal as SVG to public/brand/seal.svg. */
-  seal: { aspectRatio: '1 / 1', alt: '', placeholder: 'Seal' } satisfies MediaAsset,
+  /** The "Identity & Product · Frosa" seal (decorative: the section is already named). */
+  seal: { type: 'image', src: '/brand/seal.png', alt: '', aspectRatio: '1 / 1', objectFit: 'contain' } satisfies MediaAsset,
 };
 
 export const expertise = ['Product Strategy', 'Experience Design', 'AI-Assisted Building'];

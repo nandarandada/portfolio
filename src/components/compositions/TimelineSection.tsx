@@ -2,6 +2,7 @@ import { Section } from '../primitives/Section';
 import { Container } from '../primitives/Container';
 import { EditorialGridBackground } from '../primitives/EditorialGridBackground';
 import { Reveal } from '../../motion/Reveal';
+import { ItemTitle } from '../primitives/Typography';
 import styles from './TimelineSection.module.css';
 
 export type Milestone = {
@@ -41,7 +42,7 @@ export function TimelineSection({ id, label, items }: TimelineSectionProps) {
                 </span>
               </p>
               <div className={styles.content}>
-                <h3 className={styles.title}>{item.title}</h3>
+                <ItemTitle>{item.title}</ItemTitle>
                 <p className={styles.text}>{item.text}</p>
                 {item.org && <p className={styles.org}>{item.org}</p>}
               </div>

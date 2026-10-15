@@ -55,3 +55,55 @@
     }
   }
 }
+
+/* ── Loop mode: an endless band ─────────────────────────────────────────── */
+.loop .staticList {
+  /* the plain list is for screen readers (and reduced motion, below) */
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.marquee {
+  display: flex;
+  width: max-content;
+  animation: loop var(--duration) linear infinite;
+}
+
+.loop:hover .marquee {
+  animation-play-state: paused;
+}
+
+.group {
+  display: flex;
+  flex-shrink: 0;
+}
+
+@keyframes loop {
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee {
+    display: none;
+  }
+
+  .loop .staticList {
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 0.5em;
+    padding-inline: var(--gutter);
+  }
+}

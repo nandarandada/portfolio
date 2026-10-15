@@ -1,4 +1,5 @@
-import { forwardRef, type ComponentPropsWithoutRef, type ElementType, type ReactNode } from 'react';
+import { forwardRef, useRef, type ComponentPropsWithoutRef, type CSSProperties, type ElementType, type ReactNode } from 'react';
+import { useGridSnap } from './useGridSnap';
 import styles from './Section.module.css';
 
 /**
@@ -43,13 +44,49 @@ export const Section = forwardRef<HTMLElement, SectionProps>(function Section(
   );
 });
 
-/** A panel that repeats its section's surface so it can sit on top of a grid and keep text on a clean background. */
-export const Surface = forwardRef<HTMLDivElement, { className?: string; children: ReactNode }>(function Surface(
-  { className, children },
-  ref,
-) {
+type SurfaceProps = {
+  className?: string;
+  children: ReactNode;
+  /**
+   * Grow the panel's background out to whole grid cells and draw the cell borders along its
+   * edges, so the grid around it always ends in complete squares. `true` snaps at every width;
+   * a number snaps only from that viewport width up (where the section's grid is visible).
+   */
+  snap?: boolean | number;
+};
+
+/**
+ * A panel that repeats its section's surface so it can sit on top of a grid and keep text
+ * on a clean background.
+ */
+export const Surface = forwardRef<HTMLDivElement, SurfaceProps>(function Surface({ className, children, snap = false }, ref) {
+  const local = useRef<HTMLDivElement | null>(null);
+  const box = useGridSnap(local, snap !== false, typeof snap === 'number' ? snap : 0);
+
+  const setRefs = (node: HTMLDivElement | null) => {
+    local.current = node;
+    if (typeof ref === 'function') ref(node);
+    else if (ref) ref.current = node;
+  };
+
   return (
-    <div ref={ref} className={[styles.surface, className].filter(Boolean).join(' ')}>
+    <div ref={setRefs} className={[styles.surface, className].filter(Boolean).join(' ')} data-snapped={box ? 'true' : undefined}>
+      {box && (
+        <span
+          aria-hidden="true"
+          className={styles.backdrop}
+          style={
+            {
+              // The backdrop covers the cells exactly, including their edge lines, and redraws
+              // those edges itself (see .backdrop): one line per edge, no gaps, no stubs.
+              left: box.left,
+              top: box.top,
+              width: box.width + 1,
+              height: box.height + 1,
+            } as CSSProperties
+          }
+        />
+      )}
       {children}
     </div>
   );

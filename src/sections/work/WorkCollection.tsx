@@ -24,7 +24,7 @@ const RHYTHM: BandKind[] = ['feature', 'pair', 'pause', 'pairMirrored'];
 const featureSlot = (mirrored: boolean): CardSlot =>
   mirrored
     ? { col: 7, span: 12, rows: 8, caption: 'side', captionCol: 2, captionSpan: 4 }
-    : { col: 2, span: 13, rows: 8, caption: 'side', captionCol: 16, captionSpan: 4 };
+    : { col: 2, span: 13, rows: 8, caption: 'side', captionCol: 15, captionSpan: 5 };
 
 const pairSlots: Record<'pair' | 'pairMirrored', [CardSlot, CardSlot]> = {
   pair: [
@@ -80,25 +80,45 @@ function BandGrid({ band, onDark = false }: { band: Band; onDark?: boolean }) {
 }
 
 /**
- * Light bands run together on one paper-grid section; each pause band interrupts them with
- * a dark textured section, then the paper grid resumes.
+ * The collection opens in black, continuing the dark intro: every band up to and including the
+ * first pause sits on one dark textured section (captions directly on the texture).
+ * After that, light bands run together on the paper grid, and each later pause interrupts them
+ * with a dark section.
  */
 export function WorkCollection({ projects, label }: { projects: Project[]; label: string }) {
   const bands = buildBands(projects);
+  const firstPause = bands.findIndex((band) => band.kind === 'pause');
+  const openingEnd = firstPause === -1 ? bands.length : firstPause + 1;
+  const opening = bands.slice(0, openingEnd);
+  const rest = bands.slice(openingEnd);
+
   const chunks: ReactNode[] = [];
   let light: Band[] = [];
 
-  const flushLight = (isFirst: boolean) => {
+  if (opening.length) {
+    chunks.push(
+      <GridSection
+        key="opening"
+        tone="dark"
+        label={label}
+        rowsAbove={2}
+        rowsBelow={3}
+        grids={[{ region: { right: 0, top: 2, width: 2, height: 6 }, hideBelow: 'desktop' }]}
+      >
+        <div className={styles.stack}>
+          {opening.map((band, k) => (
+            <BandGrid key={k} band={band} onDark />
+          ))}
+        </div>
+      </GridSection>,
+    );
+  }
+
+  const flushLight = () => {
     if (!light.length) return;
     const group = light;
     chunks.push(
-      <GridSection
-        key={`light-${chunks.length}`}
-        label={label}
-        rowsAbove={3}
-        rowsBelow={3}
-        grids={isFirst ? [{ region: { left: 0, top: 4, width: 2, height: 9 }, inkVerticals: true, hideBelow: 'desktop' }] : []}
-      >
+      <GridSection key={`light-${chunks.length}`} label={label} rowsAbove={3} rowsBelow={3}>
         <div className={styles.stack}>
           {group.map((band, k) => (
             <BandGrid key={k} band={band} />
@@ -109,9 +129,9 @@ export function WorkCollection({ projects, label }: { projects: Project[]; label
     light = [];
   };
 
-  bands.forEach((band, k) => {
+  rest.forEach((band, k) => {
     if (band.kind === 'pause') {
-      flushLight(chunks.length === 0);
+      flushLight();
       chunks.push(
         <GridSection
           key={`pause-${k}`}
@@ -128,7 +148,7 @@ export function WorkCollection({ projects, label }: { projects: Project[]; label
       light.push(band);
     }
   });
-  flushLight(chunks.length === 0);
+  flushLight();
 
   return <div className={styles.collection}>{chunks}</div>;
 }

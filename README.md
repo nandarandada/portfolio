@@ -62,6 +62,22 @@ public/
 **Rule of thumb:** content lives in `src/content`, layout lives in compositions, and a
 page section only wires the two together. A Level C section should be a few lines long.
 
+## Design system
+
+A small set of tokens and components that every page is built from. In development,
+**/design-system** shows them all, rendered with the real components.
+
+| Layer | Pieces |
+| --- | --- |
+| Tokens (`styles/tokens.css`) | colour, type scale, `--lh-tight`, `--opacity-soft` / `--opacity-muted`, spacing `--space-2xs … --space-xl`, grid columns, motion |
+| Type (`primitives/Typography`) | `DisplayHeading`, `EditorialHeading`, `BodyText` (drop cap), `ItemTitle`, `MetaText`, `SectionLabel` |
+| Primitives | `Section` / `Surface` (grid-snapped panels), `Container`, `EditorialGridBackground`, `MediaPlaceholder`, `TextLink` (shared underline, also used by the nav), `Wordmark` |
+| Compositions | `CardCaption` (every project label), `ProjectGrid`, `KeywordStrip` (loop / scroll), `GridSection`, `GridPanelSection`, `StatementSection`, `EditorialTextSection`, `TimelineSection`, `CollaborationsGrid`, `AnimatedWorldMap` |
+| Hooks | `useGridSnap` (panels to whole cells), `useCellSnap` (sections to whole rows), `useInView` |
+
+Rules: panels on the grid always cover whole cells; text sits `--space-md` (16px) inside a
+panel's edge; captions are `--space-lg` below media with `--space-xs` between lines.
+
 ## Design tokens (`src/styles/tokens.css`)
 
 | Token | Value | Source |

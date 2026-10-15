@@ -6,6 +6,7 @@ import { AboutPage } from './pages/AboutPage';
 import { HomePage } from './pages/HomePage';
 import { WorkPage } from './pages/WorkPage';
 import { ContactPage, NotFoundPage, ProjectPage } from './pages/routes';
+import { DesignSystemPage } from './pages/DesignSystemPage';
 import styles from './App.module.css';
 
 /**
@@ -32,6 +33,7 @@ function Shell() {
           <Route path="/work/:slug" element={<ProjectPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />
+          {import.meta.env.DEV && <Route path="/design-system" element={<DesignSystemPage />} />}
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>

@@ -26,7 +26,7 @@
 .statementText {
   font-size: var(--fs-ui);
   line-height: 1.6;
-  opacity: 0.85;
+  opacity: var(--opacity-soft);
 }
 
 @media (max-width: 1023px) {

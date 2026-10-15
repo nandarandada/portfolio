@@ -5,7 +5,6 @@
 /* Two tracks: the headline column ends where grid column 14 begins, so the statement
    box lands on the grid exactly as in Figma, and grows with its copy. */
 .inner {
-  --container-offset: calc((100cqw - min(100cqw, var(--container) + 2 * var(--gutter))) / 2 + var(--gutter));
   display: grid;
   grid-template-columns: calc(var(--cell) * 13 - var(--container-offset)) max(calc(var(--cell) * 5), 300px);
   align-items: start;
@@ -28,6 +27,16 @@
   align-items: center;
   padding: 27px;
   border: 1px solid var(--grid-line);
+}
+
+/* Key phrases in the statement: Libre Baskerville, uppercase, lightly tracked */
+.accent {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.86em;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  white-space: nowrap; /* each phrase stays on one line */
 }
 
 .statement p {

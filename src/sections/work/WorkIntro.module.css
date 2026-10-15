@@ -1,7 +1,6 @@
 /* Short opening: header, then the headline and statement bottom-aligned, then two rows
    (the lower one is the red ruler) */
 .inner {
-  --container-offset: calc((100cqw - min(100cqw, var(--container) + 2 * var(--gutter))) / 2 + var(--gutter));
   display: grid;
   grid-template-columns: calc(var(--cell) * 12 - var(--container-offset)) 1fr;
   align-items: end;
@@ -20,7 +19,7 @@
 }
 
 .statement p {
-  opacity: 0.85;
+  opacity: var(--opacity-soft);
 }
 
 @media (max-width: 1023px) {

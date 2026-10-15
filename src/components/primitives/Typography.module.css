@@ -66,6 +66,22 @@
   letter-spacing: 0;
 }
 
+.itemTitle {
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: var(--fs-body);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-body);
+}
+
+.meta {
+  font-family: var(--font-ui);
+  font-size: var(--fs-small);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-body);
+  opacity: var(--opacity-muted);
+}
+
 .label {
   font-family: var(--font-ui);
   font-weight: 700;

@@ -10,7 +10,7 @@ import styles from './AboutSections.module.css';
 export function PracticeEvolution() {
   return (
     <Section tone="ink" spacing="spacious" aria-label="How the practice evolved">
-      <KeywordStrip items={practiceEvolution.evolution} label="Visual design to build, in order" />
+      <KeywordStrip items={practiceEvolution.evolution} label="Visual design to build, in order" motion="loop" />
       <Container className={styles.centeredColumn}>
         <Reveal className={styles.narrow}>
           {practiceEvolution.body.map((paragraph, i) => (

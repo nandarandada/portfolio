@@ -69,7 +69,7 @@ export function GridPanelSection({
         <EditorialGridBackground key={i} {...grid} />
       ))}
       {decoration}
-      <Surface ref={panelRef} className={styles.panel}>
+      <Surface ref={panelRef} className={styles.panel} snap>
         <div ref={contentRef}>{children}</div>
       </Surface>
     </Section>

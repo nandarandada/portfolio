@@ -48,14 +48,6 @@
   align-content: start;
 }
 
-.title {
-  font-family: var(--font-ui);
-  font-weight: 600;
-  font-size: var(--fs-body);
-  line-height: var(--lh-snug);
-  letter-spacing: var(--tracking-body);
-}
-
 .text {
   font-size: var(--fs-ui);
   line-height: var(--lh-snug);

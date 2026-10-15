@@ -10,6 +10,8 @@ export function useCellSnap(
   section: RefObject<HTMLElement>,
   target: RefObject<HTMLElement>,
   content: RefObject<HTMLElement>,
+  /** `minCells`: never shorter than this many cells. `minWidth`: only snap from this viewport width up. */
+  { minCells = 0, minWidth = 0 }: { minCells?: number; minWidth?: number } = {},
 ) {
   useLayoutEffect(() => {
     const sectionEl = section.current;
@@ -18,10 +20,14 @@ export function useCellSnap(
     if (!sectionEl || !targetEl || !contentEl) return;
 
     const snap = () => {
+      if (window.innerWidth < minWidth) {
+        targetEl.style.minHeight = '';
+        return;
+      }
       const cols = Number(getComputedStyle(sectionEl).getPropertyValue('--grid-cols')) || 21;
       const cell = sectionEl.clientWidth / cols;
       const { paddingTop, paddingBottom } = getComputedStyle(targetEl);
-      const natural = contentEl.offsetHeight + parseFloat(paddingTop) + parseFloat(paddingBottom);
+      const natural = Math.max(contentEl.offsetHeight + parseFloat(paddingTop) + parseFloat(paddingBottom), cell * minCells);
       targetEl.style.minHeight = `${Math.ceil(natural / cell - 0.01) * cell}px`;
     };
 
@@ -38,5 +44,5 @@ export function useCellSnap(
       cancelAnimationFrame(frame);
       observer.disconnect();
     };
-  }, [section, target, content]);
+  }, [section, target, content, minCells, minWidth]);
 }

@@ -1,4 +1,5 @@
 import { Reveal } from '../../motion/Reveal';
+import { ItemTitle } from '../primitives/Typography';
 import styles from './PrinciplesGrid.module.css';
 
 export type Principle = {
@@ -17,7 +18,7 @@ export function PrinciplesGrid({ items, label }: { items: Principle[]; label: st
       {items.map((item, i) => (
         <Reveal as="li" key={item.title} delay={(i % 3) * 90} className={styles.item}>
           <span className={styles.ring} aria-hidden="true" />
-          <h3 className={styles.title}>{item.title}</h3>
+          <ItemTitle>{item.title}</ItemTitle>
           {item.text && <p className={styles.text}>{item.text}</p>}
         </Reveal>
       ))}

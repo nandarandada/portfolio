@@ -15,7 +15,7 @@ export function PracticeOverview() {
   return (
     <GridSection labelledBy="practice-heading" rowsAbove={1} rowsBelow={2}>
       <div className={styles.overview}>
-        <Surface className={styles.overviewText}>
+        <Surface className={styles.overviewText} snap>
           <EditorialHeading id="practice-heading" text={practiceOverview.heading} />
           <Reveal delay={200}>
             <BodyText className={styles.overviewBody}>{practiceOverview.body}</BodyText>

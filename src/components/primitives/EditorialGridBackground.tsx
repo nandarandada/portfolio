@@ -54,13 +54,17 @@ export function EditorialGridBackground({
   hideBelow,
   className,
 }: EditorialGridBackgroundProps) {
+  // A full-height region stops at its last complete row (see .fullHeight), so the grid
+  // never ends in cut-off squares at the bottom of a section.
+  const fullHeight = region.height === 'full' && region.bottom === undefined;
   const style = {
     left: toLength(region.left),
     right: toLength(region.right),
     top: toLength(region.top),
     bottom: toLength(region.bottom),
     width: toLength(region.width),
-    height: toLength(region.height),
+    height: fullHeight ? undefined : toLength(region.height),
+    '--top': toLength(region.top ?? 0),
     opacity,
   } as CSSProperties;
 
@@ -70,6 +74,7 @@ export function EditorialGridBackground({
       className={[
         styles.grid,
         styles[variant],
+        fullHeight && styles.fullHeight,
         inkVerticals && styles.inkVerticals,
         fade && styles[`fade-${fade}`],
         hideBelow && styles[`hide-${hideBelow}`],

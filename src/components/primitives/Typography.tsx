@@ -61,6 +61,20 @@ export function BodyText({
   );
 }
 
+/** General Sans Semibold at body size: card titles, principle and timeline titles, small headings. */
+export function ItemTitle({ as: Tag = 'h3', className, id, children }: TextProps & { children: ReactNode }) {
+  return (
+    <Tag id={id} className={cx(styles.itemTitle, className)}>
+      {children}
+    </Tag>
+  );
+}
+
+/** Small, muted sans line under a title (discipline, work type, dates). */
+export function MetaText({ as: Tag = 'p', className, children }: TextProps & { children: ReactNode }) {
+  return <Tag className={cx(styles.meta, className)}>{children}</Tag>;
+}
+
 /** General Sans Bold, uppercase, tracked 20%. Used for labels, keyword strips and stacked lists. */
 export function SectionLabel({ as: Tag = 'p', className, id, children }: TextProps & { children: ReactNode }) {
   return (
