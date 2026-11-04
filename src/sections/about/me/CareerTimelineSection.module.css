@@ -1,0 +1,174 @@
+.head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 22rem);
+  gap: var(--space-xl) 64px;
+  align-items: end;
+  margin-bottom: clamp(56px, 7vw, 96px);
+}
+
+.intro {
+  opacity: var(--opacity-soft);
+}
+
+.timeline {
+  --line: rgb(255 255 255 / 0.9);
+  position: relative;
+}
+
+/* The craft thread: a quieter line along the whole timeline */
+.thread {
+  position: relative;
+  height: 28px;
+  margin-bottom: 18px;
+  font-family: var(--font-ui);
+  font-size: var(--fs-small);
+  letter-spacing: var(--tracking-body);
+}
+
+.thread::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-top: 1px dashed rgb(255 255 255 / 0.55);
+  transform-origin: left;
+  transform: scaleX(var(--draw, 1));
+  transition: transform 1600ms var(--ease-out) 200ms;
+}
+
+.threadLabel {
+  position: relative;
+  font-style: italic;
+  opacity: 0.85;
+}
+
+/* The main line runs along the top of the stages */
+.stages {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0 var(--space-xl);
+  padding-top: 36px;
+}
+
+.stages::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 1px;
+  background: var(--line);
+  transform-origin: left;
+  transform: scaleX(var(--draw, 1));
+  transition: transform 1400ms var(--ease-out);
+}
+
+.stage {
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: var(--space-sm);
+}
+
+.dot {
+  position: absolute;
+  top: -42px;
+  left: 0;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--color-white);
+  box-shadow: 0 0 0 4px var(--color-red);
+  transform: scale(var(--dot, 1));
+  transition: transform 500ms var(--ease-out);
+  transition-delay: calc(300ms + var(--i) * 220ms);
+}
+
+.number {
+  font-family: var(--font-ui);
+  font-size: var(--fs-small);
+  font-weight: 500;
+  letter-spacing: var(--tracking-body);
+  opacity: 0.75;
+}
+
+.title {
+  min-height: 2.5em;
+}
+
+.milestones {
+  display: grid;
+  gap: var(--space-md);
+  margin-top: var(--space-xs);
+}
+
+.milestones li {
+  display: grid;
+  gap: 2px;
+  font-size: var(--fs-small);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--tracking-body);
+}
+
+.year {
+  font-weight: 600;
+}
+
+.mTitle {
+  font-weight: 500;
+}
+
+.mText {
+  opacity: var(--opacity-soft);
+}
+
+.org {
+  font-style: italic;
+  opacity: 0.75;
+}
+
+/* Draw-in: lines grow from the left, then the stage dots appear one by one */
+@media (prefers-reduced-motion: no-preference) {
+  .timeline:not([data-inview='true']) {
+    --draw: 0;
+    --dot: 0;
+  }
+}
+
+@media (max-width: 1023px) {
+  .head {
+    grid-template-columns: 1fr;
+  }
+
+  .thread {
+    display: none;
+  }
+
+  .stages {
+    grid-template-columns: 1fr;
+    gap: 48px;
+    padding: 0 0 0 36px;
+  }
+
+  .stages::before {
+    top: 0;
+    bottom: 0;
+    left: 5px;
+    right: auto;
+    width: 1px;
+    height: auto;
+    transform-origin: top;
+    transform: scaleY(var(--draw, 1));
+  }
+
+  .dot {
+    top: 4px;
+    left: -36px;
+  }
+
+  .title {
+    min-height: 0;
+  }
+}

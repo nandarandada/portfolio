@@ -13,11 +13,6 @@ export function ProjectPage() {
   return <PlaceholderPage title={project.title} note={note} />;
 }
 
-/** No Contact frame exists in Figma yet; this stays a route-level placeholder in the shared system. */
-export function ContactPage() {
-  return <PlaceholderPage title="Contact" note="Write to f.rosa.design@gmail.com while this page is in progress." />;
-}
-
 export function NotFoundPage() {
   return <PlaceholderPage title="Page not found" note="This page doesn’t exist." />;
 }

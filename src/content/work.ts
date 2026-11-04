@@ -4,7 +4,7 @@ export const workPage = {
   title: 'Work',
   intro: {
     headline: 'Work that takes shape in the real world.',
-    statement: 'A selection of products, experiences, and ideas — from thoughtful decisions to working solutions.',
+    statement: 'Selected projects across digital products, UX and visual design. Each one shows what the project was, the problem it addressed and my part in it.',
   },
   collectionLabel: 'Selected projects',
   liveLinkLabel: 'View live product',

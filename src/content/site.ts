@@ -23,5 +23,5 @@ export const footer = {
     { label: 'LinkedIn', href: undefined },
   ] satisfies FooterLink[],
   description:
-    'Frosa is the independent design practice of Fernanda Rosa, connecting product strategy, experience design, and hands-on building. With 12+ years of experience across brands and digital products, the practice combines thoughtful decisions, visual craft, and AI-assisted development. Based in Heidelberg, Germany, and originally from Brazil.',
+    'I’m Fernanda Rosa, a designer working across digital products, UX strategy and visual design. Bachelor of Design, more than 12 years of experience. Based in Heidelberg, Germany, originally from Brazil.',
 };

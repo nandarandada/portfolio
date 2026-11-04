@@ -5,7 +5,8 @@ import { SiteFooter } from './components/layout/SiteFooter';
 import { AboutPage } from './pages/AboutPage';
 import { HomePage } from './pages/HomePage';
 import { WorkPage } from './pages/WorkPage';
-import { ContactPage, NotFoundPage, ProjectPage } from './pages/routes';
+import { NotFoundPage, ProjectPage } from './pages/routes';
+import { ContactPage } from './pages/ContactPage';
 import { DesignSystemPage } from './pages/DesignSystemPage';
 import styles from './App.module.css';
 

@@ -1,0 +1,92 @@
+.inner {
+  display: grid;
+  grid-template-columns: calc(var(--cell) * 11 - var(--container-offset)) minmax(0, 1fr);
+  grid-template-areas:
+    'intro card'
+    'topics card';
+  column-gap: var(--cell);
+  row-gap: 96px;
+  padding-top: calc(var(--cell) * 4);
+  padding-bottom: calc(var(--cell) * 3);
+}
+
+.intro {
+  grid-area: intro;
+  display: grid;
+  gap: 40px;
+}
+
+.body {
+  max-width: 28rem;
+  opacity: var(--opacity-soft);
+}
+
+.cardWrap {
+  grid-area: card;
+  align-self: start;
+  margin-top: calc(var(--cell) * 1);
+}
+
+/* the email on a clean dark panel over the grid, the red line on its edges */
+.card {
+  display: grid;
+  gap: var(--space-xl);
+  padding: 40px var(--space-xl);
+}
+
+.email {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.25rem, 0.95rem + 0.9vw, 1.625rem);
+  line-height: 1.2;
+}
+
+.socials {
+  display: flex;
+  gap: var(--space-xl);
+  font-family: var(--font-ui);
+  font-weight: 500;
+  font-size: var(--fs-ui);
+}
+
+.location {
+  font-size: var(--fs-small);
+  opacity: 0.75;
+}
+
+.topics {
+  grid-area: topics;
+}
+
+.topicsLabel {
+  font-size: var(--fs-small);
+  margin-bottom: var(--space-md);
+  opacity: 0.75;
+}
+
+.topicList {
+  display: grid;
+  gap: 6px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--fs-statement);
+  line-height: 1.2;
+}
+
+@media (max-width: 1023px) {
+  .inner {
+    grid-template-columns: 1fr;
+    grid-template-areas: 'intro' 'card' 'topics';
+    row-gap: 56px;
+    padding-top: 150px;
+    padding-bottom: 96px;
+  }
+
+  .cardWrap {
+    margin-top: 0;
+  }
+
+  .card {
+    padding: 0;
+  }
+}

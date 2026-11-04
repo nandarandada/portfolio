@@ -10,16 +10,16 @@ export const collaborations: Collaboration[] = [
   {
     name: 'GreatPetCare',
     logo: { aspectRatio: '175 / 44', alt: 'Covetrus GreatPetCare', placeholder: 'Logo' },
-    text: 'Helping shape GreatPetCare’s digital ecosystem through product design, content experiences, and brand evolution as part of the Covetrus transition.',
+    text: 'Product design, content experiences and brand evolution across GreatPetCare’s digital ecosystem, as part of the team during the Covetrus transition.',
   },
   {
     name: 'The Lanners',
     logo: { aspectRatio: '135 / 44', alt: 'The Lanners', placeholder: 'Logo' },
-    text: 'Contributed to a strategic website redesign that reintroduced the brand and showcased its evolving product portfolio.',
+    text: 'I contributed to a strategic website redesign that reintroduced the brand and its evolving product portfolio.',
   },
   {
     name: 'Guaw',
     logo: { aspectRatio: '168 / 48', alt: 'Guaw', placeholder: 'Logo' },
-    text: 'Improved key ecommerce journeys and purchase experiences, helping pet owners shop with greater confidence during a period of rapid online growth.',
+    text: 'Design work on key ecommerce journeys and the purchase experience, during a period of rapid online growth.',
   },
 ];

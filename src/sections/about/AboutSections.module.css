@@ -73,3 +73,48 @@
 .map {
   margin-top: clamp(48px, 7.4vw, 106px);
 }
+
+/* "From Photoshop to product strategy": statement left of the narrow drop-cap column */
+.photoshop {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--measure-narrow);
+  gap: clamp(32px, calc(var(--cell) * 2), 128px);
+  align-items: start;
+  width: 100%;
+  max-width: 50rem;
+}
+
+@media (max-width: 767px) {
+  .photoshop {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+
+.chapterNextRow {
+  padding-left: calc(var(--cell) * 2);
+}
+
+.chapterNextSurface {
+  width: fit-content;
+  padding: var(--space-md);
+}
+
+.chapterNext {
+  composes: link from '../../components/primitives/TextLink.module.css';
+  border: 0;
+  padding: 0 0 2px;
+  background-color: transparent;
+  cursor: pointer;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--fs-statement);
+  line-height: var(--lh-display);
+  color: var(--color-ink);
+}
+
+@media (max-width: 1023px) {
+  .chapterNextRow {
+    padding-left: var(--gutter);
+  }
+}
