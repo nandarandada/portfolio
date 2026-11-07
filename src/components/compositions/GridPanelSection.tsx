@@ -22,6 +22,8 @@ type GridPanelSectionProps = {
   label?: string;
   labelledBy?: string;
   className?: string;
+  /** Equal padding on both sides, so content centred in the panel is centred on the page. */
+  centered?: boolean;
   children: ReactNode;
 };
 
@@ -46,6 +48,7 @@ export function GridPanelSection({
   label,
   labelledBy,
   className,
+  centered = false,
   children,
 }: GridPanelSectionProps) {
   const sectionRef = useRef<HTMLElement>(null);
@@ -69,7 +72,7 @@ export function GridPanelSection({
         <EditorialGridBackground key={i} {...grid} />
       ))}
       {decoration}
-      <Surface ref={panelRef} className={styles.panel} snap>
+      <Surface ref={panelRef} className={[styles.panel, centered && styles.centered].filter(Boolean).join(' ')} snap>
         <div ref={contentRef}>{children}</div>
       </Surface>
     </Section>

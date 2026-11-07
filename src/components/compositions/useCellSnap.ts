@@ -26,6 +26,7 @@ export function useCellSnap(
       }
       const cols = Number(getComputedStyle(sectionEl).getPropertyValue('--grid-cols')) || 21;
       const cell = sectionEl.clientWidth / cols;
+      if (!(cell > 0) || !Number.isFinite(cell)) return;
       const { paddingTop, paddingBottom } = getComputedStyle(targetEl);
       const natural = Math.max(contentEl.offsetHeight + parseFloat(paddingTop) + parseFloat(paddingBottom), cell * minCells);
       targetEl.style.minHeight = `${Math.ceil(natural / cell - 0.01) * cell}px`;

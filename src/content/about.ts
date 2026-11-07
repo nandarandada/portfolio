@@ -35,23 +35,26 @@ export const aboutIntroduction = {
     placeholder: 'Portrait — Fernanda Rosa',
   } satisfies MediaAsset,
   metadata: ['Bachelor of Design.', 'Based in Heidelberg, Germany.', 'Originally from Brazil.'],
-  // Wording drawn from the original Figma About frame (126:1213), in first person.
+  // Fernanda's wording, built on the original Figma About opening. **…** marks bold.
   body: [
-    'My name is Fernanda Rosa. I’m a designer with more than 12 years of experience across branding, ecommerce, SaaS products, hospitality and pet care.',
-    'I’ve led the design of products in several industries, often as the primary designer alongside design directors and product leaders. My foundation is visual: typography, composition, detail. Over the years my focus has grown toward research, product strategy and the way ideas become working products.',
+    'Frosa is the independent practice of designer Fernanda Rosa, focused on **identity systems**, **digital products**, **user experience strategy** and the details that shape everyday experiences.',
+    'I’m a designer with **more than 12 years of experience** across branding, ecommerce, SaaS products, hospitality and pet care. My foundation is visual: **typography, composition and detail**. I work at the intersection of visual design, product thinking and business strategy, with the same goal:',
   ],
+  /** The goal the second paragraph leads into, set as the serif statement below it. */
+  goal: 'Creating work that feels thoughtful, useful, and carefully crafted with purpose.',
 };
 
 export const fromPhotoshop = {
   headline: 'From Photoshop to product strategy.',
   body: [
-    'I started with visual design, learning in Photoshop how typography, composition and small details shape the way people experience things. That foundation came long before today’s AI tools, and I still rely on it every day.',
-    'Over the years my work expanded into UX, research and product strategy. Today I bring those perspectives together, from understanding a problem to designing and refining a solution.',
+    'Over 12 years in design, from visual identities and digital experiences to UX research and product strategy.',
+    'The tools have changed. My attention to detail hasn’t.',
   ],
 };
 
 export const experienceWorldMap = {
-  heading: ['12+ Years of Experience', 'Projects in Multiple Countries'],
+  /** Accessible name of the section (no visible heading). */
+  label: 'Projects in multiple countries',
   /** Describes the highlighted regions for screen readers. */
   mapLabel: 'World map highlighting North America, South America, Europe and South Asia',
 };
@@ -122,13 +125,11 @@ export const practiceEvolution = {
   evolution: ['Visual Design', 'Brand', 'Digital', 'Experience', 'Product', 'Strategy', 'Build'],
 };
 
-export const craftAndCapricho = {
-  headline: 'Craft is a way of paying attention.',
-  body: [
-    'For me, craft isn’t only polishing pixels. It’s understanding the context, choosing what matters, making deliberate decisions and refining the result until it holds up.',
-    'Visual design made me sensitive to typography, composition, interaction and the character of an interface. Tools can now produce good-looking options quickly. What I bring is the judgment to choose, the authorship to make something distinctive and the patience to get the details right.',
-    'In Brazil we have a word for that kind of care: capricho.',
-  ],
+export const nextChapter = {
+  eyebrow: 'Next — About my work',
+  headline: 'How I approach the work.',
+  body: 'Research, decisions, collaboration, and the craft behind the details.',
+  action: 'Explore my process',
 };
 
 /* ── Chapter 2 · About my work ──────────────────────────────────────── */
@@ -230,11 +231,4 @@ export const craftThread = {
     'The behaviour of an interaction',
     'The care taken in implementation',
   ],
-};
-
-/* ── Shared closing ───────────────────────────────────────────────────── */
-
-export const aboutCTA = {
-  statements: ['Have a problem worth solving?'],
-  action: { label: 'Let’s talk.', href: '/contact' },
 };

@@ -10,6 +10,10 @@
   padding: calc(var(--cell) * 2) var(--cell) calc(var(--cell) * 2) calc(var(--cell) * 2);
 }
 
+.centered {
+  padding-right: calc(var(--cell) * 2);
+}
+
 @media (max-width: 1023px) {
   .panel {
     margin-left: var(--cell);

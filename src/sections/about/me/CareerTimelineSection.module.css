@@ -1,174 +1,97 @@
+/* Figma: band x=471 (36px), text column x=522 (≈255px): a 306px block centred on the page */
+.section {
+  --band: 36px;
+  --column: 306px;
+}
+
+/* Title and subtitle, centred above the column */
 .head {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 22rem);
-  gap: var(--space-xl) 64px;
-  align-items: end;
-  margin-bottom: clamp(56px, 7vw, 96px);
+  justify-items: center;
+  gap: var(--space-xl);
+  padding-top: clamp(96px, calc(var(--cell) * 2), 130px);
+  padding-bottom: clamp(56px, calc(var(--cell) * 1.2), 88px);
+  text-align: center;
 }
 
 .intro {
+  max-width: 28rem;
   opacity: var(--opacity-soft);
 }
 
+/* The band starts a little above the first milestone and runs to the bottom of the section */
 .timeline {
-  --line: rgb(255 255 255 / 0.9);
   position: relative;
+  padding-bottom: clamp(96px, calc(var(--cell) * 2), 130px);
 }
 
-/* The craft thread: a quieter line along the whole timeline */
-.thread {
-  position: relative;
-  height: 28px;
-  margin-bottom: 18px;
-  font-family: var(--font-ui);
-  font-size: var(--fs-small);
-  letter-spacing: var(--tracking-body);
-}
-
-.thread::before {
-  content: '';
+.band {
   position: absolute;
-  left: 0;
-  right: 0;
+  z-index: 0;
+  top: -40px;
   bottom: 0;
-  border-top: 1px dashed rgb(255 255 255 / 0.55);
-  transform-origin: left;
-  transform: scaleX(var(--draw, 1));
-  transition: transform 1600ms var(--ease-out) 200ms;
+  left: calc(50% - var(--column) / 2);
+  width: var(--band);
+  background: var(--color-red-deep) var(--texture-grain) center / var(--texture-size);
+  background-blend-mode: color-burn;
 }
 
-.threadLabel {
+.list {
   position: relative;
-  font-style: italic;
-  opacity: 0.85;
-}
-
-/* The main line runs along the top of the stages */
-.stages {
-  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: var(--column);
+  margin-inline: auto;
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 0 var(--space-xl);
-  padding-top: 36px;
+  gap: clamp(72px, calc(var(--cell) * 1.6), 104px);
 }
 
-.stages::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  height: 1px;
-  background: var(--line);
-  transform-origin: left;
-  transform: scaleX(var(--draw, 1));
-  transition: transform 1400ms var(--ease-out);
-}
-
-.stage {
-  position: relative;
+.item {
   display: grid;
-  align-content: start;
-  gap: var(--space-sm);
+  grid-template-columns: var(--band) 1fr;
+  column-gap: 15px;
 }
 
-.dot {
-  position: absolute;
-  top: -42px;
-  left: 0;
-  width: 11px;
-  height: 11px;
-  border-radius: 50%;
-  background: var(--color-white);
-  box-shadow: 0 0 0 4px var(--color-red);
-  transform: scale(var(--dot, 1));
-  transition: transform 500ms var(--ease-out);
-  transition-delay: calc(300ms + var(--i) * 220ms);
-}
-
-.number {
+/* Year digits, set vertically inside the band */
+.year {
   font-family: var(--font-ui);
-  font-size: var(--fs-small);
-  font-weight: 500;
-  letter-spacing: var(--tracking-body);
-  opacity: 0.75;
+  font-weight: 600;
+  font-size: var(--fs-body);
+  line-height: 1.2;
+  text-align: center;
 }
 
-.title {
-  min-height: 2.5em;
-}
-
-.milestones {
+.digits {
   display: grid;
-  gap: var(--space-md);
-  margin-top: var(--space-xs);
+  padding: 6px 0;
 }
 
-.milestones li {
+.content {
   display: grid;
-  gap: 2px;
-  font-size: var(--fs-small);
+  gap: 12px;
+  align-content: start;
+}
+
+.text {
+  font-size: var(--fs-ui);
   line-height: var(--lh-snug);
   letter-spacing: var(--tracking-body);
-}
-
-.year {
-  font-weight: 600;
-}
-
-.mTitle {
-  font-weight: 500;
-}
-
-.mText {
-  opacity: var(--opacity-soft);
+  text-wrap: pretty;
 }
 
 .org {
+  font-size: var(--fs-small);
   font-style: italic;
-  opacity: 0.75;
+  line-height: var(--lh-snug);
+  opacity: 0.85;
 }
 
-/* Draw-in: lines grow from the left, then the stage dots appear one by one */
-@media (prefers-reduced-motion: no-preference) {
-  .timeline:not([data-inview='true']) {
-    --draw: 0;
-    --dot: 0;
-  }
-}
-
-@media (max-width: 1023px) {
-  .head {
-    grid-template-columns: 1fr;
+@media (max-width: 599px) {
+  .section {
+    --column: 100%;
   }
 
-  .thread {
-    display: none;
-  }
-
-  .stages {
-    grid-template-columns: 1fr;
-    gap: 48px;
-    padding: 0 0 0 36px;
-  }
-
-  .stages::before {
-    top: 0;
-    bottom: 0;
-    left: 5px;
-    right: auto;
-    width: 1px;
-    height: auto;
-    transform-origin: top;
-    transform: scaleY(var(--draw, 1));
-  }
-
-  .dot {
-    top: 4px;
-    left: -36px;
-  }
-
-  .title {
-    min-height: 0;
+  .band {
+    left: var(--gutter);
   }
 }

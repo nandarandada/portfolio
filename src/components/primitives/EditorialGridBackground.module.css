@@ -78,3 +78,59 @@
     display: none;
   }
 }
+
+/* ── Draw-in: verticals rise from the bottom while horizontals sweep from the left ── */
+.drawIn {
+  background-image: none;
+  box-shadow: none;
+}
+
+.drawIn::before,
+.drawIn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-size: var(--cell) var(--cell);
+  background-position: inherit;
+}
+
+/* vertical lines (and the closing right edge) */
+.drawIn::before {
+  background-image: linear-gradient(to right, var(--line) 1px, transparent 1px);
+  box-shadow: inset -1px 0 0 var(--line);
+}
+
+/* horizontal lines (and the closing bottom edge) */
+.drawIn::after {
+  background-image: linear-gradient(to bottom, var(--line) 1px, transparent 1px);
+  box-shadow: inset 0 -1px 0 var(--line);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .drawIn::before {
+    animation: grid-fall 1400ms var(--ease-in-out) 150ms both;
+  }
+
+  .drawIn::after {
+    animation: grid-sweep 1400ms var(--ease-in-out) 450ms both;
+  }
+
+  /* vertical lines rise from the bottom */
+  @keyframes grid-fall {
+    from {
+      clip-path: inset(100% 0 0 0);
+    }
+    to {
+      clip-path: inset(0 0 0 0);
+    }
+  }
+
+  @keyframes grid-sweep {
+    from {
+      clip-path: inset(0 100% 0 0);
+    }
+    to {
+      clip-path: inset(0 0 0 0);
+    }
+  }
+}

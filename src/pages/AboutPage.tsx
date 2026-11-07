@@ -2,20 +2,18 @@ import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { usePageTitle } from './usePageTitle';
 import { ChapterTabs, ChapterPanel } from '../components/compositions/ChapterTabs';
-import { aboutTabs, type AboutTabId } from '../content/about';
+import { aboutTabs, nextChapter, type AboutTabId } from '../content/about';
 import { AboutHero } from '../sections/about/AboutHero';
 import { AboutIntroduction } from '../sections/about/AboutIntroduction';
 import { PracticeEvolution } from '../sections/about/PracticeEvolution';
 import { CareerTimelineSection } from '../sections/about/me/CareerTimelineSection';
 import { ExperienceWorldMapSection } from '../sections/about/ExperienceWorldMapSection';
-import { CraftAndCapricho } from '../sections/about/me/CraftAndCapricho';
 import { WorkOpening } from '../sections/about/work/WorkOpening';
 import { ProcessSection } from '../sections/about/work/ProcessSection';
 import { DiscoverySection } from '../sections/about/work/DiscoverySection';
 import { CollaborationSection } from '../sections/about/work/CollaborationSection';
 import { CraftThreadSection } from '../sections/about/work/CraftThreadSection';
 import { ChapterNext } from '../sections/about/ChapterNext';
-import { AboutCTA } from '../sections/about/AboutCTA';
 
 const ID = 'about';
 const isTab = (value: string | null): value is AboutTabId => aboutTabs.tabs.some((tab) => tab.id === value);
@@ -60,10 +58,15 @@ export function AboutPage() {
       <ChapterPanel id="me" idPrefix={ID} selected={selected === 'me'}>
         <AboutIntroduction />
         <PracticeEvolution />
-        <CareerTimelineSection />
         <ExperienceWorldMapSection />
-        <CraftAndCapricho />
-        <ChapterNext label="Next: About my work" onClick={() => select('work', true)} />
+        <CareerTimelineSection />
+        <ChapterNext
+          eyebrow={nextChapter.eyebrow}
+          headline={nextChapter.headline}
+          body={nextChapter.body}
+          label={nextChapter.action}
+          onClick={() => select('work', true)}
+        />
       </ChapterPanel>
 
       <ChapterPanel id="work" idPrefix={ID} selected={selected === 'work'}>
@@ -75,7 +78,6 @@ export function AboutPage() {
         <ChapterNext label="Back to: About me" onClick={() => select('me', true)} />
       </ChapterPanel>
 
-      <AboutCTA />
     </>
   );
 }

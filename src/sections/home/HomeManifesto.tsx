@@ -5,12 +5,20 @@ import { Reveal } from '../../motion/Reveal';
 import { homeManifesto } from '../../content/home';
 import styles from './HomeSections.module.css';
 
+/** Turns **phrase** into bold text; everything else stays plain. */
+const withBold = (text: string) =>
+  text.split(/(\*\*[^*]+\*\*)/).map((part, i) =>
+    part.startsWith('**') && part.endsWith('**') ? <strong key={i}>{part.slice(2, -2)}</strong> : part,
+  );
+
 /** The drop-cap manifesto column on paper, red grid margins and the Frosa seal (Figma: Home, under the FROSA band). */
 export function HomeManifesto() {
   return (
     <GridPanelSection
+      // 21 columns: 4 on each side, so the panel (and the column inside it) is centred
       start={4}
-      span={12}
+      span={13}
+      centered
       rowsAbove={0}
       rowsBelow={3}
       label="About Frosa"
@@ -26,8 +34,8 @@ export function HomeManifesto() {
     >
       <Reveal className={styles.manifesto}>
         {homeManifesto.body.map((paragraph, i) => (
-          <BodyText key={i} measure="narrow" dropCap={i === 0}>
-            {paragraph}
+          <BodyText key={i} dropCap={i === 0}>
+            {withBold(paragraph)}
           </BodyText>
         ))}
       </Reveal>

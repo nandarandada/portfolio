@@ -31,6 +31,8 @@ type EditorialGridBackgroundProps = {
   fade?: 'left' | 'right' | 'top' | 'bottom';
   /** Below this breakpoint the region is not drawn (mobile simplification). */
   hideBelow?: 'tablet' | 'desktop';
+  /** Draw the lines in on load: verticals rise from the bottom while horizontals sweep across. */
+  drawIn?: boolean;
   className?: string;
 };
 
@@ -52,6 +54,7 @@ export function EditorialGridBackground({
   inkVerticals = false,
   fade,
   hideBelow,
+  drawIn = false,
   className,
 }: EditorialGridBackgroundProps) {
   // A full-height region stops at its last complete row (see .fullHeight), so the grid
@@ -78,6 +81,7 @@ export function EditorialGridBackground({
         inkVerticals && styles.inkVerticals,
         fade && styles[`fade-${fade}`],
         hideBelow && styles[`hide-${hideBelow}`],
+        drawIn && styles.drawIn,
         region.right !== undefined && styles.alignRight,
         region.bottom !== undefined && styles.alignBottom,
         className,

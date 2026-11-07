@@ -59,36 +59,21 @@
 /* World map (Figma Frame 512 at 1280: heading 46px from the top, map 218px from the top,
    spanning the full width and bleeding at both edges) */
 .mapSection {
-  padding-top: 46px;
+  padding-bottom: clamp(48px, 6vw, 96px);
 }
 
-.mapHeading {
+/* "From Photoshop to product strategy": centred on the page at every size —
+   the statement's lines centred, then the narrow drop-cap column centred below it */
+.photoshop {
+  display: grid;
+  justify-items: center;
+  gap: clamp(40px, calc(var(--cell) * 1.4), 72px);
+  width: 100%;
   text-align: center;
 }
 
-.mapHeading > span {
-  display: block;
-}
-
-.map {
-  margin-top: clamp(48px, 7.4vw, 106px);
-}
-
-/* "From Photoshop to product strategy": statement left of the narrow drop-cap column */
-.photoshop {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) var(--measure-narrow);
-  gap: clamp(32px, calc(var(--cell) * 2), 128px);
-  align-items: start;
-  width: 100%;
-  max-width: 50rem;
-}
-
-@media (max-width: 767px) {
-  .photoshop {
-    grid-template-columns: 1fr;
-    gap: 40px;
-  }
+.photoshop > .narrow {
+  text-align: left;
 }
 
 .chapterNextRow {
@@ -111,6 +96,38 @@
   font-size: var(--fs-statement);
   line-height: var(--lh-display);
   color: var(--color-ink);
+}
+
+/* Next-chapter teaser */
+.teaser {
+  display: grid;
+  gap: var(--space-xl);
+  max-width: 30rem;
+  margin-inline: auto;
+}
+
+.teaserEyebrow {
+  font-size: var(--fs-small);
+  color: var(--color-red);
+}
+
+.teaserBody {
+  max-width: 24rem;
+}
+
+.teaserAction {
+  composes: link from '../../components/primitives/TextLink.module.css';
+  justify-self: start;
+  margin-top: var(--space-xs);
+  border: 0;
+  padding: 0 0 2px;
+  background-color: transparent;
+  cursor: pointer;
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: var(--fs-body);
+  letter-spacing: var(--tracking-body);
+  color: var(--color-red);
 }
 
 @media (max-width: 1023px) {

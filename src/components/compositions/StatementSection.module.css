@@ -5,6 +5,10 @@
   max-width: 34rem;
 }
 
+.centered {
+  margin-inline: auto;
+}
+
 .statement {
   text-wrap: balance;
 }

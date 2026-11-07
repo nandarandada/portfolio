@@ -1,9 +1,10 @@
 /* Layout helpers for the Home sections. Anything reusable belongs in a composition. */
 
 /* Manifesto: the narrow column starts four cells into the panel (two beyond its padding) */
+/* Centred on the page at every width: the panel is centred, the column centred inside it */
 .manifesto {
-  margin-left: calc(var(--cell) * 2);
-  max-width: var(--measure-narrow);
+  margin-inline: auto;
+  max-width: 265px; /* text column, at every screen size */
 }
 
 /* Seal: right margin, overlapping the red grid (Figma ≈ x 950, y +475, Ø 266 at 1280) */
@@ -95,9 +96,6 @@
 }
 
 @media (max-width: 1023px) {
-  .manifesto {
-    margin-left: 0;
-  }
 
   .workHeading {
     height: auto;

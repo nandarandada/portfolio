@@ -27,6 +27,8 @@ export function useGridSnap(ref: RefObject<HTMLElement>, enabled: boolean, minWi
       }
       const cols = Number(getComputedStyle(section).getPropertyValue('--grid-cols')) || 21;
       const cell = section.clientWidth / cols;
+      // nothing to snap to while the section has no width (hidden or still laying out)
+      if (!(cell > 0) || !Number.isFinite(cell)) return;
       const s = section.getBoundingClientRect();
       // Position relative to the section, minus any translation on the node or its ancestors
       // (reveal transforms), with sub-pixel precision.
@@ -65,6 +67,7 @@ export function useGridSnap(ref: RefObject<HTMLElement>, enabled: boolean, minWi
       const ox = origin.x + cb.clientLeft;
       const oy = origin.y + cb.clientTop;
       const next = { left: gx0 - ox, top: gy0 - oy, width: gx1 - gx0, height: gy1 - gy0 };
+      if (!Object.values(next).every(Number.isFinite)) return;
       setBox((prev) =>
         prev &&
         Math.abs(prev.left - next.left) < 0.5 &&

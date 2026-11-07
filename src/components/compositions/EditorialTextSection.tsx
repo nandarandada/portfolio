@@ -7,6 +7,14 @@ import { EditorialGridBackground } from '../primitives/EditorialGridBackground';
 import { Reveal } from '../../motion/Reveal';
 import styles from './EditorialTextSection.module.css';
 
+/** Turns **phrase** into bold text; everything else stays plain. */
+const withBold = (text: string) =>
+  text.includes('**')
+    ? text.split(/(\*\*[^*]+\*\*)/).map((part, i) =>
+        part.startsWith('**') && part.endsWith('**') ? <strong key={i}>{part.slice(2, -2)}</strong> : part,
+      )
+    : text;
+
 type GridConfig = ComponentProps<typeof EditorialGridBackground>;
 
 export type EditorialTextContent = {
@@ -31,6 +39,8 @@ type EditorialTextSectionProps = EditorialTextContent & {
   label?: string;
   /** Heading element; `h1` when the section opens a page (About). Defaults to `h2`. */
   headingAs?: 'h1' | 'h2';
+  /** Centre the heading's lines (for a closing statement under the body column). */
+  centerHeading?: boolean;
   id?: string;
 };
 
@@ -51,16 +61,17 @@ export function EditorialTextSection({
   label,
   id,
   headingAs = 'h2',
+  centerHeading = false,
 }: EditorialTextSectionProps) {
   const headingId = heading && id ? `${id}-heading` : undefined;
 
-  const headingNode = heading ? <EditorialHeading as={headingAs} id={headingId} text={heading} className={styles.heading} /> : null;
+  const headingNode = heading ? <EditorialHeading as={headingAs} id={headingId} text={heading} className={[styles.heading, centerHeading && styles.headingCentered].filter(Boolean).join(' ')} /> : null;
 
   const bodyNode = body?.length ? (
     <Reveal className={styles.body}>
       {body.map((paragraph, i) => (
         <BodyText key={i} measure="narrow" dropCap={i === 0 ? dropCap : false}>
-          {paragraph}
+          {withBold(paragraph)}
         </BodyText>
       ))}
     </Reveal>

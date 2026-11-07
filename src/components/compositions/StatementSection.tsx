@@ -16,17 +16,19 @@ type StatementSectionProps = StatementContent & {
   id: string;
   /** Whether the first statement is the section's heading (h2) or a plain paragraph. */
   headingLevel?: 'h2' | 'p';
+  /** Centre the panel and the text block on the page (width unchanged). */
+  centered?: boolean;
 };
 
 /**
  * A large serif manifesto set on a paper panel over the grid
  * (Home "We design with capricho", Figma 124:2). Also used for calls to action.
  */
-export function StatementSection({ id, statements, supporting, action, headingLevel = 'h2' }: StatementSectionProps) {
+export function StatementSection({ id, statements, supporting, action, headingLevel = 'h2', centered = false }: StatementSectionProps) {
   const headingId = `${id}-heading`;
   return (
-    <GridPanelSection start={4} span={12} id={id} labelledBy={headingId}>
-      <div className={styles.stack}>
+    <GridPanelSection start={4} span={centered ? 13 : 12} centered={centered} id={id} labelledBy={headingId}>
+      <div className={[styles.stack, centered && styles.centered].filter(Boolean).join(' ')}>
         {statements.map((statement, i) => (
           <DisplayHeading key={statement} as={i === 0 ? headingLevel : 'p'} id={i === 0 ? headingId : undefined} text={statement} className={styles.statement} />
         ))}

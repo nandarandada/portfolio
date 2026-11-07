@@ -5,18 +5,18 @@ export const homeHero = {
   headline: 'Thoughtful design for everyday experiences.',
   statement: [
     // *…* marks phrases set in the serif, uppercase (see EditorialHero).
-    'I’m a designer working across *digital products*, *UX strategy* and *visual design*.',
-    'I like to understand the problem first, then shape the solution and refine the details that make it work.',
+    // The original Figma statement. "PROPOSE" in the design was read as "purpose".
+    'Creating identities and digital products with *purpose* for *people*, who believe details make the difference.',
   ],
 };
 
 export const homeManifesto = {
   /** The first paragraph opens with the serif drop cap, as in the Figma manifesto column. */
+  // **…** marks words set in bold.
   body: [
-    // Built on the original Figma manifesto, including its closing pen line.
-    'Great design lives in the details. Small decisions, clear interactions and well-made systems change how everyday things feel.',
-    'I pay attention to what often goes unnoticed: what people need before they ask, where they hesitate, what makes something easy to trust. Research shows me the problem, strategy decides what matters, usability keeps it simple and visual craft gives it character.',
-    'At its best, design feels like finding a pen exactly when you need one.',
+    'Great design lives in the details. Small decisions, thoughtful interactions, and carefully crafted systems can transform everyday experiences.',
+    'Frosa focuses on creating identities and digital products that are simple, intuitive, and meaningful. By anticipating needs and paying attention to what often goes unnoticed, we design experiences that feel natural, useful, and quietly delightful.',
+    'Our approach brings together visual design, product strategy, and craft. In a world where almost anything can be created faster, knowing **what to create and how to make it matter** becomes even more important.',
   ],
   /** The "Identity & Product · Frosa" seal (decorative: the section is already named). */
   seal: { type: 'image', src: '/brand/seal.png', alt: '', aspectRatio: '1 / 1', objectFit: 'contain' } satisfies MediaAsset,

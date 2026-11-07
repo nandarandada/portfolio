@@ -13,6 +13,9 @@ export function AboutIntroduction() {
         label="Introduction"
         lines={aboutIntroduction.metadata}
         body={aboutIntroduction.body}
+        heading={aboutIntroduction.goal}
+        order="body-first"
+        centerHeading
         grids={[
           { region: { left: 0, top: 0, width: 4, height: 7 }, inkVerticals: true, hideBelow: 'desktop' },
           { region: { right: 0, top: 0, width: 5, height: 'full' }, variant: 'paper', hideBelow: 'desktop' },
