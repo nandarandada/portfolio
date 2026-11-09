@@ -1,6 +1,7 @@
 /* Small layout helpers shared by the About sections. Anything reusable belongs in a composition. */
 .centeredColumn {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   margin-top: clamp(64px, calc(var(--cell) * 2.4), 150px);
 }
@@ -76,26 +77,11 @@
   text-align: left;
 }
 
-.chapterNextRow {
-  padding-left: calc(var(--cell) * 2);
-}
-
-.chapterNextSurface {
-  width: fit-content;
-  padding: var(--space-md);
-}
-
-.chapterNext {
-  composes: link from '../../components/primitives/TextLink.module.css';
-  border: 0;
-  padding: 0 0 2px;
-  background-color: transparent;
-  cursor: pointer;
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: var(--fs-statement);
-  line-height: var(--lh-display);
-  color: var(--color-ink);
+/* Reserved wide image under the text, across the content column */
+.photoshopMedia {
+  flex: 0 0 100%;
+  width: 100%;
+  margin-top: clamp(56px, calc(var(--cell) * 1.4), 88px);
 }
 
 /* Next-chapter teaser */
@@ -112,7 +98,7 @@
 }
 
 .teaserBody {
-  max-width: 24rem;
+  max-width: 28rem;
 }
 
 .teaserAction {
@@ -130,8 +116,46 @@
   color: var(--color-red);
 }
 
-@media (max-width: 1023px) {
-  .chapterNextRow {
-    padding-left: var(--gutter);
+/* Chapter link: the whole panel is the link target */
+.chapterLink {
+  composes: teaserAction;
+}
+
+.chapterLink::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+
+.chapterLink:focus-visible {
+  outline: none;
+}
+
+.chapterLink:focus-visible::after {
+  outline: 2px solid var(--color-red);
+  outline-offset: -6px;
+}
+
+.arrow {
+  display: inline-block;
+  transition: transform var(--dur-base) var(--ease-out);
+}
+
+.chapterLink:hover .arrow,
+.chapterLink:focus-visible .arrow {
+  transform: translateX(4px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .arrow {
+    transition: none;
+  }
+}
+
+/* Phones: reserve three lines for the teaser text so both chapter panels match in height */
+@media (max-width: 599px) {
+  .teaserBody {
+    min-height: calc(3 * var(--lh-body) * 1em);
   }
 }

@@ -3,10 +3,15 @@ import { Container } from '../../components/primitives/Container';
 import { BodyText, EditorialHeading } from '../../components/primitives/Typography';
 import { KeywordStrip } from '../../components/compositions/KeywordStrip';
 import { Reveal } from '../../motion/Reveal';
+import { ImageReveal } from '../../motion/ImageReveal';
+import { MediaPlaceholder } from '../../components/primitives/Media';
 import { fromPhotoshop, practiceEvolution } from '../../content/about';
 import styles from './AboutSections.module.css';
 
-/** The evolution as a looping keyword line, then "From Photoshop to product strategy" (Figma Frame 512 language). */
+/**
+ * The evolution as a looping keyword line, then "From Photoshop to product strategy"
+ * (Figma Frame 512 language), and a reserved wide image under the text.
+ */
 export function PracticeEvolution() {
   return (
     <Section tone="ink" spacing="spacious" aria-labelledby="photoshop-heading">
@@ -22,6 +27,9 @@ export function PracticeEvolution() {
             ))}
           </Reveal>
         </div>
+        <ImageReveal className={styles.photoshopMedia}>
+          <MediaPlaceholder media={fromPhotoshop.media} />
+        </ImageReveal>
       </Container>
     </Section>
   );

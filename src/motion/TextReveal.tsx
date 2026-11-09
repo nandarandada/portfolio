@@ -1,10 +1,36 @@
-import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type ElementType } from 'react';
+import { Fragment, useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type ElementType } from 'react';
 import { useInView, useReducedMotion } from './useInView';
 import styles from './motion.module.css';
 
+/** `*word*` marks an emphasised word (set in `<em>`); `**` (bold markup elsewhere) is ignored. */
+const EMPHASIS = /(?<!\*)\*([^*]+)\*(?!\*)/;
+
+/** Renders one space-separated token, wrapping a marked word in <em> and keeping its punctuation outside. */
+const renderToken = (token: string) => {
+  const match = token.match(EMPHASIS);
+  if (!match || match.index === undefined) return token;
+  return (
+    <>
+      {token.slice(0, match.index)}
+      <em>{match[1]}</em>
+      {token.slice(match.index + match[0].length)}
+    </>
+  );
+};
+
+const renderLine = (line: string) =>
+  line.split(' ').map((token, i, all) => (
+    <Fragment key={i}>
+      {renderToken(token)}
+      {i < all.length - 1 ? ' ' : ''}
+    </Fragment>
+  ));
+
+const plain = (text: string) => text.replace(/(?<!\*)\*([^*]+)\*(?!\*)/g, '$1');
+
 type TextRevealProps = {
   as?: ElementType;
-  /** Plain text. A newline forces a line break (and starts a new masked line). */
+  /** Plain text. A newline forces a line break (and starts a new masked line); `*word*` sets one word in <em>. */
   text: string;
   className?: string;
   id?: string;
@@ -65,7 +91,7 @@ export function TextReveal({ as: Tag = 'p', text, className, id, delay = 0 }: Te
       <Tag id={id} className={className}>
         {text.split('\n').map((segment, i) => (
           <span key={i} style={{ display: 'block' }}>
-            {segment}
+            {renderLine(segment)}
           </span>
         ))}
       </Tag>
@@ -79,7 +105,7 @@ export function TextReveal({ as: Tag = 'p', text, className, id, delay = 0 }: Te
       ref={ref}
       id={id}
       className={className}
-      aria-label={text.replace(/\n/g, ' ')}
+      aria-label={plain(text).replace(/\n/g, ' ')}
       data-inview={inView && lines !== null}
       style={{ '--delay': `${delay}ms` } as CSSProperties}
     >
@@ -87,7 +113,7 @@ export function TextReveal({ as: Tag = 'p', text, className, id, delay = 0 }: Te
         ? lines.map((line, i) => (
             <span key={`${i}-${line}`} className={styles.line} aria-hidden="true">
               <span className={styles.lineInner} style={{ '--i': i } as CSSProperties}>
-                {line}
+                {renderLine(line)}
               </span>
             </span>
           ))
@@ -95,7 +121,7 @@ export function TextReveal({ as: Tag = 'p', text, className, id, delay = 0 }: Te
             <span key={s} aria-hidden="true" className={styles.measure} style={{ display: 'block' }}>
               {segment.map((word, w) => (
                 <span key={w} data-word={word} data-last={w === segment.length - 1 ? 'true' : undefined}>
-                  {word}
+                  {renderToken(word)}
                   {w < segment.length - 1 ? ' ' : ''}
                 </span>
               ))}

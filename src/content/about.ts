@@ -50,6 +50,12 @@ export const fromPhotoshop = {
     'Over 12 years in design, from visual identities and digital experiences to UX research and product strategy.',
     'The tools have changed. My attention to detail hasn’t.',
   ],
+  /** Reserved image slot. Add `src` and `alt` when the image is ready. */
+  media: {
+    type: 'image',
+    aspectRatio: '2 / 1',
+    placeholder: 'Image — early work or a personal moment',
+  } satisfies MediaAsset,
 };
 
 export const experienceWorldMap = {
@@ -132,103 +138,100 @@ export const nextChapter = {
   action: 'Explore my process',
 };
 
+/** End of chapter 2: the way back to chapter 1, in the same form as `nextChapter`. */
+export const previousChapter = {
+  eyebrow: 'Previous — About me',
+  headline: 'The person behind Frosa.',
+  body: 'A little about my background, experience, and the perspective I bring to design.',
+  action: 'Explore About me',
+};
+
 /* ── Chapter 2 · About my work ──────────────────────────────────────── */
 
-export const workOpening = {
-  headline: 'Good work starts with understanding the problem.',
-  body: 'Before designing a screen or asking AI for a solution, I want to know what we’re trying to solve, who it’s for and what matters most. From there, I use research, design, collaboration and the right tools to move the work forward.',
+export type ToolEra = {
+  /** The tool that defined the period. */
+  tool: string;
+  /** What the practice grew to include in that period. */
+  text: string;
 };
 
-export type ProcessStage = {
-  number: string;
-  title: string;
-  text: string;
-  human: string[];
-  ai: string[];
-  /** Short caveat under the stage. Optional. */
-  note?: string;
+export const toolsTimeline = {
+  headline: 'The tools change.\nThe thinking evolves.',
+  intro:
+    'I started in Photoshop, learning composition and typography pixel by pixel. Every tool since then has changed how I work, and each one widened what the work could include. The visual foundation stayed.',
+  label: 'From Photoshop to AI-\u2060assisted tools',
+  /** Runs alongside every era: no tool replaced it. */
+  foundation: 'Visual foundation, throughout',
+  // No dates: the order is verified, exact years are not.
+  eras: [
+    { tool: 'Photoshop', text: 'Visual foundations: typography, composition, identity and detail.' },
+    { tool: 'Sketch', text: 'From individual layouts to websites, interfaces and user flows.' },
+    { tool: 'Figma', text: 'Design systems, product teams and collaborative design.' },
+    { tool: 'AI-\u2060assisted tools', text: 'Faster exploration, prototyping and working directly in product codebases.' },
+  ] satisfies ToolEra[],
 };
+
+/**
+ * Reserved image slots between the About my work sections (wide bands, like the portrait).
+ * Each one becomes real by adding `src` and `alt`; no other change is needed.
+ */
+export const workImages = {
+  /** After "How I approach a project": the process in practice. */
+  process: {
+    type: 'image',
+    aspectRatio: '1280 / 565',
+    placeholder: 'Image — work in progress: workshop, sketches or a Figma board',
+  } satisfies MediaAsset,
+  /** Between the tools and "Craft makes the difference": a close look at detail. */
+  detail: {
+    type: 'image',
+    aspectRatio: '1280 / 565',
+    placeholder: 'Image — detail: typography, early work or an interface close-up',
+  } satisfies MediaAsset,
+};
+
+export type ProcessStage = { number: string; title: string; text: string };
 
 export const process = {
-  heading: 'How I work',
-  intro: 'An approach I adapt to each project, not a fixed method. Two tracks run through it, my judgment and the tools that help me move faster, and they meet wherever a decision is made.',
-  humanTrack: 'I lead',
-  aiTrack: 'AI assists',
+  heading: 'How I approach\na project.',
+  intro: 'Four stages I come back to on almost every project. The order bends to the problem; the attention to it doesn’t.',
   stages: [
     {
       number: '01',
       title: 'Understand',
-      text: 'The problem, the people, the business context, the constraints and the evidence we already have.',
-      human: ['Listening to people', 'Asking questions', 'Understanding nuance', 'Noticing contradictions', 'Finding the real problem'],
-      ai: ['Organising notes', 'Summarising material', 'Preparing research guides', 'Exploring hypotheses'],
-      note: 'A summary never replaces reviewing the evidence.',
+      text: 'Talking to people, exploring the context and looking at the evidence to understand what really needs solving.',
     },
     {
       number: '02',
-      title: 'Define',
-      text: 'Turning findings into decisions the team can act on.',
-      human: ['Framing the problem', 'Seeing patterns', 'Prioritising', 'Weighing trade-offs', 'Aligning the team', 'Planning next steps'],
-      ai: ['Exploring alternatives', 'Challenging assumptions', 'Organising information', 'Comparing approaches'],
+      title: 'Define & lead',
+      text: 'Turning insights into direction. I lead design initiatives, align priorities and help teams move from decisions to action.',
     },
     {
       number: '03',
-      title: 'Design',
-      text: 'Flows, interfaces, systems and interactions that carry the direction.',
-      human: ['Visual judgment', 'Originality and authorship', 'Typography and composition', 'Usability and accessibility', 'Brand expression', 'Refinement'],
-      ai: ['Exploring variations', 'Supporting prototypes', 'Repetitive elements', 'Clearly defined tasks'],
+      title: 'Design & build',
+      text: 'Shaping flows, interfaces and interactions with care and character. I prototype and build to make ideas tangible.',
     },
     {
       number: '04',
-      title: 'Build & test',
-      text: 'From concept to prototype or working interface change, together with engineering.',
-      human: ['Judging quality', 'Making trade-offs', 'Working with engineers', 'Reviewing interactions', 'Testing assumptions', 'Keeping it coherent'],
-      ai: ['Coding support', 'Prototyping', 'Technical exploration', 'Documentation', 'Repeatable checks'],
-      note: 'I work in product codebases with AI-⁠assisted tools, alongside the engineers who own the release.',
-    },
-    {
-      number: '05',
-      title: 'Refine & learn',
-      text: 'Reviewing the work, understanding feedback and improving what matters.',
-      human: ['Interpreting feedback', 'Judging design quality', 'Spotting subtle problems', 'Final design decisions', 'Sharing what we learned'],
-      ai: ['Organising feedback', 'Preparing comparisons', 'Helping iterate', 'Supporting documentation'],
+      title: 'Review & improve',
+      text: 'Looking critically at the work, gathering feedback and refining what could be better, from the overall direction to the smallest details.',
     },
   ] satisfies ProcessStage[],
 };
 
-export const discovery = {
-  headline: 'Discovery before automation.',
+export const craft = {
+  headline: 'Craft makes\nthe difference.',
   body: [
-    'Research needs people in the room. AI can help explore patterns and scale work that is already well understood, but the assumptions underneath it should be checked first.',
-    'So I keep a simple order in mind. Not a mandatory workflow, just a habit.',
+    'Good design is more than getting things to work. It’s knowing what to simplify, what deserves attention, and how to give an experience its own character.',
+    'From the first decision to the smallest interaction, craft is the care behind the work.',
   ],
-  steps: ['Understand', 'Explore', 'Test', 'Review', 'Scale'],
-  scaleNote: 'when appropriate',
-  loopNote: 'Not ready to scale? Back to understanding.',
+  capricho: 'In Brazil, we call that care “capricho”.',
 };
 
 export const collaboration = {
-  headline: 'Good design is a team effort.',
-  body: 'I work alongside product leaders, engineers and design directors, and product, business, design and engineering now sit closer together than ever. I like it that way. Design isn’t a handoff to development; it’s a conversation that starts early and keeps going.',
-  disciplines: ['Product', 'Business', 'Design', 'Engineering'],
-  practices: [
-    { title: 'Sharing context early' },
-    { title: 'Aligning on priorities' },
-    { title: 'Talking through technical and business constraints' },
-    { title: 'Making decisions together' },
-    { title: 'Documenting decisions' },
-    { title: 'Learning from feedback' },
-  ],
-};
-
-export const craftThread = {
-  headline: 'Craft is more than the final polish.',
-  body: 'It’s in the questions we ask, the decisions we make and the details we choose not to overlook.',
-  points: [
-    'The quality of a research question',
-    'The clarity of a decision',
-    'The structure of a user flow',
-    'The choice of typography',
-    'The behaviour of an interaction',
-    'The care taken in implementation',
+  headline: 'Better work\nhappens together.',
+  body: [
+    'I work alongside product managers, engineers, stakeholders and other designers, and I like to bring them in early. Good decisions come from sharing context: the user’s problem, the business goal and the technical constraints, in the same conversation.',
+    'I write decisions down, show work before it’s finished and ask for feedback often. Engineers tell me what’s possible; I make sure the experience still holds together. Design isn’t a handoff, it’s a shared responsibility.',
   ],
 };

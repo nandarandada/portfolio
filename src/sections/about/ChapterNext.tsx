@@ -1,58 +1,41 @@
 import { GridPanelSection } from '../../components/compositions/GridPanelSection';
-import { GridSection } from '../../components/compositions/GridSection';
-import { Surface } from '../../components/primitives/Section';
 import { BodyText, EditorialHeading, SectionLabel } from '../../components/primitives/Typography';
 import { Reveal } from '../../motion/Reveal';
 import styles from './AboutSections.module.css';
 
 type ChapterNextProps = {
+  /** Small red label, e.g. "Next — About my work". */
+  eyebrow: string;
+  /** Serif headline introducing the other chapter. */
+  headline: string;
+  /** One line about what the other chapter holds. */
+  body: string;
   /** The link that switches chapter, e.g. "Explore my process". */
   label: string;
   onClick: () => void;
-  /** Optional teaser for the next chapter: small label, serif headline and one line. */
-  eyebrow?: string;
-  headline?: string;
-  body?: string;
   id?: string;
 };
 
-const Arrow = () => <span aria-hidden="true">→</span>;
-
 /**
- * End of a chapter. With a teaser it introduces the next chapter on a paper panel over the
- * grid (label, headline, one line and the link); without one it is a quiet link.
+ * End of a chapter: a teaser for the other one, on a paper panel over the grid. Used in both
+ * directions (About me → About my work and back), so the two chapters link the same way.
+ * The whole panel is the link target: the button's hit area stretches over the panel.
  */
-export function ChapterNext({ label, onClick, eyebrow, headline, body, id = 'chapter-next' }: ChapterNextProps) {
-  if (headline) {
-    const headingId = `${id}-heading`;
-    return (
-      <GridPanelSection start={4} span={13} centered rowsAround={1} id={id} labelledBy={headingId}>
-        <div className={styles.teaser}>
-          {eyebrow && <SectionLabel className={styles.teaserEyebrow}>{eyebrow}</SectionLabel>}
-          <EditorialHeading id={headingId} text={headline} />
-          {body && (
-            <Reveal>
-              <BodyText className={styles.teaserBody}>{body}</BodyText>
-            </Reveal>
-          )}
-          <Reveal delay={150}>
-            <button type="button" className={styles.teaserAction} onClick={onClick}>
-              {label} <Arrow />
-            </button>
-          </Reveal>
-        </div>
-      </GridPanelSection>
-    );
-  }
+export function ChapterNext({ eyebrow, headline, body, label, onClick, id = 'chapter-next' }: ChapterNextProps) {
+  const headingId = `${id}-heading`;
   return (
-    <GridSection label="Chapters" rowsAbove={1} rowsBelow={1}>
-      <div className={styles.chapterNextRow}>
-        <Surface className={styles.chapterNextSurface} snap>
-          <button type="button" className={styles.chapterNext} onClick={onClick}>
-            {label} <Arrow />
-          </button>
-        </Surface>
+    <GridPanelSection start={4} span={13} centered rowsAround={1} id={id} labelledBy={headingId}>
+      <div className={styles.teaser}>
+        <SectionLabel className={styles.teaserEyebrow}>{eyebrow}</SectionLabel>
+        <EditorialHeading id={headingId} text={headline} />
+        <Reveal>
+          <BodyText className={styles.teaserBody}>{body}</BodyText>
+        </Reveal>
+        {/* Not inside Reveal: its transform would trap the full-panel hit area */}
+        <button type="button" className={styles.chapterLink} onClick={onClick}>
+          {label} <span className={styles.arrow} aria-hidden="true">→</span>
+        </button>
       </div>
-    </GridSection>
+    </GridPanelSection>
   );
 }

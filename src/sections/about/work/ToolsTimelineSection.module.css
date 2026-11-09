@@ -1,0 +1,153 @@
+/* Same narrow editorial measure as the process section above */
+.column {
+  max-width: 42rem;
+  margin-inline: auto;
+}
+
+.head {
+  display: grid;
+  gap: 28px;
+  margin-bottom: clamp(64px, calc(var(--cell) * 1.5), 96px);
+}
+
+.heading {
+  font-size: var(--fs-section);
+  line-height: var(--lh-heading);
+}
+
+.intro {
+  max-width: 35rem;
+  font-size: var(--fs-intro);
+  line-height: 1.6;
+  opacity: var(--opacity-soft);
+}
+
+/* A quiet dashed line beside every era: the visual foundation that stays */
+.timeline {
+  position: relative;
+  padding-left: clamp(32px, calc(var(--cell) * 0.8), 56px);
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  border-left: 1px dashed rgb(255 255 255 / 0.45);
+  transform-origin: top;
+  transform: scaleY(var(--draw, 1));
+  transition: transform 1800ms var(--ease-in-out);
+}
+
+.eras {
+  display: grid;
+}
+
+/* Each era opens with a fine red rule; the rules sweep in from the left */
+.era {
+  --delay: calc(var(--i) * var(--stagger) * 1.5);
+  position: relative;
+  display: grid;
+  grid-template-columns: 3.5rem minmax(0, 1fr);
+  align-items: baseline;
+  padding: clamp(36px, calc(var(--cell) * 0.75), 48px) 0;
+}
+
+.era::before,
+.era:last-child::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--color-red);
+  transform-origin: left;
+  transform: scaleX(var(--rule, 1));
+  transition: transform var(--dur-reveal) var(--ease-in-out) var(--delay);
+}
+
+.era::before {
+  top: 0;
+}
+
+.era:last-child::after {
+  bottom: 0;
+  transition-delay: calc(var(--delay) + var(--stagger) * 1.5);
+}
+
+.number {
+  font-family: var(--font-ui);
+  font-size: var(--fs-meta);
+  font-weight: 500;
+  letter-spacing: var(--tracking-body);
+  color: var(--color-red);
+  filter: brightness(1.6);
+}
+
+.body {
+  display: grid;
+  gap: 8px;
+}
+
+.tool {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--fs-item);
+  line-height: 1.2;
+  /* mask for the rise, as in the heading reveals; room for descenders */
+  overflow: clip;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+
+.toolInner {
+  display: block;
+  transform: translate3d(0, var(--rise, 0), 0);
+  transition: transform var(--dur-reveal) var(--ease-out) calc(var(--delay) + 200ms);
+}
+
+.number,
+.text {
+  transition: opacity var(--dur-reveal) var(--ease-out) calc(var(--delay) + 350ms);
+}
+
+.number {
+  opacity: var(--show, 1);
+}
+
+.text {
+  max-width: 30rem;
+  font-size: var(--fs-reading);
+  line-height: var(--lh-reading);
+  letter-spacing: var(--tracking-body);
+  opacity: calc(var(--opacity-soft) * var(--show, 1));
+  text-wrap: pretty;
+}
+
+.foundation {
+  padding-top: 20px;
+  font-size: var(--fs-small);
+  font-style: italic;
+  letter-spacing: var(--tracking-body);
+  opacity: 0.7;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .timeline:not([data-inview='true']) {
+    --draw: 0;
+    --rule: 0;
+    --rise: 105%;
+    --show: 0;
+  }
+}
+
+@media (max-width: 599px) {
+  .timeline {
+    padding-left: 24px;
+  }
+
+  .era {
+    grid-template-columns: 2.5rem minmax(0, 1fr);
+  }
+}

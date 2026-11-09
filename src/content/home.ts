@@ -35,7 +35,7 @@ export const selectedWork = {
 };
 
 export const capricho = {
-  statements: ['I design with “capricho”.', 'A Brazilian sense of care, intention and dedication to every detail.'],
+  statements: ['I design with “*capricho*”.', 'A Brazilian sense of care, intention and dedication to every detail.'],
 };
 
 export const practiceOverview = {

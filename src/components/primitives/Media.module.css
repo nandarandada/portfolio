@@ -23,4 +23,6 @@
   font-weight: 500;
   color: rgb(31 31 31 / 0.45);
   letter-spacing: var(--tracking-body);
+  padding-inline: var(--gutter);
+  text-align: center;
 }

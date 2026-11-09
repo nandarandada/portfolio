@@ -2,18 +2,18 @@ import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { usePageTitle } from './usePageTitle';
 import { ChapterTabs, ChapterPanel } from '../components/compositions/ChapterTabs';
-import { aboutTabs, nextChapter, type AboutTabId } from '../content/about';
+import { aboutTabs, nextChapter, previousChapter, workImages, type AboutTabId } from '../content/about';
 import { AboutHero } from '../sections/about/AboutHero';
 import { AboutIntroduction } from '../sections/about/AboutIntroduction';
 import { PracticeEvolution } from '../sections/about/PracticeEvolution';
 import { CareerTimelineSection } from '../sections/about/me/CareerTimelineSection';
 import { ExperienceWorldMapSection } from '../sections/about/ExperienceWorldMapSection';
-import { WorkOpening } from '../sections/about/work/WorkOpening';
+import { ToolsTimelineSection } from '../sections/about/work/ToolsTimelineSection';
 import { ProcessSection } from '../sections/about/work/ProcessSection';
-import { DiscoverySection } from '../sections/about/work/DiscoverySection';
 import { CollaborationSection } from '../sections/about/work/CollaborationSection';
-import { CraftThreadSection } from '../sections/about/work/CraftThreadSection';
+import { CraftSection } from '../sections/about/work/CraftSection';
 import { ChapterNext } from '../sections/about/ChapterNext';
+import { FullWidthMediaSection } from '../components/compositions/FullWidthMediaSection';
 
 const ID = 'about';
 const isTab = (value: string | null): value is AboutTabId => aboutTabs.tabs.some((tab) => tab.id === value);
@@ -70,12 +70,20 @@ export function AboutPage() {
       </ChapterPanel>
 
       <ChapterPanel id="work" idPrefix={ID} selected={selected === 'work'}>
-        <WorkOpening />
         <ProcessSection />
-        <DiscoverySection />
+        <FullWidthMediaSection media={workImages.process} label="Work in progress" />
+        <ToolsTimelineSection />
+        <FullWidthMediaSection media={workImages.detail} label="Detail" />
+        <CraftSection />
         <CollaborationSection />
-        <CraftThreadSection />
-        <ChapterNext label="Back to: About me" onClick={() => select('me', true)} />
+        <ChapterNext
+          id="chapter-previous"
+          eyebrow={previousChapter.eyebrow}
+          headline={previousChapter.headline}
+          body={previousChapter.body}
+          label={previousChapter.action}
+          onClick={() => select('me', true)}
+        />
       </ChapterPanel>
 
     </>

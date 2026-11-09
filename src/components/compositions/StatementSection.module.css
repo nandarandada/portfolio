@@ -13,6 +13,12 @@
   text-wrap: balance;
 }
 
+/* A single emphasised word (e.g. *capricho*): red italic, same face and size */
+.statement em {
+  font-style: italic;
+  color: var(--color-red);
+}
+
 .supporting {
   max-width: 24rem;
   font-weight: 500;

@@ -1,58 +1,21 @@
-.head {
+.stack {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 26rem);
-  gap: var(--space-xl) 64px;
-  align-items: start;
-  margin-bottom: 56px;
+  gap: 32px;
+  max-width: 36rem;
+  margin-inline: auto;
 }
 
-.team {
-  margin-bottom: 64px;
+.heading {
+  font-size: var(--fs-section);
+  line-height: var(--lh-heading);
 }
 
-.disciplines {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  text-align: center;
-  font-family: var(--font-ui);
-  font-weight: 700;
-  font-size: var(--fs-ui);
-  letter-spacing: var(--tracking-label);
-  text-transform: uppercase;
+.paragraph {
+  font-size: var(--fs-reading);
+  line-height: var(--lh-reading);
 }
 
-.converge {
-  display: block;
-  width: 100%;
-  height: 60px;
-  margin-top: 12px;
-  overflow: visible;
-}
-
-.converge line {
-  stroke: var(--color-red);
-  stroke-width: 1;
-  vector-effect: non-scaling-stroke;
-}
-
-.converge circle {
-  fill: var(--color-red);
-}
-
-@media (max-width: 1023px) {
-  .head {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 599px) {
-  .disciplines {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    row-gap: 12px;
-    font-size: var(--fs-small);
-  }
-
-  .converge {
-    display: none;
-  }
+/* One blank line's worth between paragraphs, at reading size */
+.paragraph + .paragraph {
+  margin-top: 1.4em;
 }
