@@ -12,6 +12,8 @@ type KeywordStripProps = {
   motion?: 'scroll' | 'loop';
   /** Seconds for one full cycle in `loop` mode. */
   duration?: number;
+  /** Extra class on the strip (e.g. a different type size on a case page). */
+  className?: string;
 };
 
 const Items = ({ items, trailing }: { items: string[]; trailing: boolean }) => (
@@ -34,10 +36,10 @@ const Items = ({ items, trailing }: { items: string[]; trailing: boolean }) => (
  * With reduced motion, either mode wraps into centered static lines. Screen readers always
  * get one plain list; the repeated copies of the loop are hidden from them.
  */
-export function KeywordStrip({ items, label, motion = 'scroll', duration = 36 }: KeywordStripProps) {
+export function KeywordStrip({ items, label, motion = 'scroll', duration = 36, className }: KeywordStripProps) {
   if (motion === 'loop') {
     return (
-      <div className={`${styles.strip} ${styles.loop}`} style={{ '--duration': `${duration}s` } as CSSProperties}>
+      <div className={[styles.strip, styles.loop, className].filter(Boolean).join(' ')} style={{ '--duration': `${duration}s` } as CSSProperties}>
         <ol className={styles.staticList} aria-label={label}>
           <Items items={items} trailing={false} />
         </ol>
@@ -54,7 +56,7 @@ export function KeywordStrip({ items, label, motion = 'scroll', duration = 36 }:
   }
 
   return (
-    <div className={styles.strip}>
+    <div className={[styles.strip, className].filter(Boolean).join(' ')}>
       <ol className={styles.track} aria-label={label}>
         <Items items={items} trailing={false} />
       </ol>

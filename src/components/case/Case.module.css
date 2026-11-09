@@ -1,0 +1,612 @@
+/*
+ * Case-study system. A case page reads its palette from `--case-*` (set by CaseTheme);
+ * Frosa's type, motion and grid stay the same on every case.
+ */
+
+/* ── Theme surfaces ─────────────────────────────────────────────────── */
+
+.case {
+  background: var(--case-base);
+}
+
+/* grained surfaces: the grain is burned into the colour, as on the rest of Frosa */
+.case .base {
+  --surface-bg: var(--case-base) var(--texture-grain) center / var(--texture-size);
+  --surface-blend: color-burn;
+  --surface-fg: var(--color-white);
+  --accent: var(--case-accent);
+  --rule: rgb(255 255 255 / 0.16);
+}
+
+.case .surface {
+  --surface-bg: var(--case-surface) var(--texture-grain) center / var(--texture-size);
+  --surface-blend: color-burn;
+  --surface-fg: var(--color-white);
+  --accent: var(--case-accent);
+  --rule: rgb(255 255 255 / 0.2);
+}
+
+/* the white editorial page: Frosa ink, the project's purple as the accent */
+.case .paper {
+  --accent: var(--case-line);
+  --rule: rgb(31 31 31 / 0.14);
+}
+
+.section {
+  padding-block: clamp(96px, 12vw, 180px);
+}
+
+/* vertical rhythm between the blocks of a chapter */
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(72px, 9vw, 144px);
+}
+
+.stackTight {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(40px, 5vw, 72px);
+}
+
+/* on the paper grid, text sits on clean white without shifting its alignment */
+.paperPanel {
+  background: var(--color-white);
+  box-shadow: 0 0 0 16px var(--color-white);
+}
+
+.paperFigure .caption {
+  width: fit-content;
+  background: var(--color-white);
+  box-shadow: 0 0 0 6px var(--color-white);
+}
+
+/* ── Grid lines in the project's colour ─────────────────────────────── */
+
+.case .gridStrong {
+  --line: var(--case-line);
+}
+
+.case .gridFaint {
+  --line: color-mix(in srgb, var(--case-line) 14%, var(--color-white));
+}
+
+.case .gridInk {
+  --line: rgb(0 0 0 / 0.28);
+}
+
+/* ── The editorial column ───────────────────────────────────────────── */
+/* One centred column per chapter opening (Figma: label, serif heading, then the narrow body
+   column with a drop cap, set in from the heading). */
+
+.column {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  justify-items: start;
+  gap: clamp(20px, 2.4vw, 32px);
+  width: min(100%, var(--measure-statement));
+  margin-inline: auto;
+}
+
+.columnWide {
+  width: min(100%, 34rem);
+}
+
+.columnLabel {
+  font-family: var(--font-ui);
+  font-size: var(--fs-body);
+  font-weight: 600;
+  line-height: var(--lh-body);
+  letter-spacing: var(--tracking-body);
+}
+
+.columnHeading {
+  max-width: 18ch;
+}
+
+.columnBody {
+  width: 100%;
+  max-width: var(--measure-narrow);
+  margin-top: clamp(24px, 4vw, 64px);
+  margin-left: clamp(0px, 6vw, 4.75rem);
+}
+
+.audiences {
+  display: grid;
+  gap: clamp(28px, 3vw, 40px);
+  margin-top: clamp(56px, 7vw, 96px);
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  letter-spacing: var(--tracking-body);
+}
+
+.audience dt {
+  font-weight: 600;
+}
+
+.audience dd {
+  margin: 14px 0 0;
+  opacity: var(--opacity-soft);
+}
+
+/* ── Hero ───────────────────────────────────────────────────────────── */
+
+/* the header floats over the page: the key art starts just below it */
+.hero {
+  padding-top: clamp(88px, 10.7vw, 137px);
+}
+
+.heroMedia {
+  margin-bottom: clamp(64px, 8vw, 104px);
+}
+
+.heroTitle {
+  font-size: clamp(3rem, 1.4rem + 6.4vw, 6rem); /* 96px at 1280 */
+  line-height: var(--lh-display); /* 1.25 */
+  white-space: nowrap;
+}
+
+.meta {
+  display: grid;
+  gap: clamp(16px, 1.6vw, 24px);
+  margin-top: clamp(8px, 1.5vw, 20px);
+}
+
+.metaItem dt {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  letter-spacing: var(--tracking-body);
+  opacity: var(--opacity-soft);
+}
+
+.metaItem dd {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--fs-statement);
+  line-height: var(--lh-display);
+  letter-spacing: 0;
+  text-wrap: balance;
+}
+
+.disciplines {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35em 1.4em;
+  margin-top: clamp(8px, 1.5vw, 20px);
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  letter-spacing: var(--tracking-body);
+}
+
+/* ── Image mosaic ───────────────────────────────────────────────────── */
+
+.mosaic {
+  display: grid;
+  gap: 2px;
+  background: var(--case-base);
+}
+
+.mosaicRow {
+  display: grid;
+  gap: 2px;
+}
+
+.mosaicItem .frame {
+  background: var(--case-art-deep);
+}
+
+/* ── Identity ───────────────────────────────────────────────────────── */
+
+/* the brief's words: General Sans Bold 34px at 1280 in Figma (330:5400), larger than the site strip */
+.briefStrip {
+  font-size: clamp(1.25rem, 0.5rem + 2.1vw, 2.125rem);
+}
+
+.identity {
+  padding-top: clamp(40px, 5.7vw, 73px);
+}
+
+.identity > :first-child {
+  margin-bottom: clamp(96px, 12vw, 180px);
+}
+
+.logos {
+  position: relative;
+  display: grid;
+  gap: clamp(24px, 4.8vw, 61px);
+}
+
+/* the horizontal lockup is cropped to the wide frame, so the logotype reads large */
+/* the marks fill the wide frames: the emblem nearly to its height */
+.logoBox .artwork .asset {
+  padding: 3%;
+}
+
+.logoCover .artwork .asset {
+  object-fit: cover;
+  padding: 0;
+}
+
+.versions {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(12px, 1.8vw, 23px);
+}
+
+/* ── Composition grid ───────────────────────────────────────────────── */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: clamp(16px, 2.2vw, 32px);
+  row-gap: clamp(48px, 6vw, 96px);
+}
+
+.cell {
+  grid-column: var(--col) / span var(--span);
+  margin-top: calc(var(--drop, 0) * clamp(24px, 4vw, 64px));
+  min-width: 0;
+}
+
+.sticky {
+  position: sticky;
+  top: 120px;
+}
+
+/* ── Media ──────────────────────────────────────────────────────────── */
+
+.figure {
+  margin: 0;
+}
+
+.frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: var(--ratio);
+  overflow: clip;
+  background: rgb(255 255 255 / 0.04);
+}
+
+.asset {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: var(--fit, cover);
+  object-position: var(--position, center);
+}
+
+/* vector artwork sits contained on the project's own night: navy with a soft purple glow */
+.artwork,
+.mosaicItem .artwork {
+  background: radial-gradient(70% 80% at 50% 50%, var(--case-art) 0%, var(--case-art-deep) 100%);
+}
+
+.artwork .asset {
+  object-fit: contain;
+  padding: 10%;
+}
+
+.onLight {
+  background: #f6f2fa;
+}
+
+.blend {
+  background: transparent;
+}
+
+.caption {
+  margin-top: 14px;
+  font-family: var(--font-ui);
+  font-size: 0.875rem;
+  line-height: 1.45;
+  letter-spacing: var(--tracking-body);
+  opacity: var(--opacity-muted);
+}
+
+/* a tall screenshot panned inside a fixed frame */
+.scrollScreen {
+  /* keep the frame's ratio: without this, the tall image would stretch it to its own height */
+  min-height: 0;
+  border: 1px solid var(--rule);
+}
+
+.scrollImage {
+  display: block;
+  width: 100%;
+  height: auto;
+  will-change: transform;
+}
+
+.scrollable {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.scrollable:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* four phones in a row; two by two on small screens */
+.phones {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(12px, 2vw, 28px);
+}
+
+.phones .frame {
+  border-radius: clamp(10px, 1.6vw, 20px);
+  border: 1px solid var(--rule);
+}
+
+.phones > :nth-child(even) {
+  margin-top: clamp(24px, 5vw, 72px);
+}
+
+/* ── Editorial placeholder ──────────────────────────────────────────── */
+
+.placeholder {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  width: 100%;
+  aspect-ratio: var(--ratio);
+  padding: clamp(18px, 2.4vw, 32px);
+  overflow: clip;
+  color: inherit;
+  border: 1px dashed color-mix(in srgb, var(--accent) 55%, transparent);
+  background:
+    radial-gradient(circle, color-mix(in srgb, var(--accent) 26%, transparent) 1.1px, transparent 1.6px) 0 0 / 18px 18px,
+    linear-gradient(color-mix(in srgb, var(--accent) 5%, transparent), color-mix(in srgb, var(--accent) 5%, transparent));
+  /* opaque on the paper grid, so the grid never runs through the guidance */
+  background-color: var(--placeholder-solid, transparent);
+}
+
+.case .paper {
+  --placeholder-solid: var(--color-white);
+}
+
+/* the media ID, large and faint, like a plate number */
+.placeholder::after {
+  content: attr(data-id);
+  position: absolute;
+  top: clamp(12px, 1.6vw, 24px);
+  right: clamp(16px, 2vw, 28px);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.5rem, 1.5rem + 4vw, 5.5rem);
+  line-height: 1;
+  color: var(--accent);
+  opacity: 0.16;
+  pointer-events: none;
+}
+
+.placeholderInner {
+  position: relative;
+  display: grid;
+  gap: 10px;
+  max-width: 30rem;
+}
+
+.placeholderId {
+  font-family: var(--font-ui);
+  font-size: var(--fs-meta);
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.placeholderText {
+  font-family: var(--font-body);
+  font-size: var(--fs-reading);
+  line-height: 1.5;
+  letter-spacing: var(--tracking-body);
+  text-wrap: pretty;
+}
+
+.placeholderMeta {
+  display: grid;
+  gap: 4px;
+  font-family: var(--font-ui);
+  font-size: var(--fs-meta);
+  line-height: 1.5;
+  letter-spacing: var(--tracking-body);
+  opacity: var(--opacity-muted);
+}
+
+.placeholderTip {
+  font-style: italic;
+}
+
+/* ── Text blocks ────────────────────────────────────────────────────── */
+
+.decisions {
+  display: grid;
+}
+
+.decision {
+  display: grid;
+  grid-template-columns: 3rem minmax(0, 1fr);
+  gap: 8px;
+  padding-block: clamp(20px, 2.4vw, 28px);
+  border-top: 1px solid var(--rule);
+}
+
+.decision:last-child {
+  border-bottom: 1px solid var(--rule);
+}
+
+.decisionNumber {
+  padding-top: 0.45em;
+  font-family: var(--font-ui);
+  font-size: var(--fs-meta);
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  color: var(--accent);
+}
+
+.decisionTitle {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--fs-item);
+  line-height: var(--lh-heading);
+}
+
+.decisionText {
+  margin-top: 8px;
+  font-family: var(--font-body);
+  font-size: var(--fs-reading);
+  line-height: var(--lh-reading);
+  letter-spacing: var(--tracking-body);
+  opacity: var(--opacity-soft);
+}
+
+.swatchBlock {
+  display: grid;
+  gap: 20px;
+}
+
+.swatches {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.swatch {
+  display: grid;
+  gap: 4px;
+}
+
+.swatchChip {
+  display: block;
+  aspect-ratio: 3 / 4;
+  margin-bottom: 8px;
+  border: 1px solid var(--rule);
+}
+
+.swatchName {
+  font-family: var(--font-ui);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.swatchHex {
+  font-family: var(--font-ui);
+  font-size: var(--fs-meta);
+  letter-spacing: 0.06em;
+  opacity: var(--opacity-muted);
+}
+
+.note {
+  font-family: var(--font-body);
+  font-size: var(--fs-reading);
+  line-height: var(--lh-reading);
+  letter-spacing: var(--tracking-body);
+  opacity: var(--opacity-soft);
+  text-wrap: pretty;
+}
+
+.noteBlock {
+  display: grid;
+  gap: 12px;
+  max-width: 24rem;
+}
+
+/* ── Closing ────────────────────────────────────────────────────────── */
+
+.closing {
+  display: grid;
+  justify-items: center;
+  gap: clamp(24px, 3vw, 36px);
+  text-align: center;
+}
+
+.closingRule {
+  width: 1px;
+  height: clamp(48px, 6vw, 80px);
+  background: var(--accent);
+}
+
+.closingText {
+  max-width: 36rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--fs-step);
+  line-height: 1.4;
+  text-wrap: balance;
+}
+
+.closingLink {
+  font-family: var(--font-ui);
+  font-size: var(--fs-ui);
+  font-weight: 500;
+  letter-spacing: var(--tracking-body);
+  color: var(--accent);
+}
+
+/* ── Tablet ─────────────────────────────────────────────────────────── */
+
+@media (max-width: 1023px) {
+  .cell {
+    grid-column: auto / span var(--tspan, 12);
+    margin-top: 0;
+  }
+
+  .sticky {
+    position: static;
+  }
+}
+
+/* ── Mobile ─────────────────────────────────────────────────────────── */
+
+@media (max-width: 599px) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .cell {
+    grid-column: 1 / -1;
+  }
+
+  .mosaicRow {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .heroTitle {
+    white-space: normal;
+  }
+
+  .columnBody {
+    margin-left: 0;
+  }
+
+  .phones,
+  .versions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .phones > :nth-child(even) {
+    margin-top: 32px;
+  }
+
+  .swatches {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    row-gap: 20px;
+  }
+
+  .decision {
+    grid-template-columns: 2.25rem minmax(0, 1fr);
+  }
+
+  /* the plate number would collide with the guidance at this width; the label keeps the ID */
+  .placeholder::after {
+    display: none;
+  }
+}

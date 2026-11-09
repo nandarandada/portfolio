@@ -3,6 +3,11 @@
   font-family: var(--font-ui);
 }
 
+/* on a dark page the black footer needs a visible edge where the content ends */
+.dark {
+  border-top: 1px solid rgb(255 255 255 / 0.14);
+}
+
 .top {
   display: grid;
   grid-template-columns: 1fr auto;

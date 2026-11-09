@@ -6,7 +6,7 @@
  * - `workType`: how the work is presented (a case study, a focused improvement, a live product).
  * - `disciplines`: what the work involved (any combination, e.g. strategy + UX + brand).
  *
- * Real projects have not been supplied yet. Every entry below is a PLACEHOLDER
+ * Arctic Arena is the first real project. Every other entry below is a PLACEHOLDER
  * (`placeholder: true`), mirroring the Figma cards ("Project name" / "User Experience"),
  * kept only to evaluate layout and responsiveness. Placeholders are labelled as such on the
  * Work page and must be replaced, not edited into real-looking work.
@@ -14,9 +14,10 @@
 import type { MediaAsset } from '../components/primitives/Media';
 import type { GridPlacement, ProjectCardData } from '../components/compositions/ProjectGrid';
 
-export type WorkType = 'product-case' | 'product-improvement' | 'live-product';
+export type WorkType = 'case-study' | 'product-case' | 'product-improvement' | 'live-product';
 
 export const workTypeLabels: Record<WorkType, string> = {
+  'case-study': 'Case Study',
   'product-case': 'Product Case Study',
   'product-improvement': 'Product Improvement',
   'live-product': 'Live Product',
@@ -61,6 +62,22 @@ const placeholder = (n: number, extra: Partial<Project> = {}): Project => ({
 });
 
 export const projects: Project[] = [
+  {
+    slug: 'arctic-arena',
+    title: 'Arctic Arena',
+    summary: 'Brand identity and website for a new gaming event in Svalbard, Norway.',
+    disciplines: ['Brand Identity', 'UX/UI Design'],
+    workType: 'case-study',
+    cover: {
+      type: 'image',
+      src: '/work/arctic-arena/sign.jpg',
+      alt: 'The Arctic Arena logo rendered as a relief of purple dots.',
+      aspectRatio: '2000 / 1400',
+    },
+    // Not featured: Home → Selected Work is decided after the full portfolio is reviewed.
+    featured: false,
+    order: 0,
+  },
   placeholder(1),
   placeholder(2, { preview: { type: 'video', aspectRatio: '16 / 10', placeholder: 'Interaction video' } }),
   placeholder(3),
