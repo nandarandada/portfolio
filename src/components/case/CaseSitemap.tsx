@@ -40,11 +40,13 @@ export function CaseSitemap({ root, sections, groups, caption, label }: CaseSite
         )}
       </p>
       {section.note && <p className={styles.sectionNote}>{section.note}</p>}
-      <ul className={styles.pages}>
-        {section.pages.map((page) => (
-          <li key={page}>{page}</li>
-        ))}
-      </ul>
+      {section.pages.length > 0 && (
+        <ul className={styles.pages}>
+          {section.pages.map((page) => (
+            <li key={page}>{page}</li>
+          ))}
+        </ul>
+      )}
     </Reveal>
   );
 
@@ -61,12 +63,14 @@ export function CaseSitemap({ root, sections, groups, caption, label }: CaseSite
               {main.map(column)}
             </ul>
           </section>
-          <section className={`${styles.group} ${styles.groupExternal}`} aria-label={groups.external}>
-            <p className={styles.groupLabel}>{groups.external}</p>
-            <ul className={styles.sections} style={{ '--cols': external.length } as CSSProperties}>
-              {external.map((s, i) => column(s, main.length + i))}
-            </ul>
-          </section>
+          {external.length > 0 && (
+            <section className={`${styles.group} ${styles.groupExternal}`} aria-label={groups.external}>
+              <p className={styles.groupLabel}>{groups.external}</p>
+              <ul className={styles.sections} style={{ '--cols': external.length } as CSSProperties}>
+                {external.map((s, i) => column(s, main.length + i))}
+              </ul>
+            </section>
+          )}
         </div>
       </nav>
       {caption && <figcaption className={styles.caption}>{caption}</figcaption>}

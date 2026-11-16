@@ -6,7 +6,7 @@
  * - `workType`: how the work is presented (a case study, a focused improvement, a live product).
  * - `disciplines`: what the work involved (any combination, e.g. strategy + UX + brand).
  *
- * Arctic Arena is the first real project. Every other entry below is a PLACEHOLDER
+ * Arctic Arena and Pawprint Oxygen are real projects. Every other entry below is a PLACEHOLDER
  * (`placeholder: true`), mirroring the Figma cards ("Project name" / "User Experience"),
  * kept only to evaluate layout and responsiveness. Placeholders are labelled as such on the
  * Work page and must be replaced, not edited into real-looking work.
@@ -77,6 +77,22 @@ export const projects: Project[] = [
     // Not featured: Home → Selected Work is decided after the full portfolio is reviewed.
     featured: false,
     order: 0,
+  },
+  {
+    slug: 'pawprint-oxygen',
+    title: 'Pawprint Oxygen',
+    summary: 'A clearer shopping experience for pet owners and veterinarians, designed at Oowlish.',
+    disciplines: ['Product Design', 'UX/UI', 'E-commerce'],
+    workType: 'product-case',
+    cover: {
+      type: 'image',
+      src: '/work/pawprint-oxygen/hero-desktop.jpg',
+      alt: 'The Pawprint Oxygen home page: “Oxygen for pets, shipped right to your door” over a photo of a dog wearing an oxygen mask.',
+      aspectRatio: '846 / 760',
+    },
+    // Not featured: Home → Selected Work is decided after the full portfolio is reviewed.
+    featured: false,
+    order: 1,
   },
   placeholder(1),
   placeholder(2, { preview: { type: 'video', aspectRatio: '16 / 10', placeholder: 'Interaction video' } }),

@@ -1,0 +1,414 @@
+/*
+ * Pawprint Oxygen: compositions specific to this case. Type, colour tokens, motion and the
+ * section rhythm come from the shared case system (Case.module.css).
+ */
+
+/* Reading widths for this case: body copy at about 500px and statements at about 540px on
+   desktop, set through the shared measures so every column keeps its alignment. Narrow
+   screens are limited by the container, as before. */
+.page {
+  --measure-narrow: 31rem;
+  --measure-statement: 34rem;
+}
+
+/* ── Screens: the site's own pages, framed quietly ──────────────────── */
+
+/* a desktop screen: soft corners, a hairline and a lift */
+.screen > :first-child,
+.browser > :first-child {
+  overflow: clip;
+  border-radius: clamp(6px, 0.8vw, 10px);
+  box-shadow:
+    0 0 0 1px var(--rule),
+    0 30px 70px -40px rgb(0 0 0 / 0.55);
+}
+
+/* a phone screen */
+.device > :first-child {
+  overflow: clip;
+  border-radius: clamp(14px, 2vw, 26px);
+  box-shadow:
+    0 0 0 1px var(--rule),
+    0 30px 60px -30px rgb(0 0 0 / 0.6);
+}
+
+/* ── 01 Hero: the home page on desktop with the phone over its corner ─ */
+
+.stage {
+  padding-top: clamp(112px, 11vw, 168px);
+  margin-bottom: clamp(72px, 9vw, 128px);
+}
+
+.heroScreens {
+  position: relative;
+  width: min(100% - 2 * var(--gutter), 1120px);
+  margin-inline: auto;
+  padding-right: 12%;
+}
+
+.heroPhone {
+  position: absolute;
+  right: 0;
+  bottom: -9%;
+  width: 24%;
+}
+
+.live {
+  display: grid;
+  justify-items: start;
+  gap: 6px;
+  margin-top: clamp(4px, 1vw, 12px);
+  font-family: var(--font-ui);
+  letter-spacing: var(--tracking-body);
+}
+
+.liveLink {
+  font-size: var(--fs-body);
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.liveNote {
+  font-size: 0.875rem;
+  opacity: var(--opacity-muted);
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.heroLead {
+  display: grid;
+  justify-items: start;
+  gap: clamp(20px, 2.4vw, 32px);
+  margin-top: clamp(40px, 6vw, 88px);
+}
+
+.headline {
+  max-width: 16ch;
+  color: var(--accent);
+}
+
+/* ── 02 Challenge: two audiences, side by side, the second dropped ── */
+
+.audiences {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(40px, 5vw, 80px) clamp(24px, 4vw, 64px);
+  align-items: start;
+}
+
+.audience:nth-child(2) {
+  margin-top: clamp(48px, 9vw, 160px);
+}
+
+.audienceText {
+  display: grid;
+  gap: 10px;
+  max-width: 28rem;
+  margin-top: clamp(20px, 2.4vw, 32px);
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  letter-spacing: var(--tracking-body);
+}
+
+.audienceName {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--fs-step);
+  line-height: var(--lh-heading);
+}
+
+.story {
+  margin: 8px 0 0;
+  padding-left: 16px;
+  border-left: 2px solid var(--case-line);
+  font-style: italic;
+  opacity: var(--opacity-soft);
+}
+
+/* ── 03 Strategy: decision rows, text beside its visual, alternating ── */
+
+/* the strategy chapter runs tighter than the others: three rows and a journey */
+.tight {
+  gap: clamp(48px, 6vw, 96px);
+}
+
+.decisionRows {
+  display: grid;
+  gap: clamp(48px, 6vw, 96px);
+}
+
+.decisionRow {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: clamp(28px, 5vw, 88px);
+  align-items: center;
+}
+
+/* every other row puts the visual first, in the wider column */
+.flipped {
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+}
+
+.flipped .decisionText {
+  order: 2;
+}
+
+.decisionText {
+  display: grid;
+  gap: 12px;
+  max-width: 24rem;
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  letter-spacing: var(--tracking-body);
+}
+
+.decisionText p {
+  opacity: var(--opacity-soft);
+}
+
+.decisionNumber {
+  font-family: var(--font-ui);
+  font-size: var(--fs-meta);
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  color: var(--accent);
+}
+
+.decisionTitle {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--fs-step);
+  line-height: var(--lh-heading);
+  text-wrap: balance;
+}
+
+.decisionVisual {
+  min-width: 0;
+}
+
+/* the sitemap reads on white, like the documentation it comes from */
+.sheet {
+  padding: clamp(24px, 4vw, 48px);
+  background: var(--color-white);
+  color: var(--color-ink);
+  border-radius: clamp(6px, 0.8vw, 10px);
+}
+
+.journey {
+  display: grid;
+  gap: 16px;
+  width: min(100%, 960px);
+  margin-inline: auto;
+}
+
+/* the template is a reference, not the work: shown smaller */
+.decisionVisual .templateFigure {
+  width: min(100%, 26rem);
+  margin-inline: auto;
+}
+
+.aside {
+  max-width: 30rem;
+  font-family: var(--font-ui);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  letter-spacing: var(--tracking-body);
+  font-style: italic;
+  opacity: var(--opacity-muted);
+}
+
+/* ── 04 Testing: blocks on the paper grid, snapped to whole cells ──── */
+
+.block,
+.comparison,
+.styleGuide {
+  padding: clamp(24px, 4vw, 56px) clamp(16px, 4vw, 56px);
+}
+
+.comparisonHead {
+  display: grid;
+  gap: 8px;
+  max-width: 34rem;
+  margin: 0 auto clamp(28px, 4vw, 48px);
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  letter-spacing: var(--tracking-body);
+}
+
+.comparisonHead p {
+  opacity: var(--opacity-soft);
+}
+
+.comparisonTitle {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--fs-step);
+  line-height: var(--lh-heading);
+}
+
+/* both options at the same scale, so they compare directly; the preferred one is marked */
+.options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(20px, 3vw, 48px);
+  align-items: start;
+}
+
+.option {
+  display: grid;
+  gap: 12px;
+}
+
+.optionLabel {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-ui);
+  font-size: var(--fs-meta);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  opacity: var(--opacity-soft);
+}
+
+.preferred .optionLabel {
+  opacity: 1;
+}
+
+.preferredTag {
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--case-accent);
+  color: var(--case-on-accent);
+  letter-spacing: 0.04em;
+}
+
+.preferred .screen > :first-child {
+  box-shadow:
+    0 0 0 2px var(--case-base),
+    0 30px 70px -40px rgb(0 0 0 / 0.45);
+}
+
+.finding {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+  max-width: 34rem;
+  margin: clamp(28px, 4vw, 48px) auto 0;
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  letter-spacing: var(--tracking-body);
+}
+
+.findingMark {
+  flex-shrink: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--case-accent);
+  box-shadow: 0 0 0 2px var(--case-base);
+  transform: translateY(-1px);
+}
+
+/* ── 05 Gallery: wide screens, desktop + phone pairs, one detail ───── */
+
+.galleryWide {
+  width: min(100%, 1120px);
+  margin-inline: auto;
+}
+
+.pair {
+  display: grid;
+  grid-template-columns: minmax(0, 8fr) minmax(0, 3fr);
+  gap: clamp(20px, 4vw, 64px);
+  align-items: end;
+}
+
+.pairReverse {
+  grid-template-columns: minmax(0, 3fr) minmax(0, 8fr);
+}
+
+.pairPhone {
+  margin-bottom: clamp(24px, 6vw, 96px);
+}
+
+.detail {
+  width: min(100%, 860px);
+  margin-inline: auto;
+}
+
+/* ── 06 Delivery ────────────────────────────────────────────────────── */
+
+.styleGuide {
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
+  gap: clamp(32px, 5vw, 80px);
+  align-items: center;
+}
+
+.backLink {
+  margin-top: clamp(16px, 2vw, 28px);
+  font-family: var(--font-ui);
+  font-size: var(--fs-body);
+  font-weight: 600;
+  color: var(--accent);
+}
+
+/* ── Tablet ─────────────────────────────────────────────────────────── */
+
+@media (max-width: 1023px) {
+  .decisionRow,
+  .flipped,
+  .styleGuide {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .flipped .decisionText {
+    order: 0;
+  }
+}
+
+/* ── Phones ─────────────────────────────────────────────────────────── */
+
+@media (max-width: 599px) {
+  .heroScreens {
+    padding-right: 18%;
+  }
+
+  .heroPhone {
+    width: 34%;
+    bottom: -14%;
+  }
+
+  .audiences,
+  .options {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .audience:nth-child(2) {
+    margin-top: 0;
+  }
+
+  .pair,
+  .pairReverse {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* on phones the phone screen sits centred under (or above) its desktop page */
+  .pairPhone {
+    justify-self: center;
+    width: 62%;
+    margin-bottom: 0;
+  }
+}
