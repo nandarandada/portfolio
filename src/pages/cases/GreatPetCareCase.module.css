@@ -1,0 +1,673 @@
+/*
+ * Great Pet Care Account: compositions specific to this case — phones in rows, the dashboard
+ * through the project, the plan, before/after pairs with their change lists, version one by
+ * task, the testing evidence, and the handover. Type, colour tokens, motion and the section
+ * rhythm come from the shared case system (Case.module.css).
+ */
+
+/* reading widths: the site's own narrow measures (tokens.css), as on the other pages */
+.page {
+}
+
+/* ── Frames ─────────────────────────────────────────────────────────── */
+
+/* a phone: the real capture, rounded like the device, with a hairline and a lift */
+.phone > :first-child,
+.phoneScroll > figure > :first-child {
+  overflow: clip;
+  border-radius: 8% / 3.7%;
+  box-shadow:
+    0 0 0 1px var(--rule),
+    0 30px 60px -32px rgb(0 0 0 / 0.55);
+}
+
+/* a desktop screen, softer corners */
+.screen > :first-child {
+  overflow: clip;
+  border-radius: clamp(6px, 1vw, 14px);
+  box-shadow:
+    0 0 0 1px var(--rule),
+    0 30px 70px -40px rgb(0 0 0 / 0.45);
+}
+
+/* ── 01 Hero: three released screens, the outer ones lowered ─────────── */
+
+.stage {
+  padding-top: clamp(112px, 11vw, 168px);
+  margin-bottom: clamp(72px, 9vw, 128px);
+}
+
+.heroPhones {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(16px, 3vw, 48px);
+  align-items: start;
+  width: min(100% - 2 * var(--gutter), 880px);
+  margin-inline: auto;
+}
+
+.heroPhone:nth-child(odd) {
+  margin-top: clamp(32px, 6vw, 96px);
+}
+
+.live {
+  display: grid;
+  justify-items: start;
+  gap: 6px;
+  margin-top: clamp(4px, 1vw, 12px);
+  font-family: var(--font-ui);
+  letter-spacing: var(--tracking-body);
+}
+
+.liveLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 24px;
+}
+
+.liveLink {
+  font-size: var(--fs-body);
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.liveNote {
+  font-size: 0.875rem;
+  opacity: var(--opacity-muted);
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* the lead takes the shared intro column (Case.module.css); only its distance from the hero is set here */
+.lead {
+  margin-top: clamp(72px, 9vw, 128px);
+}
+
+.headline {
+  max-width: 17ch;
+  color: var(--accent);
+  text-wrap: balance;
+}
+
+/* ── 02 Starting point ──────────────────────────────────────────────── */
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(16px, 3vw, 48px);
+  align-items: start;
+  width: min(100%, 880px);
+  margin-inline: auto;
+}
+
+.audiences {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(28px, 4vw, 64px);
+  width: min(100%, 880px);
+  margin-inline: auto;
+}
+
+.audience {
+  display: grid;
+  gap: 8px;
+  align-content: start;
+  padding-top: 16px;
+  border-top: 2px solid var(--case-base);
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  letter-spacing: var(--tracking-body);
+}
+
+.audienceName,
+.comparisonTitle,
+.flowTitle,
+.planStep {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--fs-step);
+  line-height: var(--lh-heading);
+}
+
+.audienceText {
+  opacity: var(--opacity-soft);
+}
+
+.story {
+  margin: 8px 0 0;
+  font-style: italic;
+}
+
+/* ── 03 A new brand: the dashboard through the project ──────────────── */
+
+.evolution {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(16px, 3vw, 48px);
+  align-items: start;
+  width: min(100%, 880px);
+  margin-inline: auto;
+}
+
+.stage3 {
+  display: grid;
+  gap: 14px;
+}
+
+.stepLabel,
+.sideLabel,
+.planTag,
+.changedLabel,
+.testFacts dt {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  font-family: var(--font-ui);
+  font-size: var(--fs-meta);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+}
+
+.stepNumber {
+  font-weight: 700;
+  color: var(--accent);
+}
+
+/* the swatches sit on white, so the dark green reads against the dark-green chapter */
+.palette {
+  width: min(100%, 880px);
+  margin-inline: auto;
+  padding: clamp(24px, 4vw, 48px);
+  background: var(--color-white);
+  color: var(--color-ink);
+  border-radius: clamp(6px, 0.8vw, 10px);
+}
+
+/* ── 04 A simpler structure ─────────────────────────────────────────── */
+
+.block,
+.comparison {
+  padding: clamp(24px, 4vw, 56px) clamp(16px, 4vw, 56px);
+}
+
+/* the full vision (explored, shown with its screens) beside version one (the proposal) */
+.plan {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: clamp(24px, 4vw, 64px);
+  align-items: start;
+  width: min(100%, 52rem);
+  margin: clamp(32px, 4vw, 56px) auto 0;
+}
+
+.planItem {
+  display: grid;
+  gap: 10px;
+  align-content: start;
+  padding: clamp(20px, 2.4vw, 32px);
+  border: 2px solid var(--case-base);
+  border-radius: clamp(6px, 0.8vw, 10px);
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  letter-spacing: var(--tracking-body);
+}
+
+/* the vision reads as secondary: a dashed outline */
+.planVision {
+  border-style: dashed;
+  border-color: color-mix(in srgb, var(--case-base) 45%, transparent);
+}
+
+.planTag {
+  opacity: var(--opacity-soft);
+}
+
+.planTagStrong {
+  opacity: 1;
+  color: var(--accent);
+}
+
+.planStep {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+}
+
+.planText {
+  opacity: var(--opacity-soft);
+}
+
+.planPhones {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(10px, 2vw, 20px);
+  width: min(100%, 320px);
+  margin-top: 8px;
+}
+
+.planFeatures {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.planFeatures li {
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: var(--case-base);
+  color: var(--color-white);
+  font-family: var(--font-ui);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.pagesIntro {
+  max-width: var(--measure-narrow);
+  margin-inline: auto;
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  letter-spacing: var(--tracking-body);
+}
+
+/* before and after, with the decision and the change list */
+.comparisonInner {
+  display: grid;
+  grid-template-columns: minmax(0, 8fr) minmax(0, 4fr);
+  gap: clamp(28px, 5vw, 80px);
+  align-items: center;
+}
+
+.pairPhones {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(16px, 3vw, 40px);
+  align-items: start;
+}
+
+.side {
+  display: grid;
+  gap: 12px;
+}
+
+.sideLabel {
+  opacity: var(--opacity-soft);
+}
+
+.afterLabel {
+  opacity: 1;
+}
+
+.afterLabel::after {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--case-accent);
+  box-shadow: 0 0 0 2px var(--case-base);
+  transform: translateY(-1px);
+}
+
+.changes {
+  display: grid;
+  gap: 14px;
+  max-width: 24rem;
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  letter-spacing: var(--tracking-body);
+}
+
+.decision {
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  line-height: 1.4;
+  font-style: italic;
+}
+
+.changes ul {
+  display: grid;
+  gap: 8px;
+}
+
+.changes li {
+  position: relative;
+  padding-left: 20px;
+  opacity: var(--opacity-soft);
+}
+
+.changes li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.7em;
+  width: 10px;
+  height: 2px;
+  background: var(--case-base);
+}
+
+/* ── 05 Version one: one row per task, mobile large ─────────────────── */
+
+.taskGroup {
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+  gap: clamp(28px, 5vw, 88px);
+  align-items: center;
+  width: min(100%, 1040px);
+  margin-inline: auto;
+}
+
+.taskGroupFlipped {
+  grid-template-columns: minmax(0, 8fr) minmax(0, 4fr);
+}
+
+.taskGroupFlipped .flowText {
+  order: 2;
+}
+
+.flowText {
+  display: grid;
+  gap: 12px;
+  max-width: 22rem;
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  letter-spacing: var(--tracking-body);
+}
+
+.flowText p {
+  opacity: var(--opacity-soft);
+}
+
+.taskPhones {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(16px, 3vw, 40px);
+  align-items: start;
+  width: min(100%, 600px);
+  margin-inline: auto;
+}
+
+.taskPhones > :nth-child(2) {
+  margin-top: clamp(32px, 5vw, 72px);
+}
+
+.taskPhonesSingle {
+  grid-template-columns: minmax(0, 1fr);
+  width: min(100%, 300px);
+}
+
+/* ── 06 User testing ────────────────────────────────────────────────── */
+
+.tasks {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: clamp(12px, 2vw, 24px);
+  width: min(100%, 880px);
+  margin: clamp(32px, 4vw, 56px) auto 0;
+}
+
+.task {
+  display: grid;
+  gap: 8px;
+  align-content: start;
+  padding-top: 14px;
+  border-top: 2px solid var(--case-base);
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: 1.35;
+  letter-spacing: var(--tracking-body);
+}
+
+/* the prototype map beside what participants wrote */
+.evidence {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: clamp(24px, 4vw, 64px);
+  align-items: center;
+}
+
+.prototype > :first-child {
+  overflow: clip;
+  border-radius: clamp(6px, 0.8vw, 10px);
+}
+
+.quotes {
+  display: grid;
+  gap: 16px;
+}
+
+.quotesLabel {
+  font-family: var(--font-ui);
+  font-size: var(--fs-body);
+  font-weight: 600;
+}
+
+.quotes ul {
+  display: grid;
+  gap: 14px;
+}
+
+.quote {
+  display: grid;
+  gap: 4px;
+  padding-left: 14px;
+  border-left: 3px solid var(--case-base);
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  letter-spacing: var(--tracking-body);
+}
+
+.quote blockquote {
+  margin: 0;
+  font-style: italic;
+}
+
+.quoteIssue {
+  border-left-color: var(--case-accent);
+}
+
+.quoteTone {
+  font-family: var(--font-ui);
+  font-size: var(--fs-meta);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  opacity: var(--opacity-soft);
+}
+
+.testFacts {
+  display: grid;
+  gap: 12px;
+}
+
+.testFacts > div {
+  display: grid;
+  gap: 2px;
+}
+
+.testFacts dt {
+  opacity: var(--opacity-soft);
+}
+
+.changedLabel {
+  margin-top: 4px;
+  opacity: var(--opacity-soft);
+}
+
+/* ── 07 Handover: desktop as supporting evidence, flows and notes ───── */
+
+.notesLabel {
+  font-family: var(--font-ui);
+  font-size: var(--fs-body);
+  font-weight: 600;
+}
+
+.desktopBlock {
+  display: grid;
+  gap: clamp(16px, 2vw, 24px);
+  width: min(100%, 1040px);
+  margin-inline: auto;
+}
+
+.desktop {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(12px, 2vw, 28px);
+  align-items: start;
+}
+
+.handover {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: clamp(28px, 5vw, 80px);
+  align-items: start;
+  width: min(100%, 1040px);
+  margin-inline: auto;
+}
+
+.handoverFlows {
+  display: grid;
+  gap: clamp(16px, 2vw, 24px);
+}
+
+.flowPhones {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(12px, 2vw, 24px);
+  align-items: start;
+}
+
+.notes {
+  display: grid;
+  gap: clamp(16px, 2vw, 24px);
+}
+
+.noteList {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(20px, 2.4vw, 32px) clamp(20px, 3vw, 40px);
+}
+
+.note {
+  display: grid;
+  gap: 8px;
+  padding-top: 16px;
+  border-top: 1px solid var(--case-line);
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  letter-spacing: var(--tracking-body);
+}
+
+.note p:last-child {
+  opacity: var(--opacity-soft);
+}
+
+.noteTitle {
+  font-weight: 600;
+  color: var(--accent);
+}
+
+/* ── 08 Delivery: the icon beside the conclusion ─────────────────────── */
+
+.delivery {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 7fr);
+  gap: clamp(28px, 5vw, 80px);
+  align-items: center;
+}
+
+.icon {
+  width: min(100%, 220px);
+  justify-self: center;
+}
+
+.icon > :first-child {
+  overflow: clip;
+  border-radius: 22%;
+  box-shadow: 0 24px 48px -28px rgb(0 0 0 / 0.5);
+}
+
+.backLink {
+  margin-top: clamp(16px, 2vw, 28px);
+  font-family: var(--font-ui);
+  font-size: var(--fs-body);
+  font-weight: 600;
+  color: var(--accent);
+}
+
+/* ── Tablet ─────────────────────────────────────────────────────────── */
+
+@media (max-width: 1023px) {
+  .comparisonInner,
+  .taskGroup,
+  .taskGroupFlipped,
+  .evidence,
+  .handover,
+  .delivery,
+  .plan {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .taskGroupFlipped .flowText {
+    order: 0;
+  }
+
+  .changes,
+  .flowText {
+    max-width: none;
+  }
+
+  .icon {
+    justify-self: start;
+    width: 140px;
+  }
+
+  .tasks {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* ── Phones ─────────────────────────────────────────────────────────── */
+
+@media (max-width: 599px) {
+  /* the hero and the dashboard stages keep their three phones side by side, closer together */
+  .heroPhones,
+  .evolution {
+    gap: 10px;
+  }
+
+  /* the Pawprint screens carry captions: one per line, centred */
+  .row {
+    grid-template-columns: minmax(0, 1fr);
+    width: 68%;
+  }
+
+  .noteList,
+  .audiences,
+  .desktop {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .tasks {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  /* one task's two phones stay side by side: they read as a pair */
+  .taskPhones > :nth-child(2) {
+    margin-top: 24px;
+  }
+}

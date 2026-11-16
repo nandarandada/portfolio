@@ -6,7 +6,7 @@
  * - `workType`: how the work is presented (a case study, a focused improvement, a live product).
  * - `disciplines`: what the work involved (any combination, e.g. strategy + UX + brand).
  *
- * Arctic Arena and Pawprint Oxygen are real projects. Every other entry below is a PLACEHOLDER
+ * Arctic Arena, Pawprint Oxygen and Great Pet Care Account are real projects. Every other entry below is a PLACEHOLDER
  * (`placeholder: true`), mirroring the Figma cards ("Project name" / "User Experience"),
  * kept only to evaluate layout and responsiveness. Placeholders are labelled as such on the
  * Work page and must be replaced, not edited into real-looking work.
@@ -93,6 +93,22 @@ export const projects: Project[] = [
     // Not featured: Home → Selected Work is decided after the full portfolio is reviewed.
     featured: false,
     order: 1,
+  },
+  {
+    slug: 'great-pet-care',
+    title: 'Great Pet Care Account',
+    summary: 'A growing set of pet-care tools made simple again, on the web and in the app, designed at Oowlish.',
+    disciplines: ['Product Design', 'UX/UI', 'Mobile'],
+    workType: 'product-case',
+    cover: {
+      type: 'image',
+      src: '/work/great-pet-care/dashboard.webp',
+      alt: 'The Great Pet Care app dashboard: “Welcome, Nick!”, four pets, two actions and a saved vet.',
+      aspectRatio: '720 / 1558',
+    },
+    // Not featured: Home → Selected Work is decided after the full portfolio is reviewed.
+    featured: false,
+    order: 2,
   },
   placeholder(1),
   placeholder(2, { preview: { type: 'video', aspectRatio: '16 / 10', placeholder: 'Interaction video' } }),
