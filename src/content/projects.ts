@@ -70,9 +70,9 @@ export const projects: Project[] = [
     workType: 'case-study',
     cover: {
       type: 'image',
-      src: '/work/arctic-arena/sign.jpg',
-      alt: 'The Arctic Arena logo rendered as a relief of purple dots.',
-      aspectRatio: '2000 / 1400',
+      src: '/work/arctic-arena/key-art.webp',
+      alt: 'The Arctic Arena emblem in warm yellow under an arc of pink and gold dots, above dark mountains and a starry purple sky.',
+      aspectRatio: '2000 / 1140',
     },
     // Not featured: Home → Selected Work is decided after the full portfolio is reviewed.
     featured: false,

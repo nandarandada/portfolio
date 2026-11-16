@@ -10,15 +10,17 @@
  *
  * REVIEW notes mark interpretations that are not documented in the project files.
  */
-import type { CaseDecision, CaseMedia, CaseMetaItem, CaseMosaicRow, CaseSwatch, CaseTheme } from './types';
+import type { CaseDecision, CaseMedia, CaseMetaItem, CaseSwatchGroup, CaseTheme, CaseVoiceGroup } from './types';
+import type { CaseLogoStage } from '../../components/case/CaseLogoStages';
+import type { CaseSitemapSection } from '../../components/case/CaseSitemap';
 
 const dir = '/work/arctic-arena';
 
-// Page surfaces follow the Figma layout (node 326:2): Frosa's grained black for the opening and
-// the final chapter, the grained indigo for the identity, purple grid lines. The project's own
+// Page surfaces follow the Figma layout (node 326:2): a near-black purple (#180531) with grain for
+// the opening, the identity and the final chapter, the grained indigo for the identity, purple grid lines. The project's own
 // navy and purple stay behind its artwork.
 export const arcticArenaTheme: CaseTheme = {
-  base: '#1F1F1F',
+  base: '#180531',
   surface: '#413184',
   accent: '#FFDD85',
   onAccent: '#13032A',
@@ -38,14 +40,15 @@ export const project = {
     { label: 'Year', value: '2021' },
   ] satisfies CaseMetaItem[],
   disciplines: ['Brand identity', 'Information architecture', 'UI design', 'Design system'],
+  // The key art's sky colour, carried up behind the site header so image and menu read as one.
+  heroSky: '#180838',
   hero: {
     id: 'AA-01',
     title: 'Key art',
     type: 'image',
-    src: `${dir}/sign.jpg`,
-    alt: 'The Arctic Arena logo rendered as a relief of purple dots on a dark purple background.',
-    aspectRatio: '2000 / 1400',
-    objectPosition: 'center 45%',
+    src: `${dir}/key-art.webp`,
+    alt: 'The Arctic Arena emblem in warm yellow under an arc of pink and gold dots, above dark mountains and a starry purple sky.',
+    aspectRatio: '2000 / 1140',
   } satisfies CaseMedia,
 };
 
@@ -97,16 +100,11 @@ export const identity = {
   label: 'Building the identity',
   heading: 'Two A’s, one emblem.',
   body: [
-    'The brief pointed to the valknut, a Norse symbol of interlocking triangles, and asked for two interlocked A’s, simple enough to be reduced. The final emblem draws both A’s as one geometric mark, used on its own or above the logotype.',
+    'The brief pointed to the valknut, a Norse symbol of interlocking triangles, and asked for two interlocked A’s. The final emblem draws both as one geometric mark.',
+    // From the Figma file: "Step 1 - Initial Study", "Step 2 - Presentation" (three concepts) and
+    // "Step 3 - Brand Guide".
+    'After a study of esports and game brands, I presented three concepts. The chosen one, the emblem inside a ring of dots like an aurora, was handed over as a full brand guide.',
   ],
-  exploration: {
-    id: 'AA-03',
-    title: 'Logo exploration',
-    type: 'image',
-    aspectRatio: '16 / 9',
-    recommendation: 'Add early sketches or logo iterations showing how the final Arctic Arena symbol evolved.',
-    tip: 'Prefer 3–5 meaningful explorations rather than a large collection of similar sketches.',
-  } satisfies CaseMedia,
   emblem: {
     id: 'AA-04',
     title: 'Emblem',
@@ -115,6 +113,16 @@ export const identity = {
     alt: 'The Arctic Arena emblem: two interlocked A-shaped triangles in warm yellow, among small stars.',
     aspectRatio: '1 / 1',
     artwork: true,
+  } satisfies CaseMedia,
+  // Brand guide page 08 (Figma node 280:15155): how the emblem was built.
+  concept: {
+    id: 'AA-04c',
+    title: 'Emblem concept',
+    type: 'image',
+    src: `${dir}/brand/concept-hd.jpg`,
+    alt: 'Brand guide page: the emblem built from the A of Arctic and the A of Arena, interlocked, plus the mountains of Svalbard.',
+    aspectRatio: '842 / 595',
+    caption: 'From the brand guide: Arctic + Arena + Svalbard.',
   } satisfies CaseMedia,
   lockup: {
     id: 'AA-04b',
@@ -168,26 +176,65 @@ export const identity = {
       artwork: true,
     },
   ] satisfies CaseMedia[],
-  // Colours sampled from the logo files and the screens. No rationale is stated: the brief
-  // asked for purple tones and to avoid black and blue; anything beyond that is unconfirmed.
+  // The full palette from the brand guide (page "Colors"), with its names and values.
   palette: {
     label: 'Colour',
-    note: 'Deep purples for the night, warm yellow for type and key actions, and a pink-to-gold gradient in the dotted ring.',
-    swatches: [
-      { name: 'Navy', hex: '#13032A' },
-      { name: 'Purple', hex: '#29064C' },
-      { name: 'Warm yellow', hex: '#FFDD85' },
-      { name: 'Gold', hex: '#FFAC60' },
-      { name: 'Pink', hex: '#E01974' },
-    ] satisfies CaseSwatch[],
+    note: 'Deep purples for the night; yellows, orange and pinks for the type and the dotted ring.',
+    groups: [
+      {
+        label: 'Primary',
+        swatches: [
+          { name: 'Main Yellow Font', hex: '#FFDD85', rgb: '255 221 133', cmyk: 'C 0% M 13% Y 48% K 0%' },
+          { name: 'Detail Yellow Font', hex: '#D2A530', rgb: '210 165 48', cmyk: 'C 0% M 18% Y 64% K 18%' },
+          { name: 'Dots 1 Yellow', hex: '#FFD260', rgb: '255 210 96', cmyk: 'C 0% M 18% Y 62% K 0%' },
+          { name: 'Dots 2 Orange', hex: '#FFAC60', rgb: '255 172 96', cmyk: 'C 0% M 33% Y 62% K 0%' },
+          { name: 'Dots 3 Light Pink', hex: '#F14B8F', rgb: '241 75 143', cmyk: 'C 0% M 65% Y 38% K 5%' },
+          { name: 'Dots 4 Mid Pink', hex: '#EE2C7B', rgb: '238 44 123', cmyk: 'C 0% M 76% Y 45% K 7%' },
+          { name: 'Dots 5 Dark Pink', hex: '#E01974', rgb: '224 25 116', cmyk: 'C 0% M 78% Y 42% K 12%' },
+        ],
+      },
+      {
+        label: 'Secondary',
+        swatches: [
+          { name: 'Main Background', hex: '#13032A', rgb: '19 3 42', cmyk: 'C 9% M 15% Y 0% K 84%' },
+          { name: 'Light Effect', hex: '#29064C', rgb: '41 6 76', cmyk: 'C 14% M 27% Y 0% K 70%' },
+        ],
+      },
+    ] satisfies CaseSwatchGroup[],
   },
-  typography: {
-    id: 'AA-07',
-    title: 'Typography',
+  // Brand guide page 39, "Arctic Arena Voice" (Figma node 300:7318), text as in the file,
+  // lightly tidied (spacing and line breaks only).
+  voice: {
+    label: 'Voice',
+    groups: [
+      {
+        title: 'Functional',
+        traits: [
+          { name: 'Casual', text: 'How we’d talk to the sports community. Slang most internet users would understand.', example: 'Social media posts, Reddit, Twitch' },
+          { name: 'Neutral', text: 'The shortest route possible. Firm, brave, grandiose.', example: 'The Game Awards' },
+        ],
+      },
+      {
+        title: 'Emotional',
+        traits: [
+          { name: 'Celebratory', text: 'An esports event brand: the communication is always commemorative.', example: 'GG!' },
+          { name: 'Organizational', text: 'Organized and inclusive, with the confidence of trust and belonging.', example: 'Join us!' },
+          { name: 'Inclusive', text: 'Everyone is invited. Neutral, while making every participant comfortable.' },
+        ],
+      },
+    ] satisfies CaseVoiceGroup[],
+  },
+  // The brand texture, full width (Figma node 294:959, page “Step 3 - Brand Guide”). Add
+  // `src: \`${dir}/brand/texture.svg\``, `alt` and the real `aspectRatio` once exported.
+  texture: {
+    id: 'AA-09c',
+    title: 'Brand texture',
     type: 'image',
-    aspectRatio: '3 / 2',
-    recommendation: 'Export the Fonts frame from the design system page of the Figma file: the headings, the logotype lettering and the body text together.',
-    tip: 'Crop close enough that the letterforms read clearly. One specimen is better than a full style list.',
+    // From the brand guide's texture (Figma node 294:959): its embedded pattern at 80%, on the
+    // page's navy, cropped to a wide band.
+    src: `${dir}/brand/texture-rows.jpg`,
+    alt: 'The Arctic Arena texture: interlocking triangles drawn in thin gold and pink lines on navy.',
+    aspectRatio: '2469 / 1215',
   } satisfies CaseMedia,
   aurora: {
     id: 'AA-08',
@@ -219,22 +266,26 @@ export const identity = {
       caption: 'Social cover',
     },
   ] satisfies CaseMedia[],
+  // REVIEW: supplied by Fernanda; confirm whether this is a mockup or a produced jacket, and
+  // that the photo can be shown (the wearer's chin is cropped out).
   merch: {
     id: 'AA-10',
     title: 'Brand in use',
     type: 'image',
-    aspectRatio: '4 / 5',
-    recommendation: 'Add a real application of the identity: a T-shirt, a flag, a ticket or signage.',
-    tip: 'Only real, produced items or mockups made for the project. Show one application well rather than many small ones.',
+    src: `${dir}/brand/jacket.jpg`,
+    alt: 'The Arctic Arena emblem and dotted ring on the chest of a black and pink jacket.',
+    aspectRatio: '1400 / 827',
+    caption: 'The emblem on a jacket.',
   } satisfies CaseMedia,
 };
 
 /* ── Designing the experience ─────────────────────────────────────────── */
 
 export const experience = {
-  label: 'Designing the experience',
+  label: 'Behind the experience',
   heading: 'Clear paths through an expressive brand.',
-  intro: 'Before the screens, I mapped every page and what each audience would look for. The sitemap, with notes on how each element behaves, was documented in Figma for development.',
+  // From the Figma file: "Site Step 1 - Study", "Site Step 2 - Wireframe", "Site Step 3 - UI".
+  intro: 'Before the screens, I studied event, esports and game sites, then mapped every page and what each audience would look for. Wireframes came next, then the final design, documented in Figma for development: the sitemap, and notes on how each element behaves.',
   sitemap: {
     id: 'AA-12',
     title: 'Sitemap',
@@ -245,29 +296,41 @@ export const experience = {
     objectFit: 'cover',
     caption: 'Sitemap. The shop and the business area are marked to open in a new tab.',
   } satisfies CaseMedia,
-  // Each decision is visible in the sitemap or the final screens. Reasons behind them are
-  // not documented, so they are described rather than explained.
+  // The sitemap from the Figma documentation (Site Step 3 - UI, "Site Map"), redrawn in HTML.
+  // Page names as in the file.
+  sitemapTree: {
+    label: 'Sitemap of the Arctic Arena website',
+    root: 'Home',
+    groups: { main: 'Main story', external: 'Opens in a new tab' },
+    caption: 'The sitemap, from the documentation for development. The shop and the business area open in a new tab, outside the main story.',
+    sections: [
+      { title: 'Event', pages: ['Summary', 'Event summary', 'Sponsors logos', 'Channels', 'Twitch videos', 'Products links'] },
+      { title: 'About', pages: ['Arctic Arena', 'Svalbard', 'History', 'Values', 'Channels'] },
+      { title: 'Sponsors', pages: ['List', 'About sponsors'] },
+      { title: 'Blog', pages: ['News'] },
+      {
+        title: 'E-commerce',
+        external: true,
+        pages: ['Home', 'Product list', 'Product page', 'Help', 'Safe shopping', 'X-day return', 'My account / Login', 'Track order'],
+      },
+      { title: 'Business', external: true, note: 'For partners', pages: ['Why participate', 'Why special', 'Games', 'Contact us'] },
+    ] satisfies CaseSitemapSection[],
+  },
+  // Each decision is visible in the sitemap, the final screens or the Figma documentation. Reasons
+  // behind them are not documented, so they are described rather than explained. Further notes
+  // (streams, social channels, hover states) live in the screen navigator.
   decisions: [
     {
-      title: 'One main story',
-      // REVIEW: the reason (keeping buying and partnering from interrupting the story) is not documented.
-      text: 'Event, About, Sponsors and News carry the main story. The shop and the business area open in a new tab.',
+      title: 'Two audiences, two paths',
+      text: 'Players follow the event, the streams and the news. Partners get their own page: why take part, what makes the event special, and a direct contact.',
     },
     {
-      title: 'A path for partners',
-      text: 'Partners have their own page: why take part, what makes the event special, the games and a direct contact.',
+      title: 'Built for every edition',
+      text: 'Each edition has its own page, labelled by year, with its games, teams and winners. The side navigation grows with them: more editions, more dots.',
     },
     {
-      title: 'Every edition',
-      text: 'Each edition has its own page, labelled by year, with games, teams and winners.',
-    },
-    {
-      title: 'Live, close at hand',
-      text: 'Twitch streams and the event’s channels sit on the home page, and every header links to them.',
-    },
-    {
-      title: 'Bold, then calm',
-      text: 'Each page opens with a large branded hero, then moves to framed blocks with section names set vertically in the margin.',
+      title: 'Expressive, then clear',
+      text: 'Each page opens with a bold branded hero, then settles into framed blocks, section names in the margin, and a fixed marker of where you are.',
     },
   ] satisfies CaseDecision[],
   documentation: {
@@ -279,14 +342,6 @@ export const experience = {
     alt: 'Screen recording of the Figma documentation: the sitemap, then page sections annotated with behaviour notes.',
     aspectRatio: '1280 / 628',
     caption: 'The documentation in Figma: structure first, then the behaviour of each element.',
-  } satisfies CaseMedia,
-  earlyUx: {
-    id: 'AA-11',
-    title: 'Early UX exploration',
-    type: 'image',
-    aspectRatio: '4 / 3',
-    recommendation: 'Add a wireframe, sitemap detail, or early layout showing how event information was organized.',
-    tip: 'Highlight a specific design decision rather than showing an entire unreadable document.',
   } satisfies CaseMedia,
   system: {
     label: 'Design system',
@@ -302,100 +357,18 @@ export const experience = {
       caption: 'The design system in Figma.',
     } satisfies CaseMedia,
   },
-  mobile: {
-    label: 'Desktop and mobile',
-    text: 'Every page was designed at 1440 and 320 pixels wide.',
-    screens: [
-      { id: 'AA-15a', title: 'Home, mobile', type: 'image', src: `${dir}/mobile-6.jpg`, alt: 'Mobile home: the dotted ring, the emblem and the headline “Are you ready”.', aspectRatio: '320 / 560' },
-      { id: 'AA-15b', title: 'Event, mobile', type: 'image', src: `${dir}/mobile-9.jpg`, alt: 'Mobile event page with the headline “Arctic Arena”.', aspectRatio: '320 / 560' },
-      { id: 'AA-15c', title: 'About, mobile', type: 'image', src: `${dir}/mobile-14.jpg`, alt: 'Mobile about page with the headline “About” and the section tabs.', aspectRatio: '320 / 560' },
-      { id: 'AA-15d', title: 'Sponsors, mobile', type: 'image', src: `${dir}/mobile-17.jpg`, alt: 'Mobile sponsors page with the headline “Join us in this adventure”.', aspectRatio: '320 / 560' },
-    ] satisfies CaseMedia[],
-  },
 };
 
-/* ── The final experience ─────────────────────────────────────────────── */
+/* ── Explore the website: the screen navigator ────────────────────────── */
 
-export const finalExperience = {
-  label: 'The final experience',
-  heading: 'Under the Arctic sky.',
-  home: {
-    id: 'AA-16',
-    title: 'Home',
-    type: 'image',
-    src: `${dir}/home-hero.jpg`,
-    alt: 'Desktop home hero: the emblem inside the dotted ring and the headline “Are you ready”, “To be amongst the best players under the polar sky?”.',
-    aspectRatio: '1440 / 650',
-    caption: 'Home',
-  } satisfies CaseMedia,
-  // Stream thumbnails, product photos and news photos are blurred: their rights are unconfirmed.
-  homeScroll: {
-    id: 'AA-17',
-    title: 'Home, full page',
-    type: 'image',
-    src: `${dir}/home-full.jpg`,
-    alt: 'The full desktop home page: hero, Twitch streams, event, sponsors, channels, shop and news. Photos are blurred.',
-    aspectRatio: '960 / 2386',
-    caption: 'The full home page. Third-party photos are blurred.',
-  } satisfies CaseMedia,
-  edition: {
-    id: 'AA-19',
-    title: 'Event edition',
-    type: 'image',
-    src: `${dir}/event-edition.jpg`,
-    alt: 'Event page for the 2021 edition, with the dotted emblem as key art and tabs for games, teams and winners.',
-    aspectRatio: '1440 / 780',
-    caption: 'An edition page',
-  } satisfies CaseMedia,
-  pages: [
-    {
-      id: 'AA-20',
-      title: 'About',
-      type: 'image',
-      src: `${dir}/about.jpg`,
-      alt: 'About page: the headline “About” beside the emblem in a ring of dots, with tabs for history, influences, Svalbard and values.',
-      aspectRatio: '1440 / 1000',
-      caption: 'About',
-    },
-    {
-      id: 'AA-21',
-      title: 'Sponsors',
-      type: 'image',
-      src: `${dir}/sponsors.jpg`,
-      alt: 'Sponsors page hero: “Join us in this adventure” over a purple concert scene with lasers.',
-      aspectRatio: '1440 / 620',
-      caption: 'Sponsors',
-    },
-  ] satisfies CaseMedia[],
-  commerce: [
-    {
-      id: 'AA-22',
-      title: 'Shop',
-      type: 'image',
-      src: `${dir}/shop.jpg`,
-      alt: 'Shop home: a T-shirt banner with the Arctic Arena ring printed on the back, and large Tickets and Flags categories.',
-      aspectRatio: '1440 / 960',
-      caption: 'Shop',
-    },
-    {
-      id: 'AA-23',
-      title: 'Sign in',
-      type: 'image',
-      src: `${dir}/sign-in.jpg`,
-      alt: 'Shop sign-in page with email and password fields and a yellow sign-in button.',
-      aspectRatio: '1440 / 988',
-      caption: 'Sign in',
-    },
-  ] satisfies CaseMedia[],
-  motion: {
-    id: 'AA-18',
-    title: 'Identity in motion',
-    type: 'video',
-    aspectRatio: '1 / 1',
-    recommendation: 'Add a short loop animating the Arctic Arena emblem or dotted-ring graphic.',
-    format: 'WebM or MP4, with a static fallback.',
-    tip: 'Keep it short and seamless, 4–8 seconds.',
-  } satisfies CaseMedia,
+export const explore = {
+  label: 'Explore the website',
+  heading: 'Every page, as designed.',
+  // The screens come from the final Figma file; the implemented site differs from it in places.
+  text: 'Move through the final screens with the site’s own menu and links, or pick a page from the list. Switch between desktop and mobile to see every page at both sizes.',
+  navigatorLabel: 'The Arctic Arena website: final screens, desktop and mobile',
+  // Agreed disclosure: the logos are invented examples, the images come from the project's own artwork.
+  navigatorNote: 'The sponsor and team logos in these screens are fictional examples made for this portfolio, not event partners or client assets. The delivered design used placeholder boxes, and the stream, news and shop images were added from the project’s own artwork. Photos of people are blurred.',
   closing: 'The brand identity and digital experience were developed, and an initial website version was partially implemented.',
   next: { label: 'Back to all work', href: '/work' },
 };
@@ -404,45 +377,46 @@ export const finalExperience = {
 // Edge-to-edge rows of images between chapters, as in the Figma layout. Each item's width is
 // its share of the row at 1280px; the row height is shared, so every image is cropped to fit.
 
-/** After the opening: the finished site, before the story of how it was made. */
-export const screensMosaic = {
-  label: 'Screens from the Arctic Arena website',
-  rows: [
-    { height: 565, items: [{ media: finalExperience.home, width: 1280 }] },
+/**
+ * After the challenge: the logo in one place while its brand-guide pages change around it.
+ * Pages from the Figma file, "Step 3 - Brand Guide": the logo (node 280:15776, drawn here from the
+ * vector logo file), construction (277:7646), colours (279:9539) and opacity (277:9091).
+ * `place` aligns each page on the wordmark (measured on the exports), in % of an 842 × 595 frame.
+ */
+export const logoStages = {
+  label: 'The Arctic Arena logo: construction, colours and opacity, from the brand guide',
+  ratio: '842 / 595',
+  background: 'radial-gradient(42% 52% at 58.8% 48.6%, #270747 0%, #13032A 100%)',
+  stages: [
     {
-      height: 440,
-      items: [
-        { media: finalExperience.edition, width: 641 },
-        { media: finalExperience.pages[0], width: 641 },
-      ],
+      id: 'logo',
+      label: 'Logo',
+      // logo-ring.svg rendered once into the frame at 2×, aligned on the wordmark (the vector has
+      // 76 filters and decodes too slowly to swap in live).
+      src: `${dir}/brand/stage-1-hd.jpg`,
+      alt: 'The Arctic Arena logo: the emblem and logotype in warm yellow inside a ring of pink and gold dots.',
+      place: { left: 0, top: 0, width: 100 },
     },
     {
-      height: 440,
-      items: [
-        { media: finalExperience.pages[1], width: 849 },
-        { media: identity.applications[0], width: 433 },
-      ],
-    },
-  ] satisfies CaseMosaicRow[],
-};
-
-/** After the challenge: the place and the night sky the identity grew from. */
-export const placeMosaic = {
-  label: 'Svalbard and the polar night, in the site’s imagery',
-  rows: [
-    {
-      height: 440,
-      items: [
-        { media: challenge.media[0], width: 641 },
-        { media: identity.aurora, width: 641 },
-      ],
+      id: 'construction',
+      label: 'Construction',
+      src: `${dir}/brand/stage-2-hd.jpg`,
+      alt: 'Brand guide, construction: the logo drawn in outline on a grid, with its proportions measured in multiples of X, the smallest possible size.',
+      place: { left: 14.28, top: 5.71, width: 88.7 },
     },
     {
-      height: 440,
-      items: [
-        { media: identity.applications[1], width: 849 },
-        { media: challenge.media[1], width: 433 },
-      ],
+      id: 'colour',
+      label: 'Colour',
+      src: `${dir}/brand/stage-3-hd.jpg`,
+      alt: 'Brand guide, colours: the five dot colours from yellow #FFD260 to dark pink #E01974, and the main and detail yellows of the type, #FFDD85 and #D2A530.',
+      place: { left: 0, top: 0, width: 100 },
     },
-  ] satisfies CaseMosaicRow[],
+    {
+      id: 'opacity',
+      label: 'Opacity',
+      src: `${dir}/brand/stage-4-hd.jpg`,
+      alt: 'Brand guide, opacity: the ring of dots fading in steps from 100% to 10%.',
+      place: { left: 0, top: 0, width: 100 },
+    },
+  ] satisfies CaseLogoStage[],
 };

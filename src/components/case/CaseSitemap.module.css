@@ -1,0 +1,191 @@
+/*
+ * The sitemap, read top to bottom: Home, then a spine down the left to every section, solid for
+ * the main story and dashed for the areas that open in a new tab. Each section is one row: its
+ * name, then its parts. Sits bare inside the white sheet it shares with the intro text.
+ */
+
+.sitemap {
+  --line: color-mix(in srgb, var(--case-line) 55%, transparent);
+  --ink-soft: rgb(31 31 31 / 0.66);
+  --indent: clamp(22px, 3vw, 36px);
+  width: 100%;
+  max-width: 54rem;
+  margin: 0 auto;
+  font-family: var(--font-ui);
+  color: var(--color-ink);
+}
+
+/* ── Root ── */
+
+.rootRow {
+  display: flex;
+}
+
+.root {
+  padding: 9px 22px;
+  border-radius: 999px;
+  background: var(--case-art);
+  color: var(--color-white);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  letter-spacing: var(--tracking-body);
+}
+
+/* ── Groups hang from a spine under Home ── */
+
+.groups {
+  display: grid;
+  margin-left: 28px;
+}
+
+.group {
+  position: relative;
+  display: grid;
+  gap: 4px;
+  padding: 28px 0 8px var(--indent);
+  border-left: 1px solid var(--case-line);
+}
+
+.groupExternal {
+  border-left-style: dashed;
+}
+
+/* the spine stops at the last section */
+.groupExternal::after {
+  content: '';
+  position: absolute;
+  left: -2px;
+  bottom: 0;
+  width: 3px;
+  height: 32px;
+  background: var(--color-white);
+}
+
+.groupLabel {
+  margin-bottom: 6px;
+  font-size: var(--fs-meta);
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--case-line);
+}
+
+.sections {
+  display: grid;
+}
+
+/* ── One section per row: name on the left, its parts on the right ── */
+
+.section {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(9rem, 13rem) minmax(0, 1fr);
+  align-items: baseline;
+  gap: 6px clamp(16px, 3vw, 40px);
+  padding-block: 14px;
+  border-bottom: 1px solid rgb(31 31 31 / 0.08);
+}
+
+.section:last-child {
+  border-bottom: 0;
+}
+
+/* a tick from the spine to the section */
+.section::before {
+  content: '';
+  position: absolute;
+  left: calc(-1 * var(--indent));
+  top: 1.45em;
+  width: calc(var(--indent) - 8px);
+  height: 1px;
+  background: var(--case-line);
+}
+
+.groupExternal .section::before {
+  background: none;
+  border-top: 1px dashed var(--case-line);
+}
+
+.sectionTitle {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: var(--tracking-body);
+}
+
+.newTab {
+  color: var(--case-line);
+  font-size: 0.875rem;
+}
+
+.sectionNote {
+  grid-column: 1;
+  grid-row: 2;
+  font-size: 0.75rem;
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+/* the parts of a section, in a quiet line separated by dots */
+.pages {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 0;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  letter-spacing: var(--tracking-body);
+  color: var(--ink-soft);
+}
+
+.pages li {
+  white-space: nowrap;
+}
+
+.pages li:not(:last-child)::after {
+  content: '·';
+  margin-inline: 0.6em;
+  color: var(--case-line);
+}
+
+.caption {
+  max-width: 28rem;
+  margin-top: clamp(18px, 2.2vw, 28px);
+  padding-left: calc(28px + var(--indent));
+  font-size: 0.875rem;
+  line-height: 1.45;
+  letter-spacing: var(--tracking-body);
+  color: var(--ink-soft);
+}
+
+/* ── Phones: the parts go under the name ── */
+
+@media (max-width: 599px) {
+  .groups {
+    margin-left: 14px;
+  }
+
+  .section {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .sectionNote {
+    grid-row: auto;
+  }
+
+  .pages {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .pages li {
+    white-space: normal;
+  }
+
+  .caption {
+    padding-left: 0;
+  }
+}

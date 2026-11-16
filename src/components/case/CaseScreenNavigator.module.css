@@ -1,0 +1,386 @@
+/* The screen navigator: page list, device switch, a browser window or phone, and the notes. */
+
+.navigator {
+  display: grid;
+  gap: clamp(24px, 3vw, 40px);
+  font-family: var(--font-ui);
+}
+
+/* ── Page list and device switch ── */
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px 40px;
+}
+
+.groups {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 32px;
+}
+
+.group {
+  display: grid;
+  gap: 8px;
+}
+
+.groupLabel {
+  font-size: var(--fs-meta);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  opacity: var(--opacity-muted);
+}
+
+.pages {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.pageButton,
+.device {
+  padding: 7px 14px;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: var(--tracking-body);
+  cursor: pointer;
+  transition:
+    background-color var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out);
+}
+
+.pageButton:hover:not(:disabled),
+.device:hover {
+  border-color: var(--accent);
+}
+
+.pageButton:disabled {
+  opacity: 0.32;
+  cursor: not-allowed;
+}
+
+.current,
+.current:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--case-on-accent);
+}
+
+.pageButton:focus-visible,
+.device:focus-visible,
+.viewport:focus-visible,
+.hotspot:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.deviceBlock {
+  display: grid;
+  justify-items: start;
+  gap: 8px;
+}
+
+.devices {
+  display: flex;
+  gap: 6px;
+}
+
+.legend {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8125rem;
+  letter-spacing: var(--tracking-body);
+  opacity: 0.8;
+}
+
+.legendSwatch {
+  width: 22px;
+  height: 12px;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  opacity: 0.5;
+}
+
+/* kept on the frame, so the sample logos are never shown without saying so */
+.badge {
+  flex-shrink: 0;
+  padding: 4px 10px;
+  border: 1px solid rgb(255 221 133 / 0.5);
+  border-radius: 999px;
+  color: var(--accent);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.badgeFloating {
+  display: block;
+  width: fit-content;
+  margin: 0 auto 8px;
+}
+
+/* ── Stage: the window and the notes beside it ── */
+
+.stage {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(200px, 16rem);
+  gap: clamp(24px, 3vw, 48px);
+  align-items: start;
+}
+
+.stageMobile {
+  grid-template-columns: minmax(0, 1fr) minmax(200px, 16rem);
+}
+
+.windowWrap {
+  display: grid;
+  gap: 14px;
+  min-width: 0;
+}
+
+/* says plainly that the screen can be used, with a soft live dot */
+.interactive {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  justify-self: start;
+  padding: 7px 14px 7px 12px;
+  border: 1px solid rgb(255 221 133 / 0.45);
+  border-radius: 999px;
+  background: rgb(255 221 133 / 0.08);
+  color: var(--accent);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.pulse {
+  position: relative;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .pulse::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: pulse 1.8s ease-out infinite;
+  }
+
+  @keyframes pulse {
+    to {
+      transform: scale(2.8);
+      opacity: 0;
+    }
+  }
+}
+
+/* the window lifts off the page: a deep shadow and a faint brand glow */
+.window {
+  overflow: hidden;
+  border: 1px solid rgb(255 221 133 / 0.28);
+  border-radius: 12px;
+  background: var(--case-art-deep);
+  box-shadow:
+    0 0 0 1px rgb(0 0 0 / 0.4),
+    0 40px 90px -30px rgb(0 0 0 / 0.95),
+    0 0 120px -20px color-mix(in srgb, var(--case-line) 55%, transparent);
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--rule);
+  background: rgb(255 255 255 / 0.04);
+}
+
+.lights {
+  display: flex;
+  gap: 6px;
+}
+
+.lights i {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgb(255 255 255 / 0.18);
+}
+
+.address {
+  flex: 1;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: rgb(0 0 0 / 0.25);
+  font-size: 0.8125rem;
+  letter-spacing: var(--tracking-body);
+  opacity: 0.8;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.slash {
+  opacity: 0.5;
+}
+
+.viewport {
+  height: min(72vh, 680px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: rgb(255 255 255 / 0.25) transparent;
+}
+
+/* the phone: the screen at its designed width */
+.phone {
+  justify-self: center;
+  position: relative;
+  width: min(100%, 340px);
+  padding: 10px;
+  border-radius: 34px;
+  border-color: rgb(255 255 255 / 0.22);
+}
+
+.phone .viewport {
+  height: min(70vh, 640px);
+  border-radius: 24px;
+}
+
+.screen {
+  position: relative;
+  width: 100%;
+  aspect-ratio: var(--ratio);
+  background: var(--case-art-deep);
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* the site's own links: invisible until hovered, focused or hinted */
+.hotspot {
+  position: absolute;
+  padding: 0;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  cursor: pointer;
+  transition:
+    background-color var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-fast) var(--ease-out);
+}
+
+.hotspot:hover {
+  background: rgb(255 221 133 / 0.12);
+  box-shadow: inset 0 0 0 1px rgb(255 221 133 / 0.6);
+}
+
+.hint .hotspot {
+  background: rgb(255 221 133 / 0.18);
+  box-shadow: inset 0 0 0 1px rgb(255 221 133 / 0.8);
+}
+
+/* ── Notes ── */
+
+.notes {
+  max-width: 20rem;
+  position: sticky;
+  top: 120px;
+  display: grid;
+  gap: 12px;
+}
+
+.notesLabel {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--fs-step);
+  line-height: var(--lh-heading);
+}
+
+.notesSource {
+  font-size: var(--fs-meta);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.notesList {
+  display: grid;
+  gap: 12px;
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  letter-spacing: var(--tracking-body);
+}
+
+.notesList li {
+  padding-left: 14px;
+  border-left: 1px solid var(--rule);
+  opacity: var(--opacity-soft);
+}
+
+.tip {
+  margin-top: 8px;
+  font-size: 0.875rem;
+  line-height: 1.45;
+  font-style: italic;
+  opacity: var(--opacity-muted);
+}
+
+.disclosure {
+  max-width: 24rem;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  letter-spacing: var(--tracking-body);
+  font-style: italic;
+  opacity: var(--opacity-muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pageButton,
+  .device,
+  .hotspot {
+    transition: none;
+  }
+}
+
+@media (max-width: 1023px) {
+  .stage,
+  .stageMobile {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .notes {
+    position: static;
+  }
+}
+
+@media (max-width: 599px) {
+  .viewport {
+    height: 64vh;
+  }
+}

@@ -1,0 +1,116 @@
+/* The logo in one place while the brand-guide pages around it change. */
+
+.stages {
+  display: grid;
+  gap: clamp(20px, 2.4vw, 32px);
+  width: min(100% - 2 * var(--gutter), 1100px);
+  margin-inline: auto;
+  font-family: var(--font-ui);
+}
+
+.frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: var(--ratio);
+  overflow: clip;
+}
+
+/* each stage fades slowly into the next; the logo stays where it is */
+.layer {
+  position: absolute;
+  display: block;
+  height: auto;
+  max-width: none;
+  opacity: 0;
+  transition: opacity 1400ms var(--ease-in-out);
+}
+
+.layer[data-active='true'] {
+  opacity: 1;
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(8px, 1.6vw, 24px);
+}
+
+.step {
+  position: relative;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  width: 100%;
+  padding: 14px 0 0;
+  border: 0;
+  border-top: 1px solid var(--rule);
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  letter-spacing: var(--tracking-body);
+  text-align: left;
+  opacity: 0.55;
+  cursor: pointer;
+  transition: opacity var(--dur-fast) var(--ease-out);
+}
+
+.step:hover,
+.step[data-active='true'] {
+  opacity: 1;
+}
+
+.step:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+.stepNumber {
+  font-size: var(--fs-meta);
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  color: var(--accent);
+}
+
+/* a thin line fills over the stage's time on screen */
+.progress {
+  position: absolute;
+  top: -1px;
+  left: 0;
+  height: 1px;
+  width: 0;
+  background: var(--accent);
+}
+
+.step[data-active='true'] .progress {
+  width: 100%;
+}
+
+.step[data-running='true'] .progress {
+  animation: fill var(--hold) linear both;
+}
+
+@keyframes fill {
+  from {
+    width: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .layer,
+  .step {
+    transition: none;
+  }
+
+  .step[data-running='true'] .progress {
+    animation: none;
+  }
+}
+
+@media (max-width: 599px) {
+  .steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 16px;
+  }
+}

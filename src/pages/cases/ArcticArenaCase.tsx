@@ -1,31 +1,34 @@
 import { usePageTitle } from '../usePageTitle';
 import { Container } from '../../components/primitives/Container';
+import { Surface } from '../../components/primitives/Section';
 import { KeywordStrip } from '../../components/compositions/KeywordStrip';
 import {
   CaseAudiences,
-  CaseCell,
   CaseClosing,
   CaseDecisions,
-  CaseGrid,
   CaseGridLines,
   CaseHero,
   CaseIntro,
-  CaseMosaic,
   CaseNote,
   CaseSection,
   CaseSwatches,
   CaseTheme,
+  CaseVoice,
 } from '../../components/case/CaseLayout';
-import { CaseFigure, CaseScrollScreen } from '../../components/case/CaseMedia';
+import { CaseFigure } from '../../components/case/CaseMedia';
+import { CaseHeroArt } from '../../components/case/CaseHeroArt';
+import { CaseLogoStages } from '../../components/case/CaseLogoStages';
+import { CaseSitemap } from '../../components/case/CaseSitemap';
+import { CaseScreenNavigator } from '../../components/case/CaseScreenNavigator';
+import { screenPages } from '../../content/cases/arcticArenaScreens';
 import {
   arcticArenaTheme,
   challenge,
   experience,
-  finalExperience,
+  explore,
   identity,
-  placeMosaic,
+  logoStages,
   project,
-  screensMosaic,
 } from '../../content/cases/arcticArena';
 import styles from '../../components/case/Case.module.css';
 
@@ -33,17 +36,27 @@ import styles from '../../components/case/Case.module.css';
  * Arctic Arena (2021): brand identity and website for a new gaming event in Svalbard.
  * Layout follows the Figma guide (node 326:2): key art and the centred editorial column,
  * a mosaic of the finished site, the challenge on white, a mosaic of the place, the identity
- * on indigo; then the experience (the white grid page) and the final screens.
+ * on the dark page; then the result first (the digital experience, large final screens), the
+ * thinking behind it (the white grid page), and finally the screens to explore (the navigator).
  */
+// The layered key art loads as its own chunk, so it never weighs on the rest of the site.
+const loadHeroArt = () => import('../../content/cases/art/arctic-arena-hero.svg?raw').then((m) => m.default);
+
 export function ArcticArenaCase() {
   usePageTitle(project.title);
 
   return (
     <CaseTheme theme={arcticArenaTheme}>
       {/* The project */}
-      <CaseHero title={project.title} meta={project.meta} disciplines={project.disciplines} body={project.body} media={project.hero} />
-
-      <CaseMosaic label={screensMosaic.label} rows={screensMosaic.rows} />
+      <CaseHero
+        title={project.title}
+        meta={project.meta}
+        disciplines={project.disciplines}
+        body={project.body}
+        media={project.hero}
+        sky={project.heroSky}
+        art={<CaseHeroArt load={loadHeroArt} ratio="1200 / 594" background="#13032A" label={project.hero.alt} />}
+      />
 
       {/* The challenge: the white editorial page, purple grid in the margins */}
       <CaseSection tone="paper" labelledBy="aa-challenge">
@@ -58,7 +71,10 @@ export function ArcticArenaCase() {
         </Container>
       </CaseSection>
 
-      <CaseMosaic label={placeMosaic.label} rows={placeMosaic.rows} />
+      {/* The logo, in place, while its brand-guide pages change around it */}
+      <CaseSection tone="base" label={logoStages.label} className={styles.logoStagesBand}>
+        <CaseLogoStages stages={logoStages.stages} ratio={logoStages.ratio} background={logoStages.background} label={logoStages.label} />
+      </CaseSection>
 
       {/* Building the identity: the brief's words as a running band, then the marks */}
       <CaseSection tone="base" labelledBy="aa-identity" className={styles.identity}>
@@ -67,8 +83,11 @@ export function ArcticArenaCase() {
           <CaseIntro id="aa-identity" label={identity.label} heading={identity.heading} body={identity.body} />
 
           <div className={styles.logos}>
-            <CaseFigure media={identity.emblem} ratio="1008 / 440" className={styles.logoBox} />
-            <CaseFigure media={identity.lockup} ratio="1008 / 440" className={`${styles.logoBox} ${styles.logoCover}`} />
+            <CaseFigure media={identity.concept} />
+            <div className={styles.logoPair}>
+              <CaseFigure media={identity.emblem} ratio="16 / 10" className={styles.logoBox} />
+              <CaseFigure media={identity.lockup} ratio="16 / 10" delay={90} className={`${styles.logoBox} ${styles.logoCover}`} />
+            </div>
             <ul className={styles.versions}>
               {identity.versions.map((media, i) => (
                 <li key={media.id}>
@@ -78,87 +97,63 @@ export function ArcticArenaCase() {
             </ul>
           </div>
 
-          <CaseGrid>
-            <CaseCell col={1} span={5} tablet={12} align="center">
-              <CaseSwatches label={identity.palette.label} note={identity.palette.note} swatches={identity.palette.swatches} />
-            </CaseCell>
-            <CaseCell col={7} span={6} tablet={12}>
-              <CaseFigure media={identity.typography} />
-            </CaseCell>
-          </CaseGrid>
-
-          <CaseGrid>
-            <CaseCell col={1} span={7} tablet={12}>
-              <CaseFigure media={identity.exploration} />
-            </CaseCell>
-            <CaseCell col={9} span={4} tablet={6} drop={2}>
-              <CaseFigure media={identity.merch} />
-            </CaseCell>
-          </CaseGrid>
-        </Container>
-      </CaseSection>
-
-      {/* Designing the experience: the white grid page */}
-      <CaseSection tone="paper" grid labelledBy="aa-experience">
-        <Container className={styles.stack}>
-          <CaseIntro id="aa-experience" label={experience.label} heading={experience.heading} body={[experience.intro]} panel />
-          <CaseFigure media={experience.sitemap} className={styles.paperFigure} />
-          <CaseGrid>
-            <CaseCell col={1} span={5} tablet={12}>
-              <div className={styles.paperPanel}>
-                <CaseDecisions items={experience.decisions} />
-              </div>
-            </CaseCell>
-            <CaseCell col={7} span={6} tablet={12} className={styles.sticky} align="start">
-              <CaseFigure media={experience.documentation} className={styles.paperFigure} />
-            </CaseCell>
-          </CaseGrid>
-          <CaseGrid>
-            <CaseCell col={1} span={5} tablet={6} drop={2}>
-              <CaseFigure media={experience.earlyUx} />
-            </CaseCell>
-            <CaseCell col={7} span={6} tablet={12}>
-              <div className={styles.stackTight}>
-                <CaseNote label={experience.system.label} text={experience.system.text} className={styles.paperPanel} />
-                <CaseFigure media={experience.system.media} className={styles.paperFigure} />
-              </div>
-            </CaseCell>
-          </CaseGrid>
-          <div className={styles.stackTight}>
-            <CaseNote label={experience.mobile.label} text={experience.mobile.text} className={styles.paperPanel} />
-            <ul className={styles.phones}>
-              {experience.mobile.screens.map((media, i) => (
-                <li key={media.id}>
-                  <CaseFigure media={media} delay={i * 90} />
-                </li>
-              ))}
-            </ul>
+          {/* colour, the brand in use, and the voice: one narrow column, read top to bottom */}
+          <div className={styles.brandColumn}>
+            <CaseSwatches label={identity.palette.label} note={identity.palette.note} groups={identity.palette.groups} />
+            <CaseFigure media={identity.merch} />
+            <CaseVoice label={identity.voice.label} groups={identity.voice.groups} />
           </div>
         </Container>
+
+        {/* the brand texture, edge to edge */}
+        <div className={styles.textureBand}>
+          <CaseFigure media={identity.texture} />
+        </div>
       </CaseSection>
 
-      {/* The final experience: the full home page, the shop, and the closing */}
-      <CaseSection tone="base" labelledBy="aa-final">
+      {/* Explore the website: the screen navigator, the main presentation of the finished site */}
+      <CaseSection tone="base" labelledBy="aa-explore">
         <CaseGridLines region={{ left: 0, top: 3, width: 3, height: 8 }} hideBelow="desktop" />
         <Container className={styles.stack}>
-          <CaseIntro id="aa-final" label={finalExperience.label} heading={finalExperience.heading} />
-          <CaseGrid>
-            <CaseCell col={1} span={5} tablet={6}>
-              <CaseScrollScreen media={finalExperience.homeScroll} ratio="3 / 4.4" />
-            </CaseCell>
-            <CaseCell col={7} span={6} tablet={12} drop={3}>
-              <div className={styles.stack}>
-                <CaseFigure media={finalExperience.commerce[0]} />
-                <CaseFigure media={finalExperience.commerce[1]} />
-              </div>
-            </CaseCell>
-          </CaseGrid>
-          <CaseGrid>
-            <CaseCell col={5} span={4} tablet={6}>
-              <CaseFigure media={finalExperience.motion} />
-            </CaseCell>
-          </CaseGrid>
-          <CaseClosing statement={finalExperience.closing} link={finalExperience.next} />
+          <CaseIntro id="aa-explore" label={explore.label} heading={explore.heading} body={[explore.text]} />
+          <CaseScreenNavigator pages={screenPages} site="Arctic Arena" label={explore.navigatorLabel} note={explore.navigatorNote} badge="Fictional sample logos" />
+        </Container>
+      </CaseSection>
+
+      {/* Behind the experience: the white grid page, the thinking behind the screens */}
+      <CaseSection tone="paper" grid labelledBy="aa-experience">
+        <Container className={styles.stack}>
+          {/* White blocks on the grid snap out to whole cells, so no square is ever cut. */}
+          {/* one white sheet: the intro, then the sitemap read top to bottom */}
+          <Surface snap className={styles.paperSheet}>
+            <CaseIntro id="aa-experience" label={experience.label} heading={experience.heading} body={[experience.intro]} />
+            <CaseSitemap
+              label={experience.sitemapTree.label}
+              root={experience.sitemapTree.root}
+              groups={experience.sitemapTree.groups}
+              sections={experience.sitemapTree.sections}
+              caption={experience.sitemapTree.caption}
+            />
+          </Surface>
+          {/* the three decisions, in the same narrow column as the text */}
+          <Surface snap className={`${styles.narrow} ${styles.editorial}`}>
+            <CaseDecisions items={experience.decisions} />
+          </Surface>
+          <Surface snap className={styles.paperBlock}>
+            <CaseFigure media={experience.documentation} className={styles.paperFigure} />
+          </Surface>
+          <Surface snap className={styles.stackTight}>
+            <CaseNote label={experience.system.label} text={experience.system.text} className={styles.narrow} />
+            <CaseFigure media={experience.system.media} className={styles.paperFigure} />
+          </Surface>
+        </Container>
+      </CaseSection>
+
+
+      {/* Closing */}
+      <CaseSection tone="base" label="Closing">
+        <Container>
+          <CaseClosing statement={explore.closing} link={explore.next} />
         </Container>
       </CaseSection>
     </CaseTheme>

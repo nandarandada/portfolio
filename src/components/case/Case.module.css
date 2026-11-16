@@ -7,17 +7,32 @@
 
 .case {
   background: var(--case-base);
+  /* a finer grid on case pages: smaller squares than the rest of the site */
+  --grid-cols: 28;
 }
 
-/* grained surfaces: the grain is burned into the colour, as on the rest of Frosa */
+@media (max-width: 1023px) {
+  .case {
+    --grid-cols: 18;
+  }
+}
+
+@media (max-width: 599px) {
+  .case {
+    --grid-cols: 10;
+  }
+}
+
+/* the dark page: grain multiplied over the project's near-black purple */
 .case .base {
   --surface-bg: var(--case-base) var(--texture-grain) center / var(--texture-size);
-  --surface-blend: color-burn;
+  --surface-blend: multiply;
   --surface-fg: var(--color-white);
   --accent: var(--case-accent);
   --rule: rgb(255 255 255 / 0.16);
 }
 
+/* the coloured surface: the grain is burned into the colour, as on the rest of Frosa */
 .case .surface {
   --surface-bg: var(--case-surface) var(--texture-grain) center / var(--texture-size);
   --surface-blend: color-burn;
@@ -30,6 +45,13 @@
 .case .paper {
   --accent: var(--case-line);
   --rule: rgb(31 31 31 / 0.14);
+  /* snapped white blocks redraw their cell edges in the same faint line as the grid */
+  --surface-line: color-mix(in srgb, var(--case-line) 14%, var(--color-white));
+}
+
+/* a white block on the paper grid, grown out to whole cells (see Surface snap) */
+.paperBlock {
+  display: grid;
 }
 
 .section {
@@ -55,10 +77,80 @@
   box-shadow: 0 0 0 16px var(--color-white);
 }
 
+/* a block as narrow as the editorial text column, centred */
+.narrow {
+  width: min(100%, 34rem);
+  margin-inline: auto;
+}
+
+/* editorial decisions: a narrow column, number above a short serif title, then the text */
+.narrow.editorial {
+  width: min(100%, 22rem);
+}
+
+.editorial .decision {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
+  padding-block: clamp(28px, 3.4vw, 40px);
+}
+
+.editorial .decision:first-child {
+  border-top: 0;
+}
+
+/* the block's own grid border closes the list, so no extra rule above or below */
+.editorial .decision:last-child {
+  border-bottom: 0;
+}
+
+.editorial .decisionNumber {
+  padding-top: 0;
+  margin-bottom: 14px;
+}
+
+.editorial .decisionTitle {
+  font-size: var(--fs-step);
+  text-wrap: balance;
+}
+
+.editorial .decisionText {
+  margin-top: 12px;
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  text-wrap: pretty;
+}
+
+/* one white sheet over the grid: the chapter intro, then the sitemap below it */
+.paperSheet {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: clamp(56px, 7vw, 96px);
+  padding: clamp(32px, 5vw, 72px) clamp(20px, 5vw, 72px);
+  background: var(--color-white);
+}
+
 .paperFigure .caption {
   width: fit-content;
   background: var(--color-white);
   box-shadow: 0 0 0 6px var(--color-white);
+}
+
+/* space between a wide band and the blocks around it */
+.bandGap {
+  margin-top: clamp(72px, 9vw, 144px);
+}
+
+/* wider than the text container: the large final screen */
+.wide {
+  width: min(100% - 2 * var(--gutter), 1280px);
+  margin-inline: auto;
+}
+
+/* a single phone screen, framed like the device */
+.phone .frame {
+  border: 1px solid var(--rule);
+  border-radius: clamp(14px, 2vw, 26px);
 }
 
 /* ── Grid lines in the project's colour ─────────────────────────────── */
@@ -105,11 +197,12 @@
   max-width: 18ch;
 }
 
+/* the drop-cap body column sits in the centre of the screen; its text stays left-aligned */
 .columnBody {
+  justify-self: center;
   width: 100%;
   max-width: var(--measure-narrow);
   margin-top: clamp(24px, 4vw, 64px);
-  margin-left: clamp(0px, 6vw, 4.75rem);
 }
 
 .audiences {
@@ -133,19 +226,40 @@
 
 /* ── Hero ───────────────────────────────────────────────────────────── */
 
-/* the header floats over the page: the key art starts just below it */
+/* The header floats over the key art, which starts at the very top of the page:
+   the menu sits in the image's own sky. */
 .hero {
-  padding-top: clamp(88px, 10.7vw, 137px);
+  padding-top: 0;
 }
 
 .heroMedia {
   margin-bottom: clamp(64px, 8vw, 104px);
 }
 
+.heroMedia .frame {
+  background: var(--hero-sky, transparent);
+}
+
 .heroTitle {
   font-size: clamp(3rem, 1.4rem + 6.4vw, 6rem); /* 96px at 1280 */
   line-height: var(--lh-display); /* 1.25 */
   white-space: nowrap;
+}
+
+/* The opening column: elements stay left-aligned with each other, and the block as a whole is
+   centred on the screen at every width (its width follows its widest line, the title). */
+.heroColumn {
+  width: fit-content;
+  max-width: 100%;
+  margin-inline: auto;
+}
+
+.heroColumn .disciplines {
+  max-width: 34rem;
+}
+
+.heroColumn .columnBody {
+  margin-top: clamp(56px, 8vw, 120px);
 }
 
 .meta {
@@ -188,6 +302,8 @@
 .mosaic {
   display: grid;
   gap: 2px;
+  /* the image reveal starts offset: keep it inside the page width */
+  overflow: clip;
   background: var(--case-base);
 }
 
@@ -198,6 +314,22 @@
 
 .mosaicItem .frame {
   background: var(--case-art-deep);
+}
+
+/* the brand texture, edge to edge between two blocks of the identity chapter */
+.textureBand {
+  margin-top: clamp(72px, 9vw, 144px);
+  /* the band closes the chapter: it runs into the section's bottom edge */
+  margin-bottom: calc(-1 * clamp(96px, 12vw, 180px));
+}
+
+.textureBand .frame {
+  background: transparent;
+}
+
+/* the logo stages band, between the challenge and the identity */
+.logoStagesBand {
+  padding-block: clamp(64px, 8vw, 120px);
 }
 
 /* ── Identity ───────────────────────────────────────────────────────── */
@@ -222,6 +354,19 @@
 }
 
 /* the horizontal lockup is cropped to the wide frame, so the logotype reads large */
+/* the emblem and the horizontal logo, side by side, smaller than the concept page above */
+.logoPair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(12px, 1.8vw, 23px);
+}
+
+@media (max-width: 599px) {
+  .logoPair {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
 /* the marks fill the wide frames: the emblem nearly to its height */
 .logoBox .artwork .asset {
   padding: 3%;
@@ -300,6 +445,7 @@
 }
 
 .caption {
+  max-width: 28rem;
   margin-top: 14px;
   font-family: var(--font-ui);
   font-size: 0.875rem;
@@ -469,38 +615,118 @@
 
 .swatchBlock {
   display: grid;
-  gap: 20px;
+  gap: 28px;
 }
 
+.swatchBlock .note {
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+}
+
+/* colour, the jacket and the voice, stacked in the editorial column */
+.brandColumn {
+  display: grid;
+  gap: clamp(64px, 8vw, 112px);
+  width: min(100%, 34rem);
+  margin-inline: auto;
+}
+
+/* the brand voice: small labels, a name in the accent, a line, an example in quotes */
+.voice {
+  display: grid;
+  gap: 28px;
+}
+
+.voiceGroup {
+  display: grid;
+  gap: 16px;
+}
+
+.voiceTraits {
+  display: grid;
+  gap: 22px;
+  margin: 0;
+}
+
+.voiceGroup + .voiceGroup {
+  margin-top: 8px;
+}
+
+.voiceTrait dt {
+  font-family: var(--font-ui);
+  font-size: var(--fs-body);
+  font-weight: 600;
+  letter-spacing: var(--tracking-body);
+  color: var(--accent);
+}
+
+.voiceTrait dd {
+  margin: 4px 0 0;
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  letter-spacing: var(--tracking-body);
+  opacity: var(--opacity-soft);
+}
+
+.voiceExample {
+  display: block;
+  margin-top: 2px;
+  font-style: italic;
+  opacity: 0.8;
+}
+
+.swatchGroup {
+  display: grid;
+  gap: 14px;
+}
+
+.swatchGroupLabel {
+  font-family: var(--font-ui);
+  font-size: var(--fs-meta);
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  opacity: var(--opacity-muted);
+}
+
+/* short bars in a quiet row, names and hex values set small underneath */
 .swatches {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr));
+  gap: 26px clamp(16px, 2vw, 28px);
 }
 
 .swatch {
   display: grid;
-  gap: 4px;
+  justify-items: start;
+  gap: 2px;
+  min-width: 0;
 }
 
 .swatchChip {
   display: block;
-  aspect-ratio: 3 / 4;
-  margin-bottom: 8px;
-  border: 1px solid var(--rule);
+  width: 100%;
+  height: 10px;
+  margin-bottom: 12px;
+  border-radius: 2px;
+  /* a hairline keeps the dark bars visible on the dark page */
+  box-shadow: 0 0 0 1px var(--rule);
 }
 
 .swatchName {
   font-family: var(--font-ui);
-  font-size: 0.9375rem;
+  font-size: var(--fs-reading);
   font-weight: 500;
   line-height: 1.3;
+  letter-spacing: var(--tracking-body);
 }
 
 .swatchHex {
   font-family: var(--font-ui);
   font-size: var(--fs-meta);
-  letter-spacing: 0.06em;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   opacity: var(--opacity-muted);
 }
 
@@ -583,10 +809,6 @@
     white-space: normal;
   }
 
-  .columnBody {
-    margin-left: 0;
-  }
-
   .phones,
   .versions {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -596,12 +818,7 @@
     margin-top: 32px;
   }
 
-  .swatches {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    row-gap: 20px;
-  }
-
-  .decision {
+  .decision:not(.editorial .decision) {
     grid-template-columns: 2.25rem minmax(0, 1fr);
   }
 

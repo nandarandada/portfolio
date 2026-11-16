@@ -81,6 +81,10 @@ type CaseFigureProps = {
   hideCaption?: boolean;
   /** Reveal delay in ms. */
   delay?: number;
+  /** Open with the image reveal (default). Off for the hero, which is on screen at load. */
+  reveal?: boolean;
+  /** Load first (the hero): no lazy loading, high fetch priority. */
+  priority?: boolean;
   className?: string;
 };
 
@@ -88,12 +92,29 @@ type CaseFigureProps = {
  * One media slot: the asset (image, artwork or video) with its caption, or the editorial
  * placeholder when the asset is still missing. Opens with the Frosa image reveal.
  */
-export function CaseFigure({ media, ratio, hideCaption = false, delay = 0, className }: CaseFigureProps) {
+export function CaseFigure({ media, ratio, hideCaption = false, delay = 0, reveal = true, priority = false, className }: CaseFigureProps) {
   const style = {
     '--ratio': ratio ?? media.aspectRatio,
     '--fit': media.objectFit ?? 'cover',
     '--position': media.objectPosition ?? 'center',
   } as CSSProperties;
+
+  const frame = (
+    <div className={cx(styles.frame, media.artwork && styles.artwork, media.onLight && styles.onLight, media.blend && styles.blend)} style={style}>
+      {media.type === 'video' ? (
+        <CaseVideo media={media} />
+      ) : (
+        <img
+          className={styles.asset}
+          src={media.src}
+          alt={media.alt ?? ''}
+          loading={priority ? 'eager' : 'lazy'}
+          decoding="async"
+          {...(priority ? { fetchpriority: 'high' } : {})}
+        />
+      )}
+    </div>
+  );
 
   if (!media.src) {
     return (
@@ -105,15 +126,7 @@ export function CaseFigure({ media, ratio, hideCaption = false, delay = 0, class
 
   return (
     <figure className={cx(styles.figure, className)} data-media-id={media.id}>
-      <ImageReveal delay={delay}>
-        <div className={cx(styles.frame, media.artwork && styles.artwork, media.onLight && styles.onLight, media.blend && styles.blend)} style={style}>
-          {media.type === 'video' ? (
-            <CaseVideo media={media} />
-          ) : (
-            <img className={styles.asset} src={media.src} alt={media.alt ?? ''} loading="lazy" decoding="async" />
-          )}
-        </div>
-      </ImageReveal>
+      {reveal ? <ImageReveal delay={delay}>{frame}</ImageReveal> : frame}
       {media.caption && !hideCaption && <figcaption className={styles.caption}>{media.caption}</figcaption>}
     </figure>
   );

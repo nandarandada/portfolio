@@ -51,7 +51,10 @@ export type CaseTheme = {
 
 export type CaseMetaItem = { label: string; value: string };
 
-export type CaseSwatch = { name: string; hex: string; note?: string };
+export type CaseSwatch = { name: string; hex: string; rgb?: string; cmyk?: string; note?: string };
+
+/** A named group of swatches, e.g. 'Primary' and 'Secondary' in a brand guide. */
+export type CaseSwatchGroup = { label: string; swatches: CaseSwatch[] };
 
 export type CaseDecision = { title: string; text: string };
 
@@ -60,3 +63,24 @@ export type CaseMosaicRow = {
   height: number;
   items: { media: CaseMedia; width: number }[];
 };
+
+/** One exported screen of a project's site. */
+export type CaseScreen = { src: string; width: number; height: number };
+
+/**
+ * One page of the screen navigator: desktop (and mobile when exported), the site's own links
+ * as hotspots [x, y, width, height, target page id] in Figma frame pixels, and notes from the
+ * design documentation.
+ */
+export type CaseScreenPage = {
+  id: string;
+  label: string;
+  group: string;
+  desktop: CaseScreen;
+  mobile?: CaseScreen;
+  hotspots: Array<[number, number, number, number, string]>;
+  notes?: string[];
+};
+
+/** A brand-voice group (e.g. Functional, Emotional) and its traits, each with an optional example. */
+export type CaseVoiceGroup = { title: string; traits: { name: string; text: string; example?: string }[] };

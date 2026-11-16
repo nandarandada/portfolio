@@ -6,7 +6,7 @@ import { AboutPage } from './pages/AboutPage';
 import { HomePage } from './pages/HomePage';
 import { WorkPage } from './pages/WorkPage';
 import { NotFoundPage, ProjectPage } from './pages/routes';
-import { caseStudies } from './pages/cases';
+import { caseFooterColors, caseStudies } from './pages/cases';
 import { ContactPage } from './pages/ContactPage';
 import { DesignSystemPage } from './pages/DesignSystemPage';
 import styles from './App.module.css';
@@ -17,9 +17,11 @@ import styles from './App.module.css';
  */
 function Shell() {
   const { pathname, hash } = useLocation();
-  // Case studies end on the black footer (Figma 326:703); every other page keeps the red one.
+  // Case studies end on a dark footer in the case's own colour (Figma 326:703); every other
+  // page keeps the red one.
   const slug = matchPath('/work/:slug', pathname)?.params.slug;
   const onCase = slug !== undefined && slug in caseStudies;
+  const footerColor = onCase ? caseFooterColors[slug] : undefined;
 
   useEffect(() => {
     if (!hash) window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
@@ -42,7 +44,7 @@ function Shell() {
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>
-      <SiteFooter tone={onCase ? 'dark' : 'red'} />
+      <SiteFooter tone={onCase ? 'dark' : 'red'} color={footerColor} />
     </>
   );
 }

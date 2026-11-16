@@ -1,0 +1,110 @@
+/*
+ * Arctic Arena key art in motion.
+ * On load: the glow opens, the mountains settle, the dots light up one by one along the arc,
+ * then the emblem rises into place. After that, the stars twinkle and a slow wave of light
+ * runs along the arc, like the aurora it stands for.
+ */
+
+.art {
+  position: relative;
+  width: 100%;
+  aspect-ratio: var(--ratio);
+  overflow: clip;
+}
+
+.art :global(.aa-hero-art) {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* every layer scales and moves around its own centre */
+.art :global(.aa-dot),
+.art :global(.aa-star),
+.art :global(.aa-emblem),
+.art :global(.aa-mountains) {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .art :global(.aa-glow) {
+    animation:
+      aa-fade 1600ms var(--ease-out) both,
+      aa-breathe 7s ease-in-out 1600ms infinite;
+  }
+
+  .art :global(.aa-mountains) {
+    animation: aa-settle 1400ms var(--ease-out) both;
+  }
+
+  .art :global(.aa-stars) {
+    animation: aa-fade 1800ms var(--ease-out) 200ms both;
+  }
+
+  .art :global(.aa-star) {
+    animation: aa-twinkle var(--d, 3s) ease-in-out var(--o, 0s) infinite;
+  }
+
+  .art :global(.aa-dot) {
+    animation:
+      aa-pop 620ms var(--ease-out) calc(300ms + var(--i) * 14ms) both,
+      aa-wave 6s ease-in-out calc(2600ms + var(--i) * 40ms) infinite;
+  }
+
+  .art :global(.aa-emblem) {
+    animation: aa-rise 1000ms var(--ease-out) 1300ms both;
+  }
+}
+
+@keyframes aa-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes aa-breathe {
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes aa-settle {
+  from {
+    opacity: 0;
+    transform: translateY(4%);
+  }
+}
+
+@keyframes aa-twinkle {
+  50% {
+    opacity: 0.35;
+    transform: scale(0.8);
+  }
+}
+
+@keyframes aa-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.2);
+  }
+}
+
+/* a dim band travelling along the arc, one dot after another */
+@keyframes aa-wave {
+  0%,
+  16%,
+  100% {
+    opacity: 1;
+  }
+  8% {
+    opacity: 0.45;
+  }
+}
+
+@keyframes aa-rise {
+  from {
+    opacity: 0;
+    transform: translateY(12%);
+  }
+}

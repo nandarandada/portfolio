@@ -5,7 +5,7 @@ import { EditorialGridBackground } from '../primitives/EditorialGridBackground';
 import { BodyText, DisplayHeading, EditorialHeading } from '../primitives/Typography';
 import { TextLink } from '../primitives/TextLink';
 import { Reveal } from '../../motion/Reveal';
-import type { CaseDecision, CaseMedia, CaseMetaItem, CaseMosaicRow, CaseSwatch, CaseTheme } from '../../content/cases/types';
+import type { CaseDecision, CaseMedia, CaseMetaItem, CaseMosaicRow, CaseSwatchGroup, CaseTheme, CaseVoiceGroup } from '../../content/cases/types';
 import { CaseFigure } from './CaseMedia';
 import styles from './Case.module.css';
 
@@ -85,21 +85,29 @@ export function CaseHero({
   disciplines,
   body,
   media,
+  sky,
+  art,
 }: {
   title: string;
   meta: CaseMetaItem[];
   disciplines: string[];
   body: string;
   media: CaseMedia;
+  /** The key art's sky colour: shown behind the image until it has loaded. */
+  sky?: string;
+  /** Animated key art, shown instead of `media` (which stays the still version elsewhere). */
+  art?: ReactNode;
 }) {
   return (
     <CaseSection tone="base" labelledBy="case-title" className={styles.hero}>
-      <div className={styles.heroMedia}>
-        <CaseFigure media={media} ratio="1280 / 632" hideCaption />
+      {/* the key art starts at the top of the page, under the floating header, and is there
+          from the first frame: no reveal, loaded first */}
+      <div className={styles.heroMedia} style={sky ? ({ '--hero-sky': sky } as CSSProperties) : undefined}>
+        {art ?? <CaseFigure media={media} hideCaption reveal={false} priority />}
       </div>
-      <CaseGridLines region={{ right: 0, top: 14, width: 6, height: 15 }} hideBelow="tablet" />
+      <CaseGridLines region={{ right: 0, top: 14, width: 3, height: 15 }} hideBelow="tablet" />
       <Container>
-        <div className={cx(styles.column, styles.columnWide)}>
+        <div className={cx(styles.column, styles.columnWide, styles.heroColumn)}>
           <DisplayHeading as="h1" id="case-title" text={title} className={styles.heroTitle} />
           <Reveal as="dl" delay={200} className={styles.meta}>
             {meta.map((item) => (
@@ -263,21 +271,51 @@ export function CaseDecisions({ items, className }: { items: CaseDecision[]; cla
   );
 }
 
-/** Palette swatches with names and hex values. */
-export function CaseSwatches({ label, note, swatches }: { label: string; note?: string; swatches: CaseSwatch[] }) {
+/** A brand palette in groups: a short bar of each colour, its name and hex value beneath. */
+export function CaseSwatches({ label, note, groups }: { label: string; note?: string; groups: CaseSwatchGroup[] }) {
   return (
     <div className={styles.swatchBlock}>
       <p className={styles.columnLabel}>{label}</p>
-      <ul className={styles.swatches}>
-        {swatches.map((swatch, i) => (
-          <Reveal as="li" key={swatch.hex} delay={i * 70} className={styles.swatch}>
-            <span className={styles.swatchChip} style={{ background: swatch.hex }} aria-hidden="true" />
-            <span className={styles.swatchName}>{swatch.name}</span>
-            <span className={styles.swatchHex}>{swatch.hex}</span>
-          </Reveal>
-        ))}
-      </ul>
+      {groups.map((group) => (
+        <section key={group.label} className={styles.swatchGroup} aria-label={group.label}>
+          <p className={styles.swatchGroupLabel}>{group.label}</p>
+          <ul className={styles.swatches}>
+            {group.swatches.map((swatch, i) => (
+              <Reveal as="li" key={swatch.hex} delay={i * 50} className={styles.swatch}>
+                <span className={styles.swatchChip} style={{ background: swatch.hex }} aria-hidden="true" />
+                <span className={styles.swatchName}>{swatch.name}</span>
+                <span className={styles.swatchHex}>{swatch.hex}</span>
+              </Reveal>
+            ))}
+          </ul>
+        </section>
+      ))}
       {note && <p className={styles.note}>{note}</p>}
+    </div>
+  );
+}
+
+/** The brand voice: groups of traits, each a name, a line, and an example in quotes. */
+export function CaseVoice({ label, groups }: { label: string; groups: CaseVoiceGroup[] }) {
+  return (
+    <div className={styles.voice}>
+      <p className={styles.columnLabel}>{label}</p>
+      {groups.map((group) => (
+        <section key={group.title} className={styles.voiceGroup} aria-label={group.title}>
+          <p className={styles.swatchGroupLabel}>{group.title}</p>
+          <dl className={styles.voiceTraits}>
+            {group.traits.map((trait) => (
+              <div key={trait.name} className={styles.voiceTrait}>
+                <dt>{trait.name}</dt>
+                <dd>
+                  {trait.text}
+                  {trait.example && <span className={styles.voiceExample}>“{trait.example}”</span>}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+      ))}
     </div>
   );
 }
