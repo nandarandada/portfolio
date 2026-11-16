@@ -35,23 +35,15 @@ export const project = {
   live: { label: 'pawprintoxygen.com', href: 'https://pawprintoxygen.com/', note: 'The live site, evolved since this first version.' },
   headline: 'Making a complex purchase feel simpler.',
   body: 'Designing a clearer shopping experience for pet owners and veterinarians, balancing specialized product information with everyday usability.',
-  heroDesktop: {
+  // desktop and phone in one composition, framed in the image itself (transparent around it)
+  hero: {
     id: 'PO-01',
-    title: 'Home page, desktop',
+    title: 'Home page, desktop and mobile',
     type: 'image',
-    src: `${dir}/hero-desktop.jpg`,
-    alt: 'The Pawprint Oxygen home page on desktop: a navy header with the yellow logo, and the headline “Oxygen for pets, shipped right to your door” over a photo of a dog wearing an oxygen mask.',
-    aspectRatio: '846 / 760',
-    objectPosition: 'top',
-  } satisfies CaseMedia,
-  heroMobile: {
-    id: 'PO-02',
-    title: 'Home page, mobile',
-    type: 'image',
-    src: `${dir}/hero-mobile.jpg`,
-    alt: 'The same home page on a phone, with the Visit Store button.',
-    aspectRatio: '254 / 556',
-    objectPosition: 'top',
+    src: `${dir}/hero-screens.webp`,
+    alt: 'The Pawprint Oxygen home page on desktop and on a phone: a navy header with the yellow logo, the headline “Oxygen for pets, shipped right to your door” over a photo of a dog wearing an oxygen mask, and a yellow Visit Store button.',
+    aspectRatio: '1932 / 1499',
+    objectFit: 'contain',
   } satisfies CaseMedia,
 };
 
@@ -258,7 +250,7 @@ export const experience = {
     type: 'image',
     src: `${dir}/m-vets.jpg`,
     alt: 'The For Vets page on a phone: “Your partner in oxygen therapy”, then the card for your practice.',
-    aspectRatio: '234 / 507',
+    aspectRatio: '577 / 1259',
   } satisfies CaseMedia,
   store: {
     id: 'PO-15',
@@ -284,7 +276,7 @@ export const experience = {
     type: 'image',
     src: `${dir}/m-store.jpg`,
     alt: 'The store on a phone, with the category carousel.',
-    aspectRatio: '240 / 520',
+    aspectRatio: '594 / 1295',
   } satisfies CaseMedia,
   homeMobile: {
     id: 'PO-18',

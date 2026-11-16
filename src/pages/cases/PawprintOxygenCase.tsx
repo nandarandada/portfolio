@@ -46,10 +46,7 @@ export function PawprintOxygenCase() {
         {/* 01 — The project: the real home page, desktop and phone, then the editorial column */}
         <CaseSection tone="base" labelledBy="case-title" className={caseStyles.hero}>
           <div className={styles.stage}>
-            <div className={styles.heroScreens}>
-              <CaseFigure media={project.heroDesktop} reveal={false} priority hideCaption className={styles.browser} />
-              <CaseFigure media={project.heroMobile} reveal={false} priority hideCaption className={cx(styles.device, styles.heroPhone)} />
-            </div>
+            <CaseFigure media={project.hero} reveal={false} priority hideCaption className={styles.heroScreens} />
           </div>
           <CaseGridLines region={{ left: 0, top: 26, width: 3, height: 12 }} hideBelow="desktop" />
           <Container>
