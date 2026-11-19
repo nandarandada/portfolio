@@ -44,10 +44,15 @@
   font-weight: 700;
 }
 
+/* the current page: a small red square before its name */
 .active::before {
-  content: '•';
-  margin-right: 0.3em;
-  color: var(--color-red);
+  content: '';
+  display: inline-block;
+  width: 0.36em;
+  height: 0.36em;
+  margin-right: 0.4em;
+  vertical-align: 0.14em;
+  background: var(--color-red);
 }
 
 @media (max-width: 599px) {
