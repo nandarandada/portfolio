@@ -1,0 +1,1291 @@
+/*
+ * Great Pet Living. One narrow column (1040px), text aligned left on its edge, the screens large.
+ * Type follows one small scale throughout:
+ *   label    13px, uppercase, semibold   — small headings over groups (Explored, References…)
+ *   caption  15px                        — under images, notes, secondary lines
+ *   body     the site's body size        — every paragraph
+ *   title    the site's step size, serif — h3s inside chapters
+ *   heading  the site's editorial heading — chapter headings
+ * Type, colour tokens, motion and the section rhythm otherwise come from the shared case system.
+ *
+ * Living's texture is one authentic tile from the design file (447 × 456, lossless WebP with
+ * alpha, 5 KB), repeated at its original scale behind the hero and the cream chapters.
+ */
+
+.page {
+  --living-cream: #fbf4e6;
+  --living-blue: #9ac4d9;
+  --living-yellow: #eaaa00;
+  --living-green: #004a3e;
+  --living-ink: #2a2a2a;
+  --tile: 224px 228px;
+  /* one width system for the whole page: never narrower than --gl-min, never wider than the max */
+  --gl-min: 280px;
+  --gl-max: 880px; /* screens and images */
+  --gl-text-max: 520px; /* every block of text, centred on the screen */
+  --gl-read: var(--measure-narrow); /* body paragraphs: the narrow editorial column (≈256px) */
+  --gl-label: 0.8125rem;
+  --gl-caption: 0.9375rem;
+}
+
+/* Living's paper: cream with the speckle tile (overrides the white editorial paper) */
+.page .paperTexture {
+  --surface-bg: var(--living-cream) var(--speckle) 0 0 / var(--tile);
+  --surface-blend: normal;
+}
+
+/* on this page the shared site header sits on cream: drawn in Living's ink (chapter headers are left alone) */
+:global(html[data-header-tone='ink']) :global(header:not(main header)) {
+  color: #2a2a2a;
+}
+
+/* ── The column and the type scale ──────────────────────────────────── */
+
+.col {
+  width: clamp(var(--gl-min), 100%, var(--gl-max));
+  margin-inline: auto;
+}
+
+/* every block of text sits in one narrower column, centred on the screen, text aligned left */
+.text {
+  width: clamp(var(--gl-min), 100%, var(--gl-text-max));
+  margin-inline: auto;
+}
+
+.stack {
+  display: grid;
+  gap: clamp(56px, 7vw, 104px);
+}
+
+.measure {
+  max-width: var(--gl-read);
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  letter-spacing: var(--tracking-body);
+}
+
+.label {
+  font-family: var(--font-ui);
+  font-size: var(--gl-label);
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.caption {
+  font-family: var(--font-ui);
+  font-size: var(--gl-caption);
+  line-height: 1.5;
+  letter-spacing: var(--tracking-body);
+  opacity: var(--opacity-muted);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--fs-step);
+  line-height: var(--lh-heading);
+}
+
+.sectionLabel {
+  font-family: var(--font-ui);
+  font-size: var(--fs-body);
+  font-weight: 600;
+  line-height: var(--lh-body);
+  letter-spacing: var(--tracking-body);
+}
+
+.intro {
+  display: grid;
+  justify-items: start;
+  gap: clamp(16px, 2vw, 24px);
+}
+
+.introHeading {
+  max-width: 20ch;
+  text-wrap: balance;
+}
+
+.figure {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ── Images: nothing drawn until loaded, then a short fade ───────────── */
+
+.shot {
+  display: block;
+  width: 100%;
+  height: auto;
+  opacity: 0;
+  translate: 0 12px;
+  transition:
+    opacity 0.6s var(--ease-out, ease),
+    translate 0.6s var(--ease-out, ease);
+}
+
+.shot.loaded {
+  opacity: 1;
+  translate: 0 0;
+}
+
+.screen {
+  border-radius: clamp(6px, 0.8vw, 12px);
+  box-shadow:
+    0 30px 70px -40px rgb(0 0 0 / 0.45);
+}
+
+.phone {
+  border-radius: clamp(14px, 2.2vw, 26px);
+  box-shadow:
+    0 30px 60px -32px rgb(0 0 0 / 0.5);
+}
+
+/* a long screen the visitor can scroll (and that scrolls itself while left alone) */
+.scrollFrame {
+  aspect-ratio: var(--ratio);
+  overflow: hidden auto;
+  background: #fff;
+  opacity: 0;
+  translate: 0 12px;
+  transition:
+    opacity 0.6s var(--ease-out, ease),
+    translate 0.6s var(--ease-out, ease);
+  /* no scrollbar drawn: the screens scroll by wheel, touch and keys */
+  scrollbar-width: none;
+}
+
+.scrollFrame::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollFrame.loaded {
+  opacity: 1;
+  translate: 0 0;
+}
+
+.scrollFrame:focus-visible,
+.loupe:focus-visible {
+  outline: 2px solid var(--case-line);
+  outline-offset: 4px;
+}
+
+.scrollImage {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* a desktop screen and its phone, side by side */
+.pair {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 1fr);
+  gap: clamp(16px, 3vw, 40px);
+  align-items: start;
+}
+
+/* ── 01 Hero ────────────────────────────────────────────────────────── */
+
+/* Living's paper runs from the very top of the page, under the header */
+.stage {
+  margin-bottom: clamp(72px, 9vw, 128px);
+  padding-top: calc(clamp(88px, 8vw, 120px) + clamp(40px, 6vw, 96px));
+  padding-bottom: clamp(40px, 6vw, 96px);
+  background: var(--living-cream) var(--speckle) 0 0 / var(--tile);
+}
+
+.heroComposition {
+  position: relative;
+  width: clamp(var(--gl-min), 100% - 2 * var(--gutter), var(--gl-max));
+  margin-inline: auto;
+  padding-right: clamp(0px, 9vw, 110px);
+  padding-bottom: clamp(48px, 8vw, 100px);
+}
+
+/* Living's own gesture: the card sits on an offset yellow block */
+.heroDesktop {
+  box-shadow:
+    clamp(10px, 1.6vw, 20px) clamp(10px, 1.6vw, 20px) 0 var(--living-yellow);
+}
+
+.heroMobile {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: clamp(92px, 21%, 230px);
+  box-shadow:
+    clamp(8px, 1.2vw, 14px) clamp(8px, 1.2vw, 14px) 0 var(--living-blue),
+    0 30px 60px -28px rgb(0 0 0 / 0.5);
+}
+
+.heroText {
+  display: grid;
+  justify-items: start;
+  gap: clamp(16px, 2vw, 24px);
+}
+
+.live {
+  display: grid;
+  justify-items: start;
+  gap: 4px;
+  margin-top: clamp(4px, 1vw, 12px);
+}
+
+.liveLink {
+  font-family: var(--font-ui);
+  font-size: var(--fs-body);
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.lead {
+  display: grid;
+  justify-items: start;
+  gap: clamp(20px, 2.6vw, 32px);
+  margin-top: clamp(72px, 9vw, 128px);
+}
+
+/* coloured titles in Living's light blue */
+.headline {
+  max-width: 17ch;
+  color: var(--living-blue);
+  text-wrap: balance;
+}
+
+/* the note on how the screens were edited: set apart, not lost */
+/* the note on how the screens differ from the file: small and quiet, after the final gallery */
+.note {
+  display: grid;
+  gap: 4px;
+  padding: 12px 0 12px 16px;
+  border-left: 2px solid var(--living-blue);
+  opacity: var(--opacity-soft);
+  font-family: var(--font-ui);
+  font-size: var(--gl-caption);
+  line-height: 1.5;
+  letter-spacing: var(--tracking-body);
+}
+
+.note p {
+  max-width: var(--gl-read);
+}
+
+/* ── 02 The starting point ──────────────────────────────────────────── */
+
+.split {
+  display: grid;
+  gap: clamp(32px, 4vw, 48px);
+}
+
+.goals {
+  display: grid;
+  gap: 24px;
+  max-width: var(--gl-read);
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  letter-spacing: var(--tracking-body);
+}
+
+.goal {
+  padding-top: 14px;
+  border-top: 2px solid var(--case-base);
+}
+
+.goal dt {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--fs-step);
+  line-height: var(--lh-heading);
+}
+
+.goal dd {
+  margin: 8px 0 0;
+  opacity: var(--opacity-soft);
+}
+
+/* ── 03 Three tries ─────────────────────────────────────────────────── */
+
+.switcher {
+  display: grid;
+  gap: clamp(20px, 2.4vw, 28px);
+}
+
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  /* one row where the screen allows: the tabs may run past the narrow text column */
+  width: max-content;
+  max-width: min(var(--gl-max), 100vw - 2 * var(--gutter));
+}
+
+.tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 10px 18px;
+  border: 1px solid rgb(42 42 42 / 0.28);
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.6);
+  color: var(--living-ink);
+  font-family: var(--font-ui);
+  font-size: var(--gl-caption);
+  font-weight: 600;
+  letter-spacing: var(--tracking-body);
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.tab:hover {
+  border-color: var(--case-base);
+}
+
+.tab[aria-selected='true'] {
+  border-color: var(--case-base);
+  background: var(--case-base);
+  color: #fff;
+}
+
+.tab:focus-visible {
+  outline: 2px solid var(--case-line);
+  outline-offset: 3px;
+}
+
+.tabNumber {
+  font-family: var(--font-ui);
+  font-size: var(--gl-label);
+  font-weight: 600;
+  opacity: 0.6;
+}
+
+/* the versions at a glance: always visible, and clickable */
+.summary {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.summaryItem {
+  display: grid;
+  align-content: start;
+  gap: 14px;
+  padding: 18px 18px 20px;
+  border: 1px solid rgb(42 42 42 / 0.14);
+  border-radius: 12px;
+  background: rgb(255 255 255 / 0.72);
+  color: var(--living-ink);
+  cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.summaryItem:hover {
+  border-color: rgb(42 42 42 / 0.4);
+}
+
+.summaryActive {
+  border-color: var(--case-base);
+  box-shadow: 6px 6px 0 var(--living-yellow);
+}
+
+.summaryTitle {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.25rem;
+  line-height: 1.2;
+}
+
+.summaryFacts {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  font-family: var(--font-ui);
+  font-size: var(--gl-caption);
+  line-height: 1.5;
+  letter-spacing: var(--tracking-body);
+}
+
+.summaryFacts dt {
+  font-size: var(--gl-label);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--case-base);
+}
+
+.summaryFacts dd {
+  margin: 2px 0 0;
+}
+
+.switcherPanel {
+  display: grid;
+  grid-template-columns: minmax(0, 2.1fr) minmax(0, 1fr);
+  gap: clamp(24px, 3.5vw, 48px);
+  align-items: start;
+}
+
+.stepText {
+  display: grid;
+  gap: 12px;
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  letter-spacing: var(--tracking-body);
+  animation: fadeIn 0.35s ease both;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+/* beside the screen: the version's card, then its references */
+.side {
+  display: grid;
+  gap: 20px;
+  align-content: start;
+  animation: fadeIn 0.35s ease both;
+}
+
+.cardTitle {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--fs-step);
+  line-height: var(--lh-heading);
+}
+
+.cardText {
+  font-family: var(--font-ui);
+  font-size: var(--gl-caption);
+  line-height: 1.5;
+  letter-spacing: var(--tracking-body);
+}
+
+.detailHead {
+  display: grid;
+  gap: 16px;
+}
+
+/* the references sit beside the version they informed, large enough to read */
+.switcherBody {
+  display: grid;
+  gap: clamp(28px, 3.4vw, 40px);
+}
+
+/* the version's references: one strictly horizontal row under the screen and the card, all at
+   one height; it scrolls sideways when the row is wider than the column */
+.references {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+  animation: fadeIn 0.35s ease both;
+}
+
+.referencesHead {
+  display: grid;
+  gap: 2px;
+}
+
+.referenceRow {
+  --ref-h: clamp(150px, 17vw, 210px);
+  display: flex;
+  gap: clamp(12px, 1.4vw, 16px);
+  margin: 0;
+  padding: 4px 2px 10px;
+  list-style: none;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
+  scrollbar-width: thin;
+  border-radius: 8px;
+}
+
+.referenceRow:focus-visible {
+  outline: 2px solid var(--case-line);
+  outline-offset: 3px;
+}
+
+.referenceRow li {
+  flex: none;
+  width: calc(var(--ref-h) * var(--w) / var(--h));
+  display: grid;
+  gap: 6px;
+  align-content: start;
+  scroll-snap-align: start;
+}
+
+/* a tall mood board keeps the row's height: a wide frame you can scroll inside */
+.referenceRow li:has(.referenceTall) {
+  width: calc(var(--ref-h) * 1.5);
+}
+
+.referenceTall {
+  display: block;
+}
+
+/* when the row runs past the column, its right edge fades to show there is more */
+.referenceRow[data-more='true'] {
+  mask-image: linear-gradient(to right, #000 calc(100% - 64px), transparent);
+}
+
+.referenceLink {
+  display: block;
+  border-radius: 8px;
+}
+
+.referenceLink:focus-visible {
+  outline: 2px solid var(--case-line);
+  outline-offset: 3px;
+}
+
+.reference {
+  border-radius: 8px;
+  box-shadow: 0 0 0 1px rgb(0 0 0 / 0.1);
+}
+
+/* ── 04 Design details ──────────────────────────────────────────────── */
+
+.details {
+  display: grid;
+  gap: clamp(20px, 2.4vw, 28px);
+}
+
+.tabsDark .tab {
+  border-color: rgb(255 255 255 / 0.3);
+  background: transparent;
+  color: #fff;
+}
+
+.tabsDark .tab:hover {
+  border-color: #fff;
+}
+
+.tabsDark .tab[aria-selected='true'] {
+  border-color: var(--living-blue);
+  background: var(--living-blue);
+  color: var(--living-green);
+}
+
+.tabsDark .tab:focus-visible {
+  outline-color: var(--living-blue);
+}
+
+.detailPanel {
+  display: grid;
+  gap: clamp(20px, 2.4vw, 28px);
+}
+
+.evidence {
+  display: grid;
+  gap: clamp(14px, 2vw, 24px);
+  align-items: start;
+  animation: fadeIn 0.35s ease both;
+}
+
+.detailShot {
+  border-radius: clamp(6px, 0.8vw, 12px);
+  background: #fff;
+}
+
+/* typography: the article headline wide, Trending beside it, the banner across */
+.evidence-type {
+  grid-template-columns: minmax(0, 2.2fr) minmax(0, 1fr);
+}
+
+.evidence-type > :nth-child(1) {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.evidence-type > :nth-child(2) {
+  grid-column: 1 / -1;
+  grid-row: 2;
+}
+
+.evidence-type > :nth-child(3) {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+/* cards: the tall home cards beside the feature card, the row beneath */
+.evidence-cards {
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 2fr);
+}
+
+.evidence-cards > :nth-child(3) {
+  grid-column: 1 / -1;
+}
+
+.evidence-categories {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+/* texture: the magnifier, and the layers exactly below it, at the same size */
+.evidence-texture {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+/* the template's equivalent, at the same width as the approved version above it */
+.before {
+  display: grid;
+  gap: 10px;
+  width: 100%;
+  margin: 0;
+  padding-top: 16px;
+  border-top: 1px solid var(--rule);
+}
+
+.before .label {
+  opacity: var(--opacity-muted);
+}
+
+/* the magnifier */
+.loupe {
+  position: relative;
+  overflow: clip;
+  border-radius: clamp(6px, 0.8vw, 12px);
+  background: #fff;
+  cursor: crosshair;
+  touch-action: pan-y;
+}
+
+.loupeBase {
+  border-radius: 0;
+}
+
+.lens {
+  position: absolute;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  background-color: #fff;
+  background-repeat: no-repeat;
+  box-shadow:
+    0 0 0 1px rgb(0 0 0 / 0.18),
+    0 14px 30px -6px rgb(0 0 0 / 0.4);
+  pointer-events: none;
+}
+
+/* the layer stack: the card and the speckle layer, pulled apart in 3D */
+.scene {
+  --lift: 0px;
+  position: relative;
+  perspective: 1400px;
+  aspect-ratio: 1140 / 786;
+  display: grid;
+  place-items: center;
+  overflow: clip;
+  border-radius: clamp(6px, 0.8vw, 12px);
+  background: #fff;
+}
+
+.sceneApart {
+  --lift: clamp(80px, 11vw, 150px);
+}
+
+.plane {
+  position: relative;
+  width: 66%;
+  aspect-ratio: 1040 / 686;
+  transform-style: preserve-3d;
+  transform: translateY(4%) rotateX(52deg) rotateZ(-32deg);
+}
+
+.layerCard,
+.layerTexture {
+  position: absolute;
+  border-radius: clamp(6px, 1vw, 12px);
+}
+
+/* the white card: 792 × 506 at the frame's top left */
+.layerCard {
+  left: 0;
+  top: 0;
+  width: 76.2%;
+  height: 73.8%;
+  background: #fff;
+  box-shadow: 0 20px 40px -14px rgb(0 0 0 / 0.3);
+}
+
+/* the texture: 705 × 525 at the bottom right, transparent but for the speckles */
+.layerTexture {
+  left: 32.2%;
+  top: 23.5%;
+  width: 67.8%;
+  height: 76.5%;
+  border: 1.5px solid var(--living-yellow);
+  background: var(--speckle) 0 0 / 150px 153px;
+  transform: translateZ(var(--lift));
+  transition: transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.layersToggle {
+  position: absolute;
+  left: 50%;
+  bottom: 12px;
+  translate: -50% 0;
+  min-height: 40px;
+  padding: 8px 16px;
+  border: 1px solid rgb(0 74 62 / 0.4);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--living-green);
+  font: 600 var(--gl-caption) / 1 var(--font-ui);
+  letter-spacing: var(--tracking-body);
+  cursor: pointer;
+}
+
+.layersToggle:hover {
+  border-color: var(--living-green);
+}
+
+.layersToggle:focus-visible {
+  outline: 2px solid var(--living-blue);
+  outline-offset: 3px;
+}
+
+/* ── The style guide: set live in Living's fonts ────────────────────── */
+
+.system {
+  display: grid;
+  gap: clamp(20px, 2.6vw, 32px);
+  margin-top: clamp(24px, 4vw, 56px);
+  padding-top: clamp(32px, 4vw, 56px);
+  border-top: 1px solid var(--rule);
+}
+
+.systemHead {
+  display: grid;
+  gap: 12px;
+}
+
+.systemLabel {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--fs-statement);
+  line-height: var(--lh-display);
+}
+
+/* a white sheet, like the handover file, so Living's colours read as designed */
+.sheetLive {
+  padding: clamp(20px, 3vw, 36px);
+  border-radius: 12px;
+  background: #fff;
+  color: var(--living-ink);
+}
+
+.typeSheet {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: clamp(20px, 3.5vw, 44px);
+}
+
+.typeScale {
+  padding-left: clamp(20px, 3.5vw, 44px);
+  border-left: 1px solid rgb(42 42 42 / 0.12);
+}
+
+.faces {
+  display: grid;
+  gap: clamp(18px, 2.4vw, 28px);
+  align-content: space-between;
+}
+
+.face {
+  display: grid;
+  gap: 4px;
+}
+
+.faceGlyphs {
+  font-size: clamp(56px, 6vw, 80px);
+  line-height: 1;
+}
+
+.faceName {
+  font-size: clamp(1.125rem, 1rem + 0.6vw, 1.5rem);
+  line-height: 1.15;
+}
+
+.faceRole {
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: var(--gl-label);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+
+.scale {
+  display: grid;
+  gap: 14px;
+}
+
+.scale li {
+  display: grid;
+  gap: 2px;
+}
+
+.scaleSample {
+  line-height: 1.15;
+}
+
+.scaleGreen {
+  color: var(--living-green);
+}
+
+.scaleNote {
+  font-family: var(--font-ui);
+  font-size: var(--gl-label);
+  line-height: 1.3;
+  letter-spacing: var(--tracking-body);
+  opacity: 0.6;
+}
+
+.scaleBodies {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid rgb(42 42 42 / 0.12);
+}
+
+.scaleBody {
+  font-family: 'Nunito Sans', sans-serif;
+  line-height: 1.45;
+}
+
+/* the palette: one continuous band of equal stripes; the stripe under the pointer (or focus)
+   widens and shows its name and value, and the first one stays open while nothing is chosen */
+.palette {
+  display: flex;
+  min-width: 0; /* the hidden labels must not widen the band past the column */
+  overflow: clip;
+  border-radius: 14px;
+  box-shadow: 0 0 0 1px rgb(255 255 255 / 0.18);
+}
+
+.swatch {
+  flex: 1 1 0;
+  min-width: 0;
+  position: relative;
+  height: clamp(150px, 18vw, 200px);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 2px;
+  padding: 14px 16px;
+  overflow: clip;
+  cursor: default;
+  outline: none;
+  transition: flex-grow 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.swatchColour {
+  position: absolute;
+  inset: 0;
+}
+
+.swatch .chipName,
+.swatch .chipHex {
+  position: relative;
+  color: #fff;
+  font-family: var(--font-ui);
+  letter-spacing: var(--tracking-body);
+  opacity: 0;
+  translate: 0 6px;
+  transition:
+    opacity 0.2s ease,
+    translate 0.2s ease;
+}
+
+.swatch:has(.swatchLight) .chipName,
+.swatch:has(.swatchLight) .chipHex {
+  color: var(--living-ink);
+}
+
+.swatch:hover,
+.swatch:focus-visible,
+.swatch:focus-within,
+.palette:not(:hover, :focus-within) .swatch:first-child {
+  flex-grow: 5;
+}
+
+.swatch:hover .chipName,
+.swatch:hover .chipHex,
+.swatch:focus-visible .chipName,
+.swatch:focus-visible .chipHex,
+.palette:not(:hover, :focus-within) .swatch:first-child .chipName,
+.palette:not(:hover, :focus-within) .swatch:first-child .chipHex {
+  opacity: 1;
+  translate: 0 0;
+  transition-delay: 0.15s;
+}
+
+.swatch .chipHex {
+  opacity: 0;
+}
+
+/* while the pointer is on the band, only the stripe under it is open */
+@media (hover: hover) {
+  .palette:hover .swatch:not(:hover) {
+    flex-grow: 1;
+  }
+
+  .palette:hover .swatch:not(:hover) .chipName,
+  .palette:hover .swatch:not(:hover) .chipHex {
+    opacity: 0;
+  }
+}
+
+.swatch:hover .chipHex,
+.swatch:focus-visible .chipHex,
+.palette:not(:hover, :focus-within) .swatch:first-child .chipHex {
+  opacity: 0.8;
+}
+
+.swatch:focus-visible::after {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  border: 2px solid currentColor;
+  border-radius: 10px;
+  color: #fff;
+}
+
+.swatch:has(.swatchLight):focus-visible::after {
+  color: var(--living-ink);
+}
+
+.chipName {
+  font-size: 1rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.chipHex {
+  font-size: var(--gl-label);
+  white-space: nowrap;
+}
+
+/* the live button and input, in Living's fonts and colours (states from the style guide) */
+.components {
+  display: grid;
+  gap: 12px;
+}
+
+.componentsLabel {
+  opacity: var(--opacity-muted);
+}
+
+.liveRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 16px 20px;
+}
+
+.liveField {
+  display: grid;
+  gap: 6px;
+  flex: 1 1 240px;
+}
+
+.liveLabel {
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--living-ink);
+}
+
+.liveInput {
+  width: 100%;
+  height: 44px;
+  padding: 0 14px;
+  border: 1px solid #dedede;
+  border-radius: 6px;
+  background: #fff;
+  color: var(--living-ink);
+  font: 400 1rem / 1 'Nunito Sans', sans-serif;
+  transition: border-color 0.15s ease;
+}
+
+.liveInput::placeholder {
+  color: #a0a0a0;
+}
+
+.liveInput:hover {
+  border-color: #b8b8b8;
+}
+
+.liveInput:focus {
+  outline: none;
+  border-color: var(--living-green);
+  box-shadow: 0 0 0 3px rgb(0 74 62 / 0.15);
+}
+
+.liveInputError,
+.liveInputError:focus {
+  border-color: #ec2626;
+  box-shadow: 0 0 0 3px rgb(236 38 38 / 0.12);
+}
+
+.liveError {
+  min-height: 1.2em;
+  color: #ec2626;
+  font: 400 0.8125rem / 1.2 'Nunito Sans', sans-serif;
+}
+
+.liveValid {
+  color: var(--living-green);
+}
+
+.liveButton {
+  height: 44px;
+  margin-top: 26px;
+  padding: 0 28px;
+  border: 0;
+  border-radius: 6px;
+  background: var(--living-green);
+  color: #fff;
+  font: 400 0.875rem / 1 'Archivo Black', sans-serif;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.liveButton:hover {
+  background: #0f685a;
+}
+
+.liveButton:focus-visible {
+  outline: 3px solid var(--living-blue);
+  outline-offset: 2px;
+}
+
+.liveButton:disabled {
+  background: #a0a0a0;
+  color: #d4d4d4;
+  cursor: not-allowed;
+}
+
+/* ── 05 The final experience ────────────────────────────────────────── */
+
+.finalPage {
+  display: grid;
+  gap: clamp(16px, 2vw, 24px);
+}
+
+.finalHead {
+  display: grid;
+  gap: 4px;
+}
+
+.finalHead .caption {
+  max-width: 40rem;
+}
+
+/* the article up close: the body and the related module on the left, the author on the right */
+.articleCrops {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(16px, 3vw, 40px);
+  align-items: start;
+  margin-top: clamp(8px, 2vw, 24px);
+}
+
+.crop0 {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.crop1 {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.crop2 {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+}
+
+/* ── 06 Credits: on the same column edge as everything above ────────── */
+
+.credits > * {
+  width: 100%;
+}
+
+/* ── Tablet ─────────────────────────────────────────────────────────── */
+
+@media (max-width: 1023px) {
+  .summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .switcherPanel {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .references {
+    max-width: 560px;
+  }
+}
+
+/* ── Small screens ──────────────────────────────────────────────────── */
+
+@media (max-width: 719px) {
+  .split {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .summary {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .evidence-type,
+  .evidence-cards,
+  .evidence-texture {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .evidence-type > *,
+  .evidence-cards > * {
+    grid-column: 1 !important;
+    grid-row: auto !important;
+  }
+
+  .evidence-type > :nth-child(3),
+  .evidence-cards > :nth-child(1) {
+    width: min(100%, 300px);
+  }
+
+  .evidence-categories {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .typeSheet {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .typeScale {
+    padding: 20px 0 0;
+    border-left: 0;
+    border-top: 1px solid rgb(42 42 42 / 0.12);
+  }
+
+  /* on phones the band becomes a grid of tiles, labels horizontal */
+  .palette {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 6px;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .swatch {
+    height: 84px;
+    writing-mode: horizontal-tb;
+    transform: none;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 0;
+    padding: 8px;
+    overflow: clip;
+    border-radius: 8px;
+  }
+
+  .swatchKey {
+    grid-column: span 2;
+  }
+
+  .swatch .chipName,
+  .swatch .chipHex,
+  .swatch:hover .chipName,
+  .swatch:hover .chipHex {
+    opacity: 1;
+    translate: none;
+  }
+
+  .swatch .chipHex {
+    opacity: 0.8;
+  }
+
+  .chipName {
+    font-size: 0.75rem;
+  }
+
+  .chipHex {
+    font-size: 0.6875rem;
+  }
+
+  .articleCrops {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .crop0,
+  .crop1,
+  .crop2 {
+    grid-column: 1;
+    grid-row: auto;
+  }
+}
+
+@media (max-width: 599px) {
+  .pair {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .pair > .phone {
+    width: min(100%, 240px);
+    justify-self: center;
+  }
+
+  .heroComposition {
+    padding-right: 18%;
+  }
+
+  .tab {
+    padding: 8px 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shot,
+  .scrollFrame,
+  .tab,
+  .summaryItem,
+  .layerTexture,
+  .swatch,
+  .swatch .chipName,
+  .swatch .chipHex {
+    transition: none;
+    translate: none;
+  }
+
+  .evidence,
+  .stepText {
+    animation: none;
+  }
+}

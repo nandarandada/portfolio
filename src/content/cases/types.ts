@@ -30,6 +30,11 @@ export type CaseMedia = MediaAsset & {
   artwork?: boolean;
   /** Artwork with soft edges, painted on the section color: no frame tint behind it. */
   blend?: boolean;
+  /**
+   * A narrower copy for screens up to 899px. Very tall screenshots decode to more memory than
+   * phones allow, and then never appear; the small copy keeps them within the limit.
+   */
+  smallSrc?: string;
 };
 
 /** The project's own palette. Only the case page uses it; the rest of Frosa keeps its identity. */
